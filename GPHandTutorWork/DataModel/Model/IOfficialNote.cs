@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface ITutorModel : Iid
+	public interface IOfficialNote : Iid
 	{
-		string FIO { get; }
-		string Login { get; }
-		string Password { get; }
+		int TutorID { get; }
+		string Comment { get; }
 	}
 }
