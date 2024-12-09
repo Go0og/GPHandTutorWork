@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.BindingModel
+namespace Contracts.ViewContract
 {
-	public class ProgressControlViewModel : IProgressControl
-	{
+	public class ProgressControlViewModel 
+	{ 
 		public int Id { get; set; }
 
 		public int CurriculumID  { get; set; }

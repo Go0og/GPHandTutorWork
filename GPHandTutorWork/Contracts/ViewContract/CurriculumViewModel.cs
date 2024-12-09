@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.BindingModel
+namespace Contracts.ViewContract
 {
-	public class CurriculumViewModel : ICurriculum
+	public class CurriculumViewModel 
 	{
 		public int Id { get; set; }
 		public string Subject { get; set; } = string.Empty;

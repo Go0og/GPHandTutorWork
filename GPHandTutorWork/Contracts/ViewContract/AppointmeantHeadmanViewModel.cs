@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.BindingModel
+namespace Contracts.ViewContract
 {
-	public class OfficialNoteViewModel : IOfficialNote
+	public class AppointmeantHeadmanViewModel 
 	{
 		public int Id { get; set; }
+
 		public int TutorID { get; set; }
 
-		public string Comment { get; set; } = string.Empty;
+		public int StudentID { get; set; }
 	}
 }

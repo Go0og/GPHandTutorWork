@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.BindingModel
 {
-	public class GroupBindingModel : IGroup
+	public class GroupViewModel : IGroup
 	{
 		public int Id { get; set; }
 		public string Name { get; set; } = string.Empty;

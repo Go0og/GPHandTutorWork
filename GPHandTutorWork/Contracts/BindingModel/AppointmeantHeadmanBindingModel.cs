@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.BindingModel
 {
-	public class AppointmeantHeadmanBindingModel : IAppointmentHeadman
+	public class AppointmeantHeadmanViewModel : IAppointmentHeadman
 	{
 		public int Id { get; set; }
 

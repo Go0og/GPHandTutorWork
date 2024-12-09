@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.BindingModel
 {
-	public class StudentBindingModel : IStudent
+	public class StudentViewModel : IStudent
 	{
 		public int Id { get; set; }
 		public string FIO { get; set; } = string.Empty;

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.BindingModel
+namespace Contracts.ViewContract
 {
-	public class UniversiryEmployeeViewModel : IUniversityEmployee
+	public class TutorViewModel  
 	{
 		public int Id { get; set; }
 		public string FIO { get; set; } = string.Empty;
@@ -15,5 +15,6 @@ namespace Contracts.BindingModel
 		public string Login { get; set; } = string.Empty;
 
 		public string Password { get; set; } = string.Empty;
+
 	}
 }

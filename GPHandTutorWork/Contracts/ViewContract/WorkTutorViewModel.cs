@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.BindingModel
+namespace Contracts.ViewContract
 {
-	public class WorkTutorViewModel : IWorkTutor
+	public class WorkTutorViewModel  
 	{
 		public int Id { get; set; }
 		public int TutorID { get; set; }

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="StorageContract\" />
-    <Folder Include="ViewContract\" />
   </ItemGroup>
 
   <ItemGroup>
