@@ -11,7 +11,7 @@ namespace Contracts.BindingModel
 	public class WorkTutorViewModel : IWorkTutor
 	{
 		public int Id { get; set; }
-		public int TutorID { get; set; }
+		public int TutorId { get; set; }
 
 		public TypeWork TypeWork { get; set; }
 

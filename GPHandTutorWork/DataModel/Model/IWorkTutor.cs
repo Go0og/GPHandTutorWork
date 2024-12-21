@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface IWorkTutor : Iid
+	public interface IWorkTutor : IId
 	{
-		int TutorID { get; }
+		int TutorId { get; }
 		TypeWork TypeWork { get; }
 		DateTime DateWork { get; }
 	}

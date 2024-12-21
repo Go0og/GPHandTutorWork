@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface IStudent : Iid
+	public interface IStudent : IId
 	{
 		string FIO { get; }
-		int GroupID { get; }
+		int GroupId { get; }
 	}
 }

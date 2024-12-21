@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface IOfficialNote : Iid
+	public interface IOfficialNote : IId
 	{
-		int TutorID { get; }
+		int TutorId { get; }
 		string Comment { get; }
 	}
 }

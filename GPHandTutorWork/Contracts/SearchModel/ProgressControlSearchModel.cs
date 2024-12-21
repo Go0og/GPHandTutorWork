@@ -11,11 +11,11 @@ namespace Contracts.SearchModel
 	{
 		public int? Id { get; set; }
 
-		public int? CurriculumID { get; set; }
+		public int? CurriculumId { get; set; }
 
-		public int? StudentID { get; set; }
+		public int? StudentId { get; set; }
 
-		public int? TeacherID { get; set; }
+		public int? TeacherId { get; set; }
 
 		public DateTime? DateGrade { get; set; }
 

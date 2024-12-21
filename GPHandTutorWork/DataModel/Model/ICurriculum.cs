@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface ICurriculum : Iid
+	public interface ICurriculum : IId
 	{
 		string Subject { get; }
 		string AttestationForm { get; }
@@ -15,6 +15,6 @@ namespace DataModel.Model
 		double Exam { get; }
 		double ConsultationExam { get; }
 		int Term { get; }
-		int GroupID { get; }
+		int GroupId { get; }
 	}
 }

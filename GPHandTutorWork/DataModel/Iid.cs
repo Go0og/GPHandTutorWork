@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataModel
 {
-	public interface Iid
+	public interface IId
 	{
 		int Id { get; }
 	}

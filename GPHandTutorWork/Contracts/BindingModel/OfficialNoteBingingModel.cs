@@ -10,7 +10,7 @@ namespace Contracts.BindingModel
 	public class OfficialNoteViewModel : IOfficialNote
 	{
 		public int Id { get; set; }
-		public int TutorID { get; set; }
+		public int TutorId { get; set; }
 
 		public string Comment { get; set; } = string.Empty;
 	}

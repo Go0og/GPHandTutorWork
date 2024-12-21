@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface IGPHAgreement : Iid
+	public interface IGPHAgreement : IId
 	{
 		DateTime DateOfConclusion { get; }
 		DateTime DataEnd { get; }
-		int UniversityEmployeeID { get; }
-		int TeacherID { get; }
-		int CurriculumID { get; }
+		int UniversityEmployeeId { get; }
+		int TeacherId { get; }
+		int CurriculumId { get; }
 		double Bet { get; }
 	}
 }

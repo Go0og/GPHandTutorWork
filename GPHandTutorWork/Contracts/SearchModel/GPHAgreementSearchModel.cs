@@ -13,11 +13,11 @@ namespace Contracts.SearchModel
 
 		public DateTime? DataEnd { get; set; }
 
-		public int? UniversityEmployeeID { get; set; }
+		public int? UniversityEmployeeId { get; set; }
 
-		public int? TeacherID { get; set; }
+		public int? TeacherId { get; set; }
 
-		public int? CurriculumID { get; set; }
+		public int? CurriculumId { get; set; }
 
 		public double? Bet { get; set; }
 	}

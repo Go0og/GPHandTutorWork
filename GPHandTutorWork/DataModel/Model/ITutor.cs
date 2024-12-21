@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface ITutor : Iid
+	public interface ITutor : IId
 	{
 		string FIO { get; }
 		string Login { get; }

@@ -11,6 +11,6 @@ namespace Contracts.SearchModel
 		public int? Id { get; set; }
 		public string? FIO { get; set; }
 
-		public int? GroupID { get; set; }
+		public int? GroupId { get; set; }
 	}
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataModel.Model
 {
-	public interface IAppointmentHeadman : Iid
+	public interface IAppointmentHeadman : IId
 	{
-		int TutorID { get; }
-		int StudentID { get; }
+		int TutorId { get; }
+		int StudentId { get; }
 	}
 }

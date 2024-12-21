@@ -10,8 +10,8 @@ namespace Contracts.SearchModel
 	{
 		public int? Id { get; set; }
 
-		public int? TutorID { get; set; }
+		public int? TutorId { get; set; }
 
-		public int? StudentID { get; set; }
+		public int? StudentId { get; set; }
 	}
 }

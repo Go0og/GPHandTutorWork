@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 namespace DataModel.Model
 {
-	public interface IProgressControl : Iid
+	public interface IProgressControl : IId
 	{
-		int CurriculumID { get; }
-		int StudentID { get; }
-		int TeacherID { get; }
+		int CurriculumId { get; }
+		int StudentId { get; }
+		int TeacherId { get; }
 		DateTime DateGrade { get; }
 		int LessonNumber { get; }
 		Grade Grade { get; }

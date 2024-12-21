@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.BindingModel
+namespace Contracts.StorageContract.dbModels
 {
-	public class CurriculumViewModel : ICurriculum
+	public class Curriculum : ICurriculumStorage
 	{
 		public int Id { get; set; }
 		public string Subject { get; set; } = string.Empty;
@@ -23,6 +23,7 @@ namespace Contracts.BindingModel
 		public double ConsultationExam { get; set; }
 
 		public int Term { get; set; }
+
 		public int GroupId { get; set; }
 
 

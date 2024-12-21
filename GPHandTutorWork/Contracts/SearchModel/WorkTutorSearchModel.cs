@@ -10,7 +10,7 @@ namespace Contracts.SearchModel
 	public class WorkTutorSearchModel
 	{
 		public int? Id { get; set; }
-		public int? TutorID { get; set; }
+		public int? TutorId { get; set; }
 
 		public TypeWork? TypeWork { get; set; }
 

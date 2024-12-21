@@ -23,7 +23,7 @@ namespace Contracts.ViewContract
 		public double ConsultationExam { get; set; }
 
 		public int Term { get; set; }
-		public int GroupID { get; set; }
+		public int GroupId { get; set; }
 
 
 	}

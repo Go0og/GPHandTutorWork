@@ -9,7 +9,7 @@ namespace Contracts.SearchModel
 	public class OfficialNoteSearchModel
 	{
 		public int? Id { get; set; }
-		public int? TutorID { get; set; }
+		public int? TutorId { get; set; }
 
 		public string? Comment { get; set; } 
 	}
