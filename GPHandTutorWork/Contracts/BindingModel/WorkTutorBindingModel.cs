@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.BindingModel
 {
-	public class WorkTutorViewModel : IWorkTutor
+	public class WorkTutorBindingModel : IWorkTutor
 	{
 		public int Id { get; set; }
 		public int TutorId { get; set; }

@@ -1,4 +1,5 @@
-﻿using Contracts.SearchModel;
+﻿using Contracts.BindingModel;
+using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace Contracts.StorageContract
 	public interface IUniversityEmployeeStorage
 	{
 		public List<UniversityEmployee> GetFullList();
-		public List<UniversityEmployee> GetFillteredList(UniversityEmployeeSearchModel SearchModel);
 		public UniversityEmployee? GetUniversityEmployee(UniversityEmployeeSearchModel SearchModel);
+		public bool CreateUniversityEmployee(UniversityEmployeeBindingModel UniversityEmployeeBindingModel);
+		public bool UpdateUniversityEmployee(UniversityEmployeeBindingModel UniversityEmployeeBindingModel);
+		public bool DeleteUniversityEmployee(UniversityEmployeeBindingModel UniversityEmployeeBindingModel);
 	}
 }

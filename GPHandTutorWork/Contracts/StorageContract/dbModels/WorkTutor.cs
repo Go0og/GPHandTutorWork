@@ -1,4 +1,5 @@
-﻿using DataModel.Enum;
+﻿using Contracts.BindingModel;
+using DataModel.Enum;
 using DataModel.Model;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,19 @@ namespace Contracts.StorageContract.dbModels
 
 		public DateTime DateWork {get; set;}
 
+		public static WorkTutor? Create(WorkTutorBindingModel Model)
+		{
+			if (Model == null)
+			{
+				return null;
+			}
+			return new WorkTutor()
+			{
+				Id = Model.Id,
+				TutorId = Model.TutorId,
+				TypeWork = Model.TypeWork,
+				DateWork = Model.DateWork
+			};
+		}
 	}
 }

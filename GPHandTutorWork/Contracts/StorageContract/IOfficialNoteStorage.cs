@@ -1,4 +1,5 @@
-﻿using Contracts.SearchModel;
+﻿using Contracts.BindingModel;
+using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,8 @@ namespace Contracts.StorageContract
 		public List<OfficialNote> GetFullList();
 		public List<OfficialNote> GetFillteredList(OfficialNoteSearchModel SearchModel);
 		public OfficialNote? GetOfficialNote(OfficialNoteSearchModel SearchModel);
+		public bool CreateOfficialNote(OfficialNoteBindingModel OfficialNoteBindingModel);
+		public bool UpdateOfficialNote(OfficialNoteBindingModel OfficialNoteBindingModel);
+		public bool DeleteOfficialNote(OfficialNoteBindingModel OfficialNoteBindingModel);
 	}
 }

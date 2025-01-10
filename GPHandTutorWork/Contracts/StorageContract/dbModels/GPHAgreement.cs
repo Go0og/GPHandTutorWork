@@ -1,9 +1,11 @@
-﻿using DataModel.Model;
+﻿using Contracts.BindingModel;
+using DataModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Contracts.StorageContract.dbModels
 {
@@ -25,5 +27,37 @@ namespace Contracts.StorageContract.dbModels
 
 		public double Bet {get; set;}
 
+		public static GPHAgreement? Create(GPHAgreementBindingModel Model)
+		{
+			if (Model == null)
+			{
+				return null;
+			}
+			return new GPHAgreement()
+			{
+				Id = Model.Id,
+				DataEnd = Model.DataEnd,
+				DateOfConclusion = Model.DateOfConclusion,
+				UniversityEmployeeId = Model.UniversityEmployeeId,
+				TeacherId = Model.TeacherId,
+				CurriculumId = Model.CurriculumId,
+				Bet = Model.Bet,
+
+			};
+		}
+		public void Update(GPHAgreementBindingModel Model)
+		{
+			if (Model == null)
+			{
+				return;
+			}
+			Id = Model.Id;
+			DateOfConclusion = Model.DateOfConclusion;
+			DataEnd = Model.DataEnd;
+			UniversityEmployeeId = Model.UniversityEmployeeId;
+			TeacherId = Model.TeacherId;
+			CurriculumId = Model.CurriculumId;
+			Bet = Model.Bet;
+		}
 	}
 }

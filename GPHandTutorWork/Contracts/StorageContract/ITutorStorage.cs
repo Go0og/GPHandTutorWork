@@ -1,4 +1,5 @@
-﻿using Contracts.SearchModel;
+﻿using Contracts.BindingModel;
+using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace Contracts.StorageContract
 	public interface ITutorStorage
 	{
 		public List<Tutor> GetFullList();
-		public List<Tutor> GetFillteredList(TutorSearchModel SearchModel);
 		public Tutor? GetTutor(TutorSearchModel SearchModel);
+		public bool CreateTutor(TutorBindingModel tutorBindingModel);
+		public bool UpdateTutor(TutorBindingModel tutorBindingModel);
+		public bool DeleteTutor(TutorBindingModel tutorBindingModel);
 	}
 }

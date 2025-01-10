@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.StorageContract.dbModels
 {
-	public class Curriculum : ICurriculumStorage
+	public class Curriculum : ICurriculum
 	{
 		public int Id { get; set; }
 		public string Subject { get; set; } = string.Empty;
@@ -25,6 +25,7 @@ namespace Contracts.StorageContract.dbModels
 		public int Term { get; set; }
 
 		public int GroupId { get; set; }
+		public Group? Group { get; set; }
 
 
 	}

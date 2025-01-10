@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.BindingModel
 {
-	public class OfficialNoteViewModel : IOfficialNote
+	public class OfficialNoteBindingModel : IOfficialNote
 	{
 		public int Id { get; set; }
 		public int TutorId { get; set; }

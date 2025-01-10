@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.ViewContract
 {
-	public class AppointmeantHeadmanViewModel 
+	public class AppointmentHeadmanViewModel 
 	{
 		public int Id { get; set; }
 

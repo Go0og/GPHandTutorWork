@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.BindingModel
 {
-	public class ProgressControlViewModel : IProgressControl
+	public class ProgressControlBindingModel : IProgressControl
 	{
 		public int Id { get; set; }
 

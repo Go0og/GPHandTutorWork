@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.SearchModel
 {
-	public class AppointmeantHeadmanSearchModel
+	public class AppointmentHeadmanSearchModel
 	{
 		public int? Id { get; set; }
 

@@ -12,6 +12,7 @@ namespace Contracts.StorageContract.dbModels
 	{
 		public int Id {get; set;}
 		public int CurriculumId {get; set;}
+		public Curriculum? Curriculum {get; set;}
 
 		public int StudentId {get; set;}
 		public Student? Student {get; set;}

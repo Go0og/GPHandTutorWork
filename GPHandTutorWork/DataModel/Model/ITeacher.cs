@@ -13,7 +13,7 @@ namespace DataModel.Model
 		int PassportSerialAndNumber { get; }
 		int ContactPhoneNumber { get; }
 		int INN { get; }
-		int InsuranceNumber { get; }
+		int InsuranceNumber { get; }//Стразование
 		int CardDetails { get; }
 	}
 }

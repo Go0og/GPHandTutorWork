@@ -1,4 +1,5 @@
-﻿using Contracts.SearchModel;
+﻿using Contracts.BindingModel;
+using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace Contracts.StorageContract
 		public List<WorkTutor> GetFullList();
 		public List<WorkTutor> GetFillteredList(WorkTutorSearchModel SearchModel);
 		public WorkTutor? GetWorkTutor(WorkTutorSearchModel SearchModel);
+
+		public bool CreateWork(WorkTutorBindingModel workTutorBindingModel);
 	}
 }
