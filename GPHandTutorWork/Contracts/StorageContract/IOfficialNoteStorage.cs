@@ -11,7 +11,6 @@ namespace Contracts.StorageContract
 {
 	public interface IOfficialNoteStorage
 	{
-		public List<OfficialNote> GetFullList();
 		public List<OfficialNote> GetFillteredList(OfficialNoteSearchModel SearchModel);
 		public OfficialNote? GetOfficialNote(OfficialNoteSearchModel SearchModel);
 		public bool CreateOfficialNote(OfficialNoteBindingModel OfficialNoteBindingModel);

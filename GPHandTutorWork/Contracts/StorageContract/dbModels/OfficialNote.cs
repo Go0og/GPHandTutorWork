@@ -15,7 +15,7 @@ namespace Contracts.StorageContract.dbModels
 		public int TutorId {get; set;}
 		public Tutor? Tutor {get; set;}
 
-		public string? Comment { get; set;} = string.Empty;
+		public string Comment { get; set;} = string.Empty;
 		public static OfficialNote? Create(OfficialNoteBindingModel Model)
 		{
 			if (Model == null)

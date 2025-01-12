@@ -7,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Contracts.StorageContract
+namespace Contracts.InteractorContract
 {
-	public interface IAppointmentHeadmanStorage
+	public interface IAppointmeanHeadmanLogic
 	{
-		public List<AppointmentHeadman> GetFullList();
-		public List<AppointmentHeadman> GetFillteredList(AppointmentHeadmanSearchModel SearchModel);
-		public AppointmentHeadman? GetAppointmentHeadman(AppointmentHeadmanSearchModel searchModel);
+		public List<AppointmentHeadmanBindingModel> GetFullList(AppointmentHeadmanSearchModel? searchModel);
+		public AppointmentHeadmanBindingModel? GetAppointmentHeadman(AppointmentHeadmanSearchModel searchModel);
 		public bool CreateAppointmentHeadman(AppointmentHeadmanBindingModel BindingModel);
 		public bool UpdateAppointmentHeadman(AppointmentHeadmanBindingModel BindingModel);
 		public bool DeleteAppointmentHeadman(AppointmentHeadmanBindingModel BindingModel);
-
+		public void CheckModel(AppointmentHeadmanBindingModel BindingModel, bool obDel, bool onUp);
 	}
 }
