@@ -31,11 +31,11 @@ namespace Interactors
 			}
 			if (string.IsNullOrEmpty(BindingModel.TutorId.ToString()))
 			{
-				throw new ArgumentNullException("user fio is missing", nameof(BindingModel.TutorId));
+				throw new ArgumentNullException("Tutor id is missing", nameof(BindingModel.TutorId));
 			}
 			if (string.IsNullOrEmpty(BindingModel.StudentId.ToString()))
 			{
-				throw new ArgumentNullException("user departmentId is missing", nameof(BindingModel.StudentId));
+				throw new ArgumentNullException("Student id is missing", nameof(BindingModel.StudentId));
 			}
 		}
 
