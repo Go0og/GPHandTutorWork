@@ -1,0 +1,6 @@
+@WEB_GPH_Tutor_HostAddress = http://localhost:5178
+
+GET {{WEB_GPH_Tutor_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
