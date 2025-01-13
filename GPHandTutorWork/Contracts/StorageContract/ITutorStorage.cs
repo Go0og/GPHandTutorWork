@@ -12,6 +12,7 @@ namespace Contracts.StorageContract
 	public interface ITutorStorage
 	{
 		public List<Tutor> GetFullList();
+		public List<Tutor> GetFillteredList(TutorSearchModel searchModel);
 		public Tutor? GetTutor(TutorSearchModel SearchModel);
 		public bool CreateTutor(TutorBindingModel tutorBindingModel);
 		public bool UpdateTutor(TutorBindingModel tutorBindingModel);

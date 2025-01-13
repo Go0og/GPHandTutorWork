@@ -78,8 +78,18 @@ namespace DataBaseImplement.Implements
 					.FirstOrDefault(x => x.FIO == SearchModel.FIO);
 			}
 			return null;
-
 		}
 
+		public List<Tutor> GetFillteredList(TutorSearchModel searchModel)
+		{
+			using var context = new DataBaseImplement();
+			if (searchModel.Id.HasValue) 
+			{ 
+				return context.Tutors
+					.Where(x => x.Id == searchModel.Id)
+					.ToList();
+			}
+			return new();
+		}
 	}
 }
