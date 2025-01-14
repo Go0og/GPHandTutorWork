@@ -11,7 +11,7 @@ namespace Contracts.InteractorContract
 {
 	public interface IGPHAgreementLogic
 	{
-		public List<GPHAgreementBindingModel> GetFullList(GPHAgreementSearchModel? searchModel);
+		public List<GPHAgreementBindingModel> GetFillteredList(GPHAgreementSearchModel? searchModel);
 		public GPHAgreementBindingModel? GetGPHAgreement(GPHAgreementSearchModel SearchModel);
 		public bool CreateGPHAgreement(GPHAgreementBindingModel BindingModel);
 		public bool UpdateGPHAgreement(GPHAgreementBindingModel BindingModel);

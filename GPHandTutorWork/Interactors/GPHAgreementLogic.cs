@@ -89,7 +89,7 @@ namespace Interactors
 			return true;
 		}
 
-		public List<GPHAgreementBindingModel> GetFullList(GPHAgreementSearchModel? searchModel)
+		public List<GPHAgreementBindingModel> GetFillteredList(GPHAgreementSearchModel? searchModel)
 		{
 			var models = searchModel == null ? _storage.GetFullList() : _storage.GetFillteredList(searchModel);
 			if (models.Count == 0)

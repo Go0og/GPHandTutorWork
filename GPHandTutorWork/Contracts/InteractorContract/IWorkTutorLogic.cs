@@ -10,7 +10,7 @@ namespace Contracts.InteractorContract
 {
 	public interface IWorkTutorLogic
 	{
-		public List<WorkTutorBindingModel> GetFullList(WorkTutorSearchModel? searchModel);
+		public List<WorkTutorBindingModel> GetFillteredList(WorkTutorSearchModel? searchModel);
 		public WorkTutorBindingModel? GetWorkTutor(WorkTutorSearchModel SearchModel);
 		public bool CreateWorkTutor(WorkTutorBindingModel BindingModel);
 		public bool UpdateWorkTutor(WorkTutorBindingModel BindingModel);
