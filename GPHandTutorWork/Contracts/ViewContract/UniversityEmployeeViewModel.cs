@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.ViewContract
 {
-	public class UniversiryEmployeeViewModel 
+	public class UniversityEmployeeViewModel 
 	{
 		public int Id { get; set; }
 		public string FIO { get; set; } = string.Empty;

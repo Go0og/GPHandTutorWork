@@ -11,6 +11,6 @@ namespace Contracts.PresenterContract
 	public interface IAppointmeanHeadmanPresenter
 	{
 		public AppointmentHeadmanViewModel MakeAppointmeanHeadmenPresenter(AppointmentHeadmanSearchModel search_model);
-		public List<AppointmentHeadmanViewModel> make_department_list_presenter(AppointmentHeadmanSearchModel? search_model);
+		public List<AppointmentHeadmanViewModel> MakeAppointmeanHeadmanListPresenter(AppointmentHeadmanSearchModel? search_model);
 	}
 }

@@ -18,9 +18,9 @@ namespace Interactors
 		{
 			_storage = storage;
 		}
-		public List<GroupBindingModel> GetFullList()
+		public List<GroupBindingModel> GetFilteredList(GroupSearchModel SearchModel)
 		{
-			var models = _storage.GetFullList();
+			var models = _storage.GetFillteredList(SearchModel);
 			if (models == null)
 			{
 				return new();

@@ -13,9 +13,9 @@ namespace Contracts.ViewContract
 		public int Id { get; set; }
 		public int TutorId { get; set; }
 
-		public TypeWork TypeWork { get; set; }
+		public string TypeWork { get; set; } = string.Empty;
 
-		public DateTime DateWork { get; set; } = DateTime.Now;
+		public string DateWork { get; set; } = string.Empty;
 
 	}
 }
