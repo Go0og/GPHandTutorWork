@@ -1,6 +1,7 @@
 ﻿using Contracts.BindingModel;
 using Contracts.InteractorContract;
 using Contracts.SearchModel;
+using Contracts.StorageContract;
 using Contracts.StorageContract.dbModels;
 using DataBaseImplement.Implements;
 using System;
@@ -13,8 +14,8 @@ namespace Interactors
 {
 	public class TutorLogic : ITutorLogic
 	{
-		private readonly TutorStorage _storage;
-		public TutorLogic (TutorStorage storage)
+		private readonly ITutorStorage _storage;
+		public TutorLogic (ITutorStorage storage)
 		{
 			_storage = storage;
 		}
@@ -44,6 +45,7 @@ namespace Interactors
 
 		public bool CreateTutor(TutorBindingModel BindingModel)
 		{
+			CheckModel(BindingModel);
 			if (_storage.CreateTutor(BindingModel) == false)
 			{
 				throw new Exception("insert operation failed");

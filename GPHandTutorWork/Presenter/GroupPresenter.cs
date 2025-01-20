@@ -14,10 +14,10 @@ using System.Xml.Linq;
 
 namespace Presenter
 {
-	public class GroupPresent : IGroupPresenter
+	public class GroupPresenter : IGroupPresenter
 	{
 		private readonly IGroupLogic _logic;
-		public GroupPresent(IGroupLogic logic)
+		public GroupPresenter(IGroupLogic logic)
 		{
 			_logic = logic;
 		}

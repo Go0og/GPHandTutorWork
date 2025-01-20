@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interactors", "Interactors\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presenter", "Presenter\Presenter.csproj", "{2DF3DEEA-B9B1-42A1-9118-DC7C40B2337E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationRestAPI", "WebApplicationRestAPI\WebApplicationRestAPI.csproj", "{91177D43-A647-4D55-A82A-516C9216D60B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPHandTutorWorkApp", "GPHandTutorWorkApp\GPHandTutorWorkApp.csproj", "{B72DDD85-D09C-45F6-B79F-3954476162B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{2DF3DEEA-B9B1-42A1-9118-DC7C40B2337E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DF3DEEA-B9B1-42A1-9118-DC7C40B2337E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DF3DEEA-B9B1-42A1-9118-DC7C40B2337E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91177D43-A647-4D55-A82A-516C9216D60B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91177D43-A647-4D55-A82A-516C9216D60B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91177D43-A647-4D55-A82A-516C9216D60B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91177D43-A647-4D55-A82A-516C9216D60B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72DDD85-D09C-45F6-B79F-3954476162B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72DDD85-D09C-45F6-B79F-3954476162B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72DDD85-D09C-45F6-B79F-3954476162B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72DDD85-D09C-45F6-B79F-3954476162B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

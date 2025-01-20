@@ -13,8 +13,6 @@ namespace Contracts.InteractorContract
 		public List<WorkTutorBindingModel> GetFillteredList(WorkTutorSearchModel? searchModel);
 		public WorkTutorBindingModel? GetWorkTutor(WorkTutorSearchModel SearchModel);
 		public bool CreateWorkTutor(WorkTutorBindingModel BindingModel);
-		public bool UpdateWorkTutor(WorkTutorBindingModel BindingModel);
-		public bool DeleteWorkTutor(WorkTutorBindingModel BindingModel);
 		public void CheckModel(WorkTutorBindingModel bindingModel, bool obDel, bool onUp);
 	}
 }

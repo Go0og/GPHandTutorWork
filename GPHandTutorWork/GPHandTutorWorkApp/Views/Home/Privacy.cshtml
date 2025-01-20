@@ -1,0 +1,21 @@
+﻿@using Contracts.ViewContract
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+@model TutorViewModel;
+
+<h1>Личные данные</h1>
+<form method="post">
+	<div class="row">
+		<div class="col-4">Почта:</div>
+		<div class="col-8"><input type="text" name="Login" value="@Model.Login" /></div>
+	</div>
+	<div class="row">
+		<div class="col-4">Пароль:</div>
+		<div class="col-8"><input type="text" name="Password" value="@Model.Password" /></div>
+	</div>
+	<div class="row">
+		<div class="col-4">ФИО:</div>
+		<div class="col-8"><input type="text" name="DIO" value="@Model.FIO" readonly/></div>
+	</div>
+</form>
