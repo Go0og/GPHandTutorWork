@@ -16,28 +16,6 @@ namespace WebApp.Controllers
 			return View();
 		}
 
-		[HttpGet]
-		public IActionResult Template()
-		{
-			if (APIclient.Tutor == null)
-			{
-				return Redirect("~/Home/Enter");
-			}
-
-			return View();
-		}
-
-		[HttpGet]
-		public IActionResult TemplateCreate()
-		{
-			if (APIclient.Tutor == null)
-			{
-				return Redirect("~/Home/Enter");
-			}
-
-			return View(APIclient.Tutor);
-		}
-
 
 
 	}
