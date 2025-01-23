@@ -11,6 +11,6 @@ namespace Contracts.InteractorContract
 	public interface IStudentLogic
 	{
 		public List<StudentBindingModel> GetFullList(StudentSearchModel? SearchModel);
-		public StudentBindingModel? GetStudent(StudentSearchModel SearchModel);
+		public StudentBindingModel GetStudent(StudentSearchModel SearchModel);
 	}
 }

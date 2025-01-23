@@ -11,7 +11,7 @@ namespace Contracts.InteractorContract
 	public interface IOfficialNoteLogic
 	{
 		public List<OfficialNoteBindingModel> GetFullList(OfficialNoteSearchModel? searchModel);
-		public OfficialNoteBindingModel? GetOfficialNote(OfficialNoteSearchModel searchModel);
+		public OfficialNoteBindingModel GetOfficialNote(OfficialNoteSearchModel searchModel);
 		public bool CreateOfficialNote(OfficialNoteBindingModel BindingModel);
 		public bool UpdateOfficialNote(OfficialNoteBindingModel BindingModel);
 		public bool DeleteOfficialNote(OfficialNoteBindingModel BindingModel);

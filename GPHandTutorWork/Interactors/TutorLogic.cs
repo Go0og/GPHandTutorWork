@@ -87,7 +87,7 @@ namespace Interactors
 			return bindingModels;
 		}
 
-		public TutorBindingModel? GetTutor(TutorSearchModel SearchModel)
+		public TutorBindingModel GetTutor(TutorSearchModel SearchModel)
 		{
 			if (SearchModel == null)
 			{

@@ -11,6 +11,6 @@ namespace Contracts.InteractorContract
 	public interface IGroupLogic
 	{
 		public List<GroupBindingModel> GetFilteredList(GroupSearchModel SearchModel);
-		public GroupBindingModel? GetGroup(GroupSearchModel SearchModel);
+		public GroupBindingModel GetGroup(GroupSearchModel SearchModel);
 	}
 }

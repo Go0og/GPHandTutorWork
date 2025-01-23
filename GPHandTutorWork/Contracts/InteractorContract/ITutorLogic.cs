@@ -11,7 +11,7 @@ namespace Contracts.InteractorContract
 	public interface ITutorLogic
 	{
 		public List<TutorBindingModel> GetFullList(TutorSearchModel? searchModel);
-		public TutorBindingModel? GetTutor(TutorSearchModel SearchModel);
+		public TutorBindingModel GetTutor(TutorSearchModel SearchModel);
 		public bool CreateTutor(TutorBindingModel TutorBindingModel);
 		public bool UpdateTutor(TutorBindingModel TutorBindingModel);
 		public bool DeleteTutor(TutorBindingModel TutorBindingModel);

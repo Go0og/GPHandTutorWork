@@ -34,7 +34,7 @@ namespace Interactors
 			return bindingModel;
 		}
 
-		public StudentBindingModel? GetStudent(StudentSearchModel SearchModel)
+		public StudentBindingModel GetStudent(StudentSearchModel SearchModel)
 		{
 			if (SearchModel == null)
 			{

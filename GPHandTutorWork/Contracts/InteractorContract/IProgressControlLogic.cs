@@ -11,6 +11,6 @@ namespace Contracts.InteractorContract
 	public interface IProgressControlLogic
 	{
 		public List<ProgressControlBindingModel> GetFullList(ProgressControlSearchModel? SearchModel);
-		public ProgressControlBindingModel? GetProgressControl(ProgressControlSearchModel SearchModel);
+		public ProgressControlBindingModel GetProgressControl(ProgressControlSearchModel SearchModel);
 	}
 }
