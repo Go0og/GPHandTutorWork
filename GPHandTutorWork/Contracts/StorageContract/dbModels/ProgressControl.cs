@@ -11,7 +11,7 @@ namespace Contracts.StorageContract.dbModels
 	public class ProgressControl : IProgressControl
 	{
 		public int Id {get; set;}
-		public int CurriculumId {get; set;}
+		public int CurriculumList {get; set;}
 		public Curriculum? Curriculum {get; set;}
 
 		public int StudentId {get; set;}

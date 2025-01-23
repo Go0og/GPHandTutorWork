@@ -28,7 +28,7 @@ namespace Presenter
 				newViewModels.Add(new ProgressControlViewModel
 				{
 					Id = model.Id,
-					CurriculumId = model.CurriculumId,
+					CurriculumList = model.CurriculumList,
 					StudentId = model.StudentId,
 					TeacherId = model.TeacherId,
 					DateGrade = model.DateGrade,
@@ -45,7 +45,7 @@ namespace Presenter
 			var newViewModel = new ProgressControlViewModel
 			{
 				Id = model.Id,
-				CurriculumId = model.CurriculumId,
+				CurriculumList = model.CurriculumList,
 				StudentId = model.StudentId,
 				TeacherId = model.TeacherId,
 				DateGrade = model.DateGrade,

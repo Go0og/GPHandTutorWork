@@ -19,9 +19,8 @@ namespace Contracts.BindingModel
 
 		public int TeacherId { get; set; }
 
-		public int CurriculumId { get; set; }
-
 		public double Bet { get; set; }
 
+		public List<int> CurriculumList { get; set; } = new();
 	}
 }

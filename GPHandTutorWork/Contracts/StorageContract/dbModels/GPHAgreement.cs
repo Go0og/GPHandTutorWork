@@ -22,7 +22,7 @@ namespace Contracts.StorageContract.dbModels
 		public int TeacherId {get; set;}
 		public Teacher? Teacher {get; set;}
 
-		public int CurriculumId {get; set;}
+		public List<int> CurriculumList {get; set;}
 		public Curriculum? Curriculum {get; set;} 
 
 		public double Bet {get; set;}
@@ -40,7 +40,7 @@ namespace Contracts.StorageContract.dbModels
 				DateOfConclusion = Model.DateOfConclusion,
 				UniversityEmployeeId = Model.UniversityEmployeeId,
 				TeacherId = Model.TeacherId,
-				CurriculumId = Model.CurriculumId,
+				CurriculumList = Model.CurriculumList,
 				Bet = Model.Bet,
 
 			};
@@ -56,7 +56,7 @@ namespace Contracts.StorageContract.dbModels
 			DataEnd = Model.DataEnd;
 			UniversityEmployeeId = Model.UniversityEmployeeId;
 			TeacherId = Model.TeacherId;
-			CurriculumId = Model.CurriculumId;
+			CurriculumList = Model.CurriculumList;
 			Bet = Model.Bet;
 		}
 	}

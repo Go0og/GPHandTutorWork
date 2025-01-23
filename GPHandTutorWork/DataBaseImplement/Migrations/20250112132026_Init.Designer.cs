@@ -100,7 +100,7 @@ namespace DataBaseImplement.Migrations
                     b.Property<double>("Bet")
                         .HasColumnType("float");
 
-                    b.Property<int>("CurriculumId")
+                    b.Property<int>("CurriculumList")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataEnd")
@@ -117,7 +117,7 @@ namespace DataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculumId");
+                    b.HasIndex("CurriculumList");
 
                     b.HasIndex("TeacherId");
 
@@ -177,7 +177,7 @@ namespace DataBaseImplement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CurriculumId")
+                    b.Property<int>("CurriculumList")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateGrade")
@@ -197,7 +197,7 @@ namespace DataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculumId");
+                    b.HasIndex("CurriculumList");
 
                     b.HasIndex("StudentId");
 
@@ -369,7 +369,7 @@ namespace DataBaseImplement.Migrations
                 {
                     b.HasOne("Contracts.StorageContract.dbModels.Curriculum", "Curriculum")
                         .WithMany()
-                        .HasForeignKey("CurriculumId")
+                        .HasForeignKey("CurriculumList")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -418,7 +418,7 @@ namespace DataBaseImplement.Migrations
                 {
                     b.HasOne("Contracts.StorageContract.dbModels.Curriculum", "Curriculum")
                         .WithMany()
-                        .HasForeignKey("CurriculumId")
+                        .HasForeignKey("CurriculumList")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

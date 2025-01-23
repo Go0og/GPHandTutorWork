@@ -8,7 +8,7 @@ namespace DataModel.Model
 {
 	public interface IProgressControl : IId
 	{
-		int CurriculumId { get; }
+		int CurriculumList { get; }
 		int StudentId { get; }
 		int TeacherId { get; }
 		DateTime DateGrade { get; }

@@ -177,15 +177,15 @@ namespace DataBaseImplement.Migrations
                     DataEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UniversityEmployeeId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    CurriculumId = table.Column<int>(type: "int", nullable: false),
+                    CurriculumList = table.Column<int>(type: "int", nullable: false),
                     Bet = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GPHAgreements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GPHAgreements_Curriculums_CurriculumId",
-                        column: x => x.CurriculumId,
+                        name: "FK_GPHAgreements_Curriculums_CurriculumList",
+                        column: x => x.CurriculumList,
                         principalTable: "Curriculums",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -235,7 +235,7 @@ namespace DataBaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CurriculumId = table.Column<int>(type: "int", nullable: false),
+                    CurriculumList = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     DateGrade = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -246,8 +246,8 @@ namespace DataBaseImplement.Migrations
                 {
                     table.PrimaryKey("PK_ProgressControls", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProgressControls_Curriculums_CurriculumId",
-                        column: x => x.CurriculumId,
+                        name: "FK_ProgressControls_Curriculums_CurriculumList",
+                        column: x => x.CurriculumList,
                         principalTable: "Curriculums",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -275,9 +275,9 @@ namespace DataBaseImplement.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GPHAgreements_CurriculumId",
+                name: "IX_GPHAgreements_CurriculumList",
                 table: "GPHAgreements",
-                column: "CurriculumId");
+                column: "CurriculumList");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GPHAgreements_TeacherId",
@@ -300,9 +300,9 @@ namespace DataBaseImplement.Migrations
                 column: "TutorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProgressControls_CurriculumId",
+                name: "IX_ProgressControls_CurriculumList",
                 table: "ProgressControls",
-                column: "CurriculumId");
+                column: "CurriculumList");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProgressControls_StudentId",

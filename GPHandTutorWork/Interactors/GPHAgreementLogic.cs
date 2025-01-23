@@ -46,9 +46,9 @@ namespace Interactors
 			{
 				throw new ArgumentNullException("Проверьте преподавателя", nameof(bindingModel.TeacherId));
 			}
-			if (string.IsNullOrEmpty(bindingModel.CurriculumId.ToString()))
+			if (string.IsNullOrEmpty(bindingModel.CurriculumList.ToString()))
 			{
-				throw new ArgumentNullException("Проверьте учебный план", nameof(bindingModel.CurriculumId));
+				throw new ArgumentNullException("Проверьте учебный план", nameof(bindingModel.CurriculumList));
 			}
 			if (bindingModel.Bet < 0)
 			{
@@ -124,7 +124,7 @@ namespace Interactors
 				Id = model.Id,
 				DateOfConclusion = model.DateOfConclusion,
 				DataEnd = model.DataEnd,
-				CurriculumId = model.CurriculumId,
+				CurriculumList = model.CurriculumList,
 				TeacherId = model.TeacherId,
 				UniversityEmployeeId = model.UniversityEmployeeId,
 				Bet = model.Bet
