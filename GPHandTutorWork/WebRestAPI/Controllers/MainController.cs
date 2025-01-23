@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebRestAPI.Controllers
 {
+	[Route("api/[controller]/[action]")]
 	[ApiController]
-	[Route("[controller]")]
 	public class MainController : ControllerBase
 	{
 		private readonly IAppointmeanHeadmanPresenter _AppointmeanPresent;

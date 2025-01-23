@@ -6,10 +6,9 @@ using Contracts.ViewContract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApplicationRestAPI.Controllers {
-
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class TutorController : Controller {
+	[Route("api/[controller]/[action]")]
+	[ApiController]
+	public class TutorController : Controller {
 
         private readonly ITutorLogic _TutorLogic;
         private readonly ITutorPresenter _TutorPresenter; 
