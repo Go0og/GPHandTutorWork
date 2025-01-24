@@ -7,8 +7,10 @@ namespace WebApp {
     public class APIclient {
         private static readonly HttpClient apiClient = new();
         public static TutorViewModel? Tutor { get; set; } = null;
+		public static UniversityEmployeeViewModel? UniversityEmployee { get; set; } = null;
 
-        public static void connect(IConfiguration configuration) {
+
+		public static void connect(IConfiguration configuration) {
             apiClient.BaseAddress = new Uri(configuration["IPAddress"]);
             apiClient.DefaultRequestHeaders.Accept.Clear();
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

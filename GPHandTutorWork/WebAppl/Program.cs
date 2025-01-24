@@ -1,3 +1,5 @@
+using WebApp;
+
 namespace WebAppl
 {
 	public class Program
@@ -10,7 +12,7 @@ namespace WebAppl
 			builder.Services.AddControllersWithViews();
 
 			var app = builder.Build();
-
+			APIclient.connect(builder.Configuration);
 			// Configure the HTTP request pipeline.
 			if (!app.Environment.IsDevelopment())
 			{

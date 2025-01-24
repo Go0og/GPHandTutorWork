@@ -12,14 +12,18 @@ namespace WebApplicationRestAPI.Controllers {
 
         private readonly ITutorLogic _TutorLogic;
         private readonly ITutorPresenter _TutorPresenter; 
+        private readonly IUniversityEmployeeLogic _UniversityEmployeeLogic;
+        private readonly IUniversityEmployeePresenter _UniversityEmployeePresenter;
 
-        public TutorController(ITutorLogic TutoLogic, ITutorPresenter TutorPresenter) {
+        public TutorController(ITutorLogic TutoLogic, ITutorPresenter TutorPresenter, IUniversityEmployeeLogic universityEmployeeLogic, IUniversityEmployeePresenter universityEmployeePresenter) {
             _TutorPresenter = TutorPresenter;
             _TutorLogic = TutoLogic;
+            _UniversityEmployeeLogic = universityEmployeeLogic;
+            _UniversityEmployeePresenter = universityEmployeePresenter;
         }
 
         [HttpPost]
-        public void register(TutorBindingModel model) {
+        public void register_tutor(TutorBindingModel model) {
             try {
                 _TutorLogic.CreateTutor(model);
             }
@@ -29,7 +33,7 @@ namespace WebApplicationRestAPI.Controllers {
         }
 
         [HttpGet]
-        public TutorViewModel? login(string Login, string password) {
+        public TutorViewModel? login_tutor(string Login, string password) {
             try {
                 return _TutorPresenter.MakeTutorPresenter(new TutorSearchModel {
                     Login = Login,
@@ -42,7 +46,7 @@ namespace WebApplicationRestAPI.Controllers {
         }
 
         [HttpPost]
-        public void edit(TutorBindingModel model) {
+        public void edit_tutor(TutorBindingModel model) {
             try {
                 _TutorLogic.UpdateTutor(model);
             }
@@ -50,7 +54,50 @@ namespace WebApplicationRestAPI.Controllers {
                 throw;
             }
         }
-        /*          //потом разобрать зачем это было тут
+
+		[HttpPost]
+		public void register_employee(UniversityEmployeeBindingModel model)
+		{
+			try
+			{
+				_UniversityEmployeeLogic.CreateUniversityEmployee(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
+		public UniversityEmployeeViewModel? login_employee(string Login, string password)
+		{
+			try
+			{
+				return _UniversityEmployeePresenter.MakeUniversityEmployeePresenter(new UniversityEmployeeSearchModel
+				{
+					Login = Login,
+					Password = password
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpPost]
+		public void edit_employee(UniversityEmployeeBindingModel model)
+		{
+			try
+			{
+				_UniversityEmployeeLogic.UpdateUniversityEmployee(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		/*          //потом разобрать зачем это было тут
         [HttpGet]
         public List<template_view_model>? get_user_template_list(int userId) {
             try {
@@ -61,5 +108,5 @@ namespace WebApplicationRestAPI.Controllers {
             }
         }
         */
-    }
+	}
 }

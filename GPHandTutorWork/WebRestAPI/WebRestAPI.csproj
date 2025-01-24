@@ -15,7 +15,6 @@
     <ProjectReference Include="..\DataBaseImplement\DataBaseImplement.csproj" />
     <ProjectReference Include="..\Interactors\Interactors.csproj" />
     <ProjectReference Include="..\Presenter\Presenter.csproj" />
-    <ProjectReference Include="..\WebAppl\WebAppl.csproj" />
   </ItemGroup>
 
 </Project>
