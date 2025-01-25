@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace WebApp {
+namespace WebAppL {
     public class APIclient {
         private static readonly HttpClient apiClient = new();
         public static TutorViewModel? Tutor { get; set; } = null;
@@ -33,7 +33,8 @@ namespace WebApp {
 
             var response = apiClient.PostAsync(requestUrl, data);
             var result = response.Result.Content.ReadAsStringAsync().Result;
-            if (!response.Result.IsSuccessStatusCode) {
+            //ошибка....
+            if (!response.Result.IsSuccessStatusCode) { 
                 throw new Exception(result);
             }
         }

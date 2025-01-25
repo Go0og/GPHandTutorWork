@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\WebRestAPI\WebRestAPI.csproj" />
   </ItemGroup>
 
 </Project>

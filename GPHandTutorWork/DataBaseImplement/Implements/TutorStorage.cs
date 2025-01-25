@@ -64,26 +64,17 @@ namespace DataBaseImplement.Implements
 			if (SearchModel.Id.HasValue)
 			{
 				return context.Tutors
-					.Include(x => x.FIO)
-					.Include(x => x.Login)
-					.Include(x => x.Password)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
 			if (!string.IsNullOrEmpty(SearchModel.FIO))
 			{
 				return context.Tutors
-					.Include(x => x.FIO)
-					.Include(x => x.Login)
-					.Include(x => x.Password)
 					.FirstOrDefault(x => x.FIO == SearchModel.FIO);
 			}
-			if (!string.IsNullOrEmpty(SearchModel.Login) || !string.IsNullOrEmpty(SearchModel.Password))
+			if (!string.IsNullOrEmpty(SearchModel.Login) && !string.IsNullOrEmpty(SearchModel.Password))
 			{
 				return context.Tutors
-					.Include(x => x.FIO)
-					.Include(x => x.Login)
-					.Include(x => x.Password)
-					.FirstOrDefault(x => x.Login == SearchModel.Login);
+					.FirstOrDefault(x => x.Login == SearchModel.Login && x.Password == SearchModel.Password);
 			}
 			return null;
 		}

@@ -3,19 +3,28 @@ using Contracts.ViewContract;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Diagnostics;
-using WebApp;
+using WebAppL;
 using WebAppl.Models;
+using AspNetCoreGeneratedDocument;
 
 namespace WebAppl.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly ILogger<HomeController> _logger;
-		private string Role = string.Empty;
+		public string Role { get; set; } = string.Empty;
 
 		public HomeController(ILogger<HomeController> logger)
 		{
 			_logger = logger;
+			if (APIclient.Tutor != null)
+			{
+				Role = "Куратор";
+			}
+			else if(APIclient.UniversityEmployee != null)
+			{
+				Role = "Сотрудник";
+			}
 		}
 
 		public IActionResult Index()
@@ -24,11 +33,13 @@ namespace WebAppl.Controllers
 			{
 				return Redirect("~/Home/Enter");
 			}
+			ViewBag.Role = Role;
 			return View();
 		}
 
 		public IActionResult Privacy()
 		{
+			ViewBag.Role = Role;
 			return View();
 		}
 
@@ -40,6 +51,7 @@ namespace WebAppl.Controllers
 		[HttpGet]
 		public IActionResult Enter()
 		{
+			ViewBag.Role = Role;
 			return View();
 		}
 
@@ -63,13 +75,14 @@ namespace WebAppl.Controllers
 					}
 					break;
 			}
-			Role = role;
+			ViewBag.Role = Role;
 			Response.Redirect("Index");
 		}
 
 		[HttpGet]
 		public IActionResult Register()
 		{
+			ViewBag.Role = Role;
 			//ViewBag.departments = APIclient.GetRequest<List<department_view_model>>("api/main/get_department_list");
 			return View();
 		}
@@ -96,6 +109,7 @@ namespace WebAppl.Controllers
 					});
 					break;
 			}
+			ViewBag.Role = Role;
 			Response.Redirect("Enter");
 		}
 	}

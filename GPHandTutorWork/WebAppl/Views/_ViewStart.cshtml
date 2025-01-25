@@ -1,3 +1,15 @@
 ﻿@{
+    var role = ViewBag.Role;
+}
+@if (role == "Куратор")
+{
+    Layout = "_LayoutTutor";
+}
+else if (role =="Сотрудник")
+{
+    Layout = "_LayoutEmployee";
+}
+else {
     Layout = "_Layout";
 }
+

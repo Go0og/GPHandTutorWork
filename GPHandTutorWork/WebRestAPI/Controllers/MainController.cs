@@ -1,3 +1,5 @@
+using Contracts.BindingModel;
+using Contracts.InteractorContract;
 using Contracts.PresenterContract;
 using Microsoft.AspNetCore.Mvc;
 
