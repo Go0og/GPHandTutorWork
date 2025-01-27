@@ -1,7 +1,10 @@
 using Contracts.BindingModel;
 using Contracts.InteractorContract;
 using Contracts.PresenterContract;
+using Contracts.SearchModel;
+using Contracts.ViewContract;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebRestAPI.Controllers
 {
@@ -37,6 +40,38 @@ namespace WebRestAPI.Controllers
 			_TutorPresenter = tutorPresenter;
 			_UniversityEmployeePresenter = universityEmployeePresenter;
 			_WorkTutorPresenter = workTutorPresenter;
+		}
+		[HttpGet]
+		public List<GroupViewModel> get_group_list(int TutorID)
+		{
+			try
+			{
+				return _GroupPresenter.MakeGroupListPresenter(new GroupSearchModel
+				{
+					TutorId = TutorID
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpGet]
+		public List<StudentViewModel> get_student_list(int GroupID)
+		{
+			try
+			{
+				return _StudentPresenter.MakeStudentListPresenter(new StudentSearchModel
+				{
+					GroupId = GroupID
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
 		}
 	}
 }

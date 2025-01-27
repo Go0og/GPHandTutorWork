@@ -19,9 +19,7 @@ namespace DataBaseImplement.Implements
 			{
 				return context.Groups
 					.Where(x => x.TutorId == SearchModel.TutorId)
-					.Include(x => x.Id)
 					.Include(x=> x.Tutor)
-					.Include(x=> x.Name)
 					.ToList();
 			}
 			return new();

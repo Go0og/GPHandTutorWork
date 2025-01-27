@@ -6,6 +6,7 @@ using System.Diagnostics;
 using WebAppL;
 using WebAppl.Models;
 using AspNetCoreGeneratedDocument;
+using Contracts.SearchModel;
 
 namespace WebAppl.Controllers
 {
@@ -83,7 +84,6 @@ namespace WebAppl.Controllers
 		public IActionResult Register()
 		{
 			ViewBag.Role = Role;
-			//ViewBag.departments = APIclient.GetRequest<List<department_view_model>>("api/main/get_department_list");
 			return View();
 		}
 
@@ -112,5 +112,28 @@ namespace WebAppl.Controllers
 			ViewBag.Role = Role;
 			Response.Redirect("Enter");
 		}
+
+		[HttpPost]
+		public void AppointmeanHeadman(string Group, string student)
+		{
+
+		}
+
+
+
+		[HttpGet]
+		public IActionResult AppointmeanHeadman()
+		{
+			if (APIclient.Tutor == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+
+			ViewBag.Groups = APIclient.GetRequest<List<GroupViewModel>>($"api/main/get_group_list?TutorID={APIclient.Tutor.Id}");
+			ViewBag.Students = APIclient.GetRequest<List<StudentViewModel>>($"api/main/get_student_list?GroupID={3}");
+
+			return View();
+		}
+
 	}
 }

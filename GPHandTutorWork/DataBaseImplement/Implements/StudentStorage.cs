@@ -20,7 +20,6 @@ namespace DataBaseImplement.Implements
 				return context.Students
 					.Where(x => x.GroupId == SearchModel.GroupId)
 					.Include(x => x.Gpoup)
-					.Include(x => x.FIO)
 					.ToList();
 			}
 			return new();
@@ -31,7 +30,6 @@ namespace DataBaseImplement.Implements
 			using var context = new DataBaseImplement();
 			return context.Students
 				.Include(x => x.Gpoup)
-				.Include(x => x.FIO)
 				.ToList();
 		}
 

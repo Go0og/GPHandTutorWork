@@ -21,7 +21,7 @@ namespace Interactors
 
 		public List<StudentBindingModel> GetFullList(StudentSearchModel? SearchModel)
 		{
-			var models = _storage.GetFullList();
+			var models = _storage.GetFillteredList(SearchModel);
 			if (models == null)
 			{
 				return new();

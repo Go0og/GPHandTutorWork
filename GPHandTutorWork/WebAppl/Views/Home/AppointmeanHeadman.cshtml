@@ -1,0 +1,24 @@
+﻿@{
+	ViewData["Title"] = "AppointmeanHeadman";
+}
+<div class="text-center">
+	<h2 class="display-4">Назначение старосты</h2>
+</div>
+<form method="post">
+	<div class="row">
+		<div class="col-4">Группа:</div>
+		<div class="col-8">
+			<select id="group" name="group" class="form-control" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))"></select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-4">Студент:</div>
+		<div class="col-8">
+			<select id="student" name="student" class="form-control" asp-items="@(new SelectList(ViewBag.Students, "Id", "Name"))"></select>
+		</div>
+	</div>
+
+</form>
+<div class="register-link">
+	<a href="Index">Назначить терпилой</a>
+</div>

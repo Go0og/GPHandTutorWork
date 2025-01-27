@@ -4,6 +4,7 @@ using Contracts.PresenterContract;
 using Contracts.SearchModel;
 using Contracts.ViewContract;
 using Microsoft.AspNetCore.Mvc;
+using Presenter;
 
 namespace WebRestAPI.Controllers
 {
@@ -11,11 +12,10 @@ namespace WebRestAPI.Controllers
 	[ApiController]
 	public class UserController : Controller
 	{
-		private readonly ITutorLogic _TutorLogic;
+		public readonly ITutorLogic _TutorLogic;
 		private readonly ITutorPresenter _TutorPresenter;
 		private readonly IUniversityEmployeeLogic _UniversityEmployeeLogic;
 		private readonly IUniversityEmployeePresenter _UniversityEmployeePresenter;
-
 
 		public UserController(ITutorLogic TutoLogic, ITutorPresenter TutorPresenter, IUniversityEmployeeLogic universityEmployeeLogic, IUniversityEmployeePresenter universityEmployeePresenter)
 		{
@@ -43,6 +43,7 @@ namespace WebRestAPI.Controllers
 		{
 			try
 			{
+
 				return _TutorPresenter.MakeTutorPresenter(new TutorSearchModel
 				{
 					Login = Login,
