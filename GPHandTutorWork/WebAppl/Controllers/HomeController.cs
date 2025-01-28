@@ -130,9 +130,15 @@ namespace WebAppl.Controllers
 			}
 
 			ViewBag.Groups = APIclient.GetRequest<List<GroupViewModel>>($"api/main/get_group_list?TutorID={APIclient.Tutor.Id}");
-			ViewBag.Students = APIclient.GetRequest<List<StudentViewModel>>($"api/main/get_student_list?GroupID={3}");
+			ViewBag.StudentS = new List<StudentViewModel>();
 
 			return View();
+		}
+
+		[HttpGet]
+		public List<StudentViewModel> Get_Students_groups(int group)
+		{
+			return APIclient.GetRequest<List<StudentViewModel>>($"api/main/get_student_list?GroupID={group}");
 		}
 
 	}
