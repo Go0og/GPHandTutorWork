@@ -3,6 +3,7 @@ using Contracts.InteractorContract;
 using Contracts.PresenterContract;
 using Contracts.SearchModel;
 using Contracts.ViewContract;
+using Interactors;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -13,6 +14,7 @@ namespace WebRestAPI.Controllers
 	public class MainController : ControllerBase
 	{
 		private readonly IAppointmeanHeadmanPresenter _AppointmeanPresent;
+		private readonly IAppointmeanHeadmanLogic _AppointmeanHeadmanLogic;
 		private readonly ICurriculumPresenter _CurriculumPresent;
 		private readonly IGPHAgreementPresenter _GPHAgreementPresenter;
 		private readonly IGroupPresenter _GroupPresenter;
@@ -26,7 +28,7 @@ namespace WebRestAPI.Controllers
 
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
-			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter)
+			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter, IAppointmeanHeadmanLogic appointmeanHeadmanLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -40,6 +42,8 @@ namespace WebRestAPI.Controllers
 			_TutorPresenter = tutorPresenter;
 			_UniversityEmployeePresenter = universityEmployeePresenter;
 			_WorkTutorPresenter = workTutorPresenter;
+
+			_AppointmeanHeadmanLogic = appointmeanHeadmanLogic;
 		}
 		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
@@ -73,5 +77,20 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+
+		[HttpPost]
+		public void add_appointmean_headman(AppointmentHeadmanBindingModel model)
+		{
+			try
+			{
+				_AppointmeanHeadmanLogic.CreateAppointmentHeadman(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+
 	}
 }

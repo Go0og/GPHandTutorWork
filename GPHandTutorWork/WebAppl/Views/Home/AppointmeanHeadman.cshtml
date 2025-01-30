@@ -1,46 +1,75 @@
 ﻿@{
-	ViewData["Title"] = "AppointmeanHeadman";
+    ViewData["Title"] = "AppointmeanHeadman";
 }
 <div class="text-center">
-	<h2 class="display-4">Назначение старосты</h2>
+    <h2 class="display-4">Назначение старосты</h2>
 </div>
 <form method="post">
-	<div class="row">
-		<div class="col-4">Группа:</div>
-		<div class="col-8">
-			<select id="group" name="group" class="form-control" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))"></select>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-4">Студент:</div>
-		<div class="col-8">
-			<select id="student" name="student" class="form-control" asp-items="@(new SelectList(ViewBag.Students, "Id", "Name"))"></select>
-		</div>
-	</div>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <div class="row">
+        <div class="col-4">Группа:</div>
+        <div class="col-8">
+            <select id="group" name="group" class="form-control">
+                <option value="">Выберите группу</option> 
+                @foreach (var group in ViewBag.Groups)
+                {
+                    <option value="@group.Id">@group.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Студент:</div>
+        <div class="col-8">
+            <select id="student" name="student" class="form-control">
+                <option value="">Выберите студента</option> 
+            </select>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4"><input type="submit" value="Назначить терпилой" class="btn btn-primary" /></div>
+    </div>
+
 </form>
-<div class="register-link">
-	<a href="Index">Назначить терпилой</a>
-</div>
+
+
 
 
 
 <script>
-	$('#group').on('change', function () {
-	 check();
-	});
+    $('#group').on('change', function () {
+        check();
+    });
 
-	function check() {
-	 var group = $('#group').val();
-	  $.ajax({
-	   method: "GET",
-	   url: "/Home/Get_Students_groups",
-	   data: { group : group },
-	   success: function (result) {
-		$("#Students").val(result);
-	   }
-	});
-	  });
-
-	}
+    function check() {
+        var group = $('#group').val();
+        if (group) {
+            $.ajax({
+                method: "GET",
+                url: "/Home/Get_Students_groups",
+                data: { group: group },
+                success: function (result) {
+                    $('#student').empty();
+                    $('#student').append($('<option>', {
+                        value: '',
+                        text: 'Выберите студента'
+                    }));
+                    $.each(result, function (i, student) {
+                        $('#student').append($('<option>', {
+                            value: student.id,
+                            text: student.fio
+                        }));
+                    });
+                }
+            });
+        } else {
+            $('#student').empty();
+            $('#student').append($('<option>', {
+                value: '',
+                text: 'Выберите студента'
+            }));
+        }
+    }
 </script>

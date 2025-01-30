@@ -114,9 +114,18 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public void AppointmeanHeadman(string Group, string student)
+		public void AppointmeanHeadman(string student)
 		{
-
+			if(APIclient.Tutor == null)
+			{
+				Response.Redirect("Enter");
+			}
+			APIclient.PostRequest("api/main/add_appointmean_headman", new AppointmentHeadmanBindingModel
+			{
+				StudentId = Convert.ToInt32(student),
+				TutorId = APIclient.Tutor.Id
+			});
+			Response.Redirect("Index");
 		}
 
 
