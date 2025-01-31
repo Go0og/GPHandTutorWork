@@ -176,29 +176,49 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public void OfficialNoteCreate(string comment, int id)
+		public void OfficialNoteCreate(string comment, int id, string action)
 		{
 			if (APIclient.Tutor == null)
 			{
 				Response.Redirect("Enter");
+				return;
 			}
-			if (id > 0)
+
+			switch (action)
 			{
-				APIclient.PostRequest("api/main/update_official_note", new OfficialNoteBindingModel
-				{
-					Id = id,
-					Comment = comment,
-					TutorId = APIclient.Tutor.Id
-				});
+				case "save":
+					if (id > 0)
+					{
+						APIclient.PostRequest("api/main/update_official_note", new OfficialNoteBindingModel
+						{
+							Id = id,
+							Comment = comment,
+							TutorId = APIclient.Tutor.Id
+						});
+					}
+					else
+					{
+						APIclient.PostRequest("api/main/add_official_note", new OfficialNoteBindingModel
+						{
+							Comment = comment,
+							TutorId = APIclient.Tutor.Id
+						});
+					}
+					break;
+
+				case "delete":
+					if (id > 0)
+					{
+						APIclient.PostRequest("api/main/delete_official_note", new OfficialNoteBindingModel
+						{
+							Id = id,
+							Comment = comment,
+							TutorId = APIclient.Tutor.Id
+						});
+					}
+					break;
 			}
-			else
-			{
-				APIclient.PostRequest("api/main/add_official_note", new OfficialNoteBindingModel
-				{
-					Comment = comment,
-					TutorId = APIclient.Tutor.Id
-				});
-			}
+
 			ViewBag.Role = Role;
 			Response.Redirect("OfficialNote");
 		}

@@ -152,5 +152,18 @@ namespace WebRestAPI.Controllers
 			}
 		}
 
+		[HttpPost]
+		public void delete_official_note(OfficialNoteBindingModel model)
+		{
+			try
+			{
+				_OfficialNoteLogic.DeleteOfficialNote(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
 	}
 }

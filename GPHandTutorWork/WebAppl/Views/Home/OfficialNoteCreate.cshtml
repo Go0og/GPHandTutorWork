@@ -6,8 +6,9 @@
     <h2 class="display-4">Записки сотрудника</h2>
 </div>
 <form method="post">
- 
     <input type="hidden" name="id" value="@ViewBag.Text?.Id" />
+
+    <input type="hidden" name="action" id="action" value="" />
 
     <div class="row">
         <div class="col-4">Тело письма:</div>
@@ -20,7 +21,10 @@
     </div>
     <div class="row">
         <div class="col-8"></div>
-        <div class="col-4"><input type="submit" value="Сохранить" class="btn btn-primary" /></div>
+        <div class="col-4">
+            <input type="submit" value="Сохранить" class="btn btn-primary" onclick="setAction('save')" />
+            <input type="submit" value="Удалить" class="btn btn-danger" onclick="setAction('delete')" />
+        </div>
     </div>
 </form>
 
@@ -32,9 +36,12 @@
         this.style.height = (this.scrollHeight) + 'px';
     });
 
-
     window.addEventListener('load', function () {
         textarea.style.height = 'auto';
         textarea.style.height = (textarea.scrollHeight) + 'px';
     });
+
+    function setAction(action) {
+        document.getElementById('action').value = action;
+    }
 </script>
