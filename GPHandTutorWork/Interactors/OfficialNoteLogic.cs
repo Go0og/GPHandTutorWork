@@ -41,7 +41,7 @@ namespace Interactors
 		public bool CreateOfficialNote(OfficialNoteBindingModel BindingModel)
 		{
 			CheckModel(BindingModel);
-			if (_storage.CreateOfficialNote(BindingModel))
+			if (_storage.CreateOfficialNote(BindingModel) == false)
 			{
 				throw new Exception("insert operation failed");
 			}
@@ -50,7 +50,7 @@ namespace Interactors
 		public bool UpdateOfficialNote(OfficialNoteBindingModel BindingModel)
 		{
 			CheckModel(BindingModel);
-			if (_storage.UpdateOfficialNote(BindingModel))
+			if (_storage.UpdateOfficialNote(BindingModel) == false)
 			{
 				throw new Exception("insert operation failed");
 			}
@@ -60,7 +60,7 @@ namespace Interactors
 		public bool DeleteOfficialNote(OfficialNoteBindingModel BindingModel)
 		{
 			CheckModel(BindingModel);
-			if (_storage.DeleteOfficialNote(BindingModel))
+			if (_storage.DeleteOfficialNote(BindingModel) == false)
 			{
 				throw new Exception("insert operation failed");
 			}

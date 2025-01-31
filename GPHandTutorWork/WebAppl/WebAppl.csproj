@@ -15,4 +15,11 @@
     <ProjectReference Include="..\WebRestAPI\WebRestAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\OfficialNote.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

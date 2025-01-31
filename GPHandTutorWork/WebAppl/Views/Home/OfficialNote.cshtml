@@ -1,0 +1,50 @@
+﻿@using Contracts.ViewContract
+@model List<OfficialNoteViewModel> 
+@{
+    ViewData["Title"] = "OfficialNote";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Записки сотрудника</h2>
+</div>
+<div class="text-center">
+    @{
+        if (Model == null)
+        {
+            <h3 class="display-4">Авторизируйтесь</h3>
+            return;
+        }
+        <div class="row">
+            <div class="col-4">Номер редактируемой записи:</div>
+            <div class="col-8"><input type="text" id="Note_id" name="Note_id" /></div>
+        </div>
+        <p>
+            <a asp-action="OfficialNoteCreate" asp-route-Note_id="" id="createLink">Работать с запиской</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Тело записки</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Comment)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<script>
+    document.getElementById('Note_id').addEventListener('input', function () {
+        const noteId = this.value;
+        const createLink = document.getElementById('createLink');
+        createLink.href = `@Url.Action("OfficialNoteCreate")?Note_id=${noteId}`;
+    });
+</script>

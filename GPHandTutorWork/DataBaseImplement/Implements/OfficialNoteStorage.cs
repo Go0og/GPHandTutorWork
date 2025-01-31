@@ -60,7 +60,6 @@ namespace DataBaseImplement.Implements
 				return context.OfficialNotes
 					.Where(x => x.TutorId == SearchModel.TutorId)
 					.Include(x => x.Tutor)
-					.Include(x => x.Comment)
 					.ToList();
 			}
 			return new();
@@ -70,7 +69,6 @@ namespace DataBaseImplement.Implements
 		{
 			using var context = new DataBaseImplement();
 			return context.OfficialNotes
-				.Include(x => x.Comment)
 				.Include (x => x.Tutor)
 				.ToList();
 		}
@@ -81,7 +79,6 @@ namespace DataBaseImplement.Implements
 			if (SearchModel.Id.HasValue) { 
 				return context.OfficialNotes
 					.Include (x => x.Tutor)
-					.Include (x => x.Comment)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
 			return null;

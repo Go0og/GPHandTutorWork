@@ -2,6 +2,7 @@ using Contracts.BindingModel;
 using Contracts.InteractorContract;
 using Contracts.PresenterContract;
 using Contracts.SearchModel;
+using Contracts.StorageContract.dbModels;
 using Contracts.ViewContract;
 using Interactors;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,7 @@ namespace WebRestAPI.Controllers
 		private readonly IGPHAgreementPresenter _GPHAgreementPresenter;
 		private readonly IGroupPresenter _GroupPresenter;
 		private readonly IOfficialNotePresenter _OfficialNotePresenter;
+		private readonly IOfficialNoteLogic _OfficialNoteLogic;
 		private readonly IProgressControlPrestnter _ProgressControlPresenter;
 		private readonly IStudentPrestnter _StudentPresenter;
 		private readonly ITeacherPresenter _TeacherPresenter;
@@ -28,7 +30,8 @@ namespace WebRestAPI.Controllers
 
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
-			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter, IAppointmeanHeadmanLogic appointmeanHeadmanLogic)
+			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter,
+			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -44,6 +47,7 @@ namespace WebRestAPI.Controllers
 			_WorkTutorPresenter = workTutorPresenter;
 
 			_AppointmeanHeadmanLogic = appointmeanHeadmanLogic;
+			_OfficialNoteLogic = officialNoteLogic;
 		}
 		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
@@ -90,7 +94,63 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+		[HttpGet]
+		public List<OfficialNoteViewModel> get_notes(int TutorID)
+		{
+			try
+			{
+				return _OfficialNotePresenter.MakeOfficialNoteListPresenter(new OfficialNoteSearchModel
+				{
+					TutorId= TutorID
+				});
 
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpGet]
+		public OfficialNoteViewModel get_note(int TutorID, int Note_id)
+		{
+			try
+			{
+				return _OfficialNotePresenter.MakeOfficialNotePresenter(new OfficialNoteSearchModel
+				{
+					Id = Note_id,
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpPost]
+		public void add_official_note(OfficialNoteBindingModel model)
+		{
+			try
+			{
+				_OfficialNoteLogic.CreateOfficialNote(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpPost]
+		public void update_official_note(OfficialNoteBindingModel model)
+		{
+			try
+			{
+				_OfficialNoteLogic.UpdateOfficialNote(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 
 	}
 }

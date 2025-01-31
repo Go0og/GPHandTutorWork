@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "OfficialNote";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Записки сотрудника</h2>
+</div>
+<form method="post">
+ 
+    <input type="hidden" name="id" value="@ViewBag.Text?.Id" />
+
+    <div class="row">
+        <div class="col-4">Тело письма:</div>
+        <div class="col-8">
+            <textarea name="comment"
+                      id="autoResizeTextarea"
+                      style="width: 100%; min-height: 40px; padding: 5px; resize: none;"
+                      placeholder="Введите текст...">@ViewBag.Text?.Comment</textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4"><input type="submit" value="Сохранить" class="btn btn-primary" /></div>
+    </div>
+</form>
+
+<script>
+    const textarea = document.getElementById('autoResizeTextarea');
+
+    textarea.addEventListener('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+
+    window.addEventListener('load', function () {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    });
+</script>

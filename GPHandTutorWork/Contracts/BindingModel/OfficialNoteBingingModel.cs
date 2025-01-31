@@ -12,6 +12,6 @@ namespace Contracts.BindingModel
 		public int Id { get; set; }
 		public int TutorId { get; set; }
 
-		public string Comment { get; set; } = string.Empty;
+		public string Comment { get; set; } 
 	}
 }

@@ -7,6 +7,7 @@ using WebAppL;
 using WebAppl.Models;
 using AspNetCoreGeneratedDocument;
 using Contracts.SearchModel;
+using Contracts.StorageContract.dbModels;
 
 namespace WebAppl.Controllers
 {
@@ -125,6 +126,7 @@ namespace WebAppl.Controllers
 				StudentId = Convert.ToInt32(student),
 				TutorId = APIclient.Tutor.Id
 			});
+			ViewBag.Role = Role;
 			Response.Redirect("Index");
 		}
 
@@ -140,15 +142,65 @@ namespace WebAppl.Controllers
 
 			ViewBag.Groups = APIclient.GetRequest<List<GroupViewModel>>($"api/main/get_group_list?TutorID={APIclient.Tutor.Id}");
 			ViewBag.StudentS = new List<StudentViewModel>();
-
+			ViewBag.Role = Role;
 			return View();
 		}
 
 		[HttpGet]
 		public List<StudentViewModel> Get_Students_groups(int group)
 		{
+			ViewBag.Role = Role;
 			return APIclient.GetRequest<List<StudentViewModel>>($"api/main/get_student_list?GroupID={group}");
 		}
 
+		[HttpGet]
+		public IActionResult OfficialNote()
+		{
+			if (APIclient.Tutor == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+			ViewBag.Role = Role;
+			return View(APIclient.GetRequest<List<OfficialNoteViewModel>>($"api/main/get_notes?TutorId={APIclient.Tutor.Id}"));
+		}
+
+		[HttpGet]
+		public IActionResult OfficialNoteCreate(string Note_id)
+		{
+			ViewBag.Role = Role;
+			if(Note_id != null)
+			{
+				ViewBag.Text=APIclient.GetRequest<OfficialNoteViewModel>($"api/main/get_note?Note_id={Note_id}");
+			}
+			return View();
+		}
+
+		[HttpPost]
+		public void OfficialNoteCreate(string comment, int id)
+		{
+			if (APIclient.Tutor == null)
+			{
+				Response.Redirect("Enter");
+			}
+			if (id > 0)
+			{
+				APIclient.PostRequest("api/main/update_official_note", new OfficialNoteBindingModel
+				{
+					Id = id,
+					Comment = comment,
+					TutorId = APIclient.Tutor.Id
+				});
+			}
+			else
+			{
+				APIclient.PostRequest("api/main/add_official_note", new OfficialNoteBindingModel
+				{
+					Comment = comment,
+					TutorId = APIclient.Tutor.Id
+				});
+			}
+			ViewBag.Role = Role;
+			Response.Redirect("OfficialNote");
+		}
 	}
 }
