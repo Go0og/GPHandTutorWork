@@ -1,5 +1,6 @@
 ﻿using Contracts.BindingModel;
 using Contracts.SearchModel;
+using Contracts.StorageContract.dbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Contracts.InteractorContract
 {
 	public interface IProgressControlLogic
 	{
-		public List<ProgressControlBindingModel> GetFullList(ProgressControlSearchModel? SearchModel);
+		public List<ProgressControlBindingModel> GetFullList();
+		public List<ProgressControlBindingModel> GetFillteredList(ProgressControlSearchModel SearchModel);
 		public ProgressControlBindingModel GetProgressControl(ProgressControlSearchModel SearchModel);
 	}
 }

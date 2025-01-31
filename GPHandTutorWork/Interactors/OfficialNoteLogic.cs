@@ -3,6 +3,7 @@ using Contracts.InteractorContract;
 using Contracts.SearchModel;
 using Contracts.StorageContract;
 using Contracts.StorageContract.dbModels;
+using DataModel.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,11 @@ namespace Interactors
 	public class OfficialNoteLogic : IOfficialNoteLogic
 	{
 		private readonly IOfficialNoteStorage _storage;
-		public OfficialNoteLogic (IOfficialNoteStorage storage)
+		private readonly IWorkTutorLogic _workTutorLogic;
+		public OfficialNoteLogic (IOfficialNoteStorage storage, IWorkTutorLogic workTutorLogic)
 		{
 			_storage = storage;
+			_workTutorLogic = workTutorLogic;
 		}
 		public void CheckModel(OfficialNoteBindingModel BindingModel, bool obDel = false, bool onUp = false)
 		{
@@ -45,6 +48,12 @@ namespace Interactors
 			{
 				throw new Exception("insert operation failed");
 			}
+			_workTutorLogic.CreateWorkTutor(new WorkTutorBindingModel
+			{
+				TutorId= BindingModel.TutorId,
+				DateWork = DateTime.Now,
+				TypeWork = TypeWork.СоставлениеСлужебнойЗаписки
+			});
 			return true;
 		}
 		public bool UpdateOfficialNote(OfficialNoteBindingModel BindingModel)
@@ -54,6 +63,12 @@ namespace Interactors
 			{
 				throw new Exception("insert operation failed");
 			}
+			_workTutorLogic.CreateWorkTutor(new WorkTutorBindingModel
+			{
+				TutorId = BindingModel.TutorId,
+				DateWork = DateTime.Now,
+				TypeWork = TypeWork.СоставлениеСлужебнойЗаписки
+			});
 			return true;
 		}
 
@@ -64,6 +79,12 @@ namespace Interactors
 			{
 				throw new Exception("insert operation failed");
 			}
+			_workTutorLogic.CreateWorkTutor(new WorkTutorBindingModel
+			{
+				TutorId = BindingModel.TutorId,
+				DateWork = DateTime.Now,
+				TypeWork = TypeWork.СоставлениеСлужебнойЗаписки
+			});
 			return true;
 		}
 

@@ -20,7 +20,7 @@ namespace Presenter
 
 		public List<ProgressControlViewModel> MakeProgressControlListPresenter(ProgressControlSearchModel? search_model)
 		{
-			var models = _logic.GetFullList(search_model);
+			var models = _logic.GetFillteredList(search_model);
 			List<ProgressControlViewModel> newViewModels = new();
 
 			foreach (var model in models)

@@ -3,6 +3,7 @@ using Contracts.InteractorContract;
 using Contracts.SearchModel;
 using Contracts.StorageContract;
 using Contracts.StorageContract.dbModels;
+using DataModel.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace Interactors
 	public class ProgressControlLogic : IProgressControlLogic
 	{
 		private readonly IProgressControlStorage _storage;
-		public ProgressControlLogic (IProgressControlStorage storage)
+		private readonly IWorkTutorLogic _workTutorLogic;
+		public ProgressControlLogic (IProgressControlStorage storage, IWorkTutorLogic workTutorLogic)
 		{
 			_storage = storage;
+			_workTutorLogic = workTutorLogic;
 		}
-		public List<ProgressControlBindingModel> GetFullList(ProgressControlSearchModel? SearchModel)
+		public List<ProgressControlBindingModel> GetFullList()
 		{
 			var models = _storage.GetFullList();
 			if (models.Count == 0)
@@ -33,6 +36,21 @@ namespace Interactors
 			return bindingModels;
 		}
 
+		public List<ProgressControlBindingModel> GetFillteredList(ProgressControlSearchModel SearchModel)
+		{
+			var models = SearchModel == null ? _storage.GetFullList() : _storage.GetFillteredList(SearchModel);
+			if (models.Count == 0)
+			{
+				return new();
+			}
+			List<ProgressControlBindingModel> bindingModels = new();
+			foreach (var model in models)
+			{
+				bindingModels.Add(getBindingModel(model));
+			}
+
+			return bindingModels;
+		}
 		public ProgressControlBindingModel? GetProgressControl(ProgressControlSearchModel SearchModel)
 		{
 			{

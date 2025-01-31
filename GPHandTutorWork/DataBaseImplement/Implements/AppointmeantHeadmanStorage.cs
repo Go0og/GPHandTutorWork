@@ -15,6 +15,7 @@ namespace DataBaseImplement.Implements
 {
 	public class AppointmentHeadmanStorage : IAppointmentHeadmanStorage
 	{
+
 		public bool CreateAppointmentHeadman(AppointmentHeadmanBindingModel Model)
 		{
 			using var context = new DataBaseImplement();

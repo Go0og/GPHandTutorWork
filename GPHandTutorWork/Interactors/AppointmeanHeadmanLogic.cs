@@ -3,6 +3,7 @@ using Contracts.InteractorContract;
 using Contracts.SearchModel;
 using Contracts.StorageContract;
 using Contracts.StorageContract.dbModels;
+using DataModel.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace Interactors
 {
 	public class AppointmeanHeadmanLogic : IAppointmeanHeadmanLogic
 	{
+		private readonly IWorkTutorLogic _workTutorLogic;
 		private readonly IAppointmentHeadmanStorage _storage;
-		public AppointmeanHeadmanLogic(IAppointmentHeadmanStorage storage)
+		public AppointmeanHeadmanLogic(IAppointmentHeadmanStorage storage, IWorkTutorLogic workTutorLogic)
 		{
 			_storage = storage;
+			_workTutorLogic = workTutorLogic;
 		}
 
 		public void CheckModel(AppointmentHeadmanBindingModel BindingModel, bool obDel = false, bool onUp = false)
@@ -46,6 +49,12 @@ namespace Interactors
 			{
 				throw new Exception("insert operation failed");
 			}
+			_workTutorLogic.CreateWorkTutor(new WorkTutorBindingModel
+			{
+				TutorId = BindingModel.TutorId,
+				DateWork = DateTime.Now,
+				TypeWork = TypeWork.НазначениеСтарост
+			});
 			return true;
 		}
 		public bool UpdateAppointmentHeadman(AppointmentHeadmanBindingModel BindingModel)
@@ -65,6 +74,12 @@ namespace Interactors
 			{
 				throw new Exception("Update operation failed");
 			}
+			_workTutorLogic.CreateWorkTutor(new WorkTutorBindingModel
+			{
+				TutorId = BindingModel.TutorId,
+				DateWork = DateTime.Now,
+				TypeWork = TypeWork.НазначениеСтарост
+			});
 			return true;
 		}
 
