@@ -40,6 +40,10 @@ namespace Presenter
 		public OfficialNoteViewModel MakeOfficialNotePresenter(OfficialNoteSearchModel search_model)
 		{
 			var model = _logic.GetOfficialNote(search_model);
+			if (model == null)
+			{
+				return null;
+			}
 			var newViewModel = new OfficialNoteViewModel
 			{
 				Id = model.Id,

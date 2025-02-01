@@ -20,8 +20,9 @@ namespace DataBaseImplement.Implements
 		{
 			using var context = new DataBaseImplement();
 
-			if (UpdateAppointmentHeadman(SearchAppointmeanHeadman_InGroup(context.Students.FirstOrDefault(x => x.Id == Model.StudentId))))
+			if (SearchAppointmeanHeadman_InGroup(context.Students.FirstOrDefault(x => x.Id == Model.StudentId))!=null)
 			{
+				UpdateAppointmentHeadman(SearchAppointmeanHeadman_InGroup(context.Students.FirstOrDefault(x => x.Id == Model.StudentId)));
 				return true;
 			}
 

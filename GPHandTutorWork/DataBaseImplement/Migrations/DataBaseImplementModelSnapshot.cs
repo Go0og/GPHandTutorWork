@@ -97,8 +97,12 @@ namespace DataBaseImplement.Migrations
                     b.Property<double>("Bet")
                         .HasColumnType("float");
 
-                    b.Property<int>("CurriculumList")
+                    b.Property<int?>("CurriculumId")
                         .HasColumnType("int");
+
+                    b.PrimitiveCollection<string>("CurriculumList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataEnd")
                         .HasColumnType("datetime2");
@@ -114,7 +118,7 @@ namespace DataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculumList");
+                    b.HasIndex("CurriculumId");
 
                     b.HasIndex("TeacherId");
 
@@ -154,6 +158,7 @@ namespace DataBaseImplement.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TutorId")
@@ -174,7 +179,7 @@ namespace DataBaseImplement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CurriculumList")
+                    b.Property<int>("CurriculumId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateGrade")
@@ -194,7 +199,7 @@ namespace DataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurriculumList");
+                    b.HasIndex("CurriculumId");
 
                     b.HasIndex("StudentId");
 
@@ -231,11 +236,13 @@ namespace DataBaseImplement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CardDetails")
-                        .HasColumnType("int");
+                    b.Property<string>("CardDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ContactPhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("ContactPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -244,14 +251,17 @@ namespace DataBaseImplement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("INN")
-                        .HasColumnType("int");
+                    b.Property<string>("INN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("InsuranceNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("InsuranceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PassportSerialAndNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PassportSerialAndNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -366,9 +376,7 @@ namespace DataBaseImplement.Migrations
                 {
                     b.HasOne("Contracts.StorageContract.dbModels.Curriculum", "Curriculum")
                         .WithMany()
-                        .HasForeignKey("CurriculumList")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CurriculumId");
 
                     b.HasOne("Contracts.StorageContract.dbModels.Teacher", "Teacher")
                         .WithMany()
@@ -415,7 +423,7 @@ namespace DataBaseImplement.Migrations
                 {
                     b.HasOne("Contracts.StorageContract.dbModels.Curriculum", "Curriculum")
                         .WithMany()
-                        .HasForeignKey("CurriculumList")
+                        .HasForeignKey("CurriculumId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

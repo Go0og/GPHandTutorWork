@@ -13,14 +13,14 @@ namespace Contracts.SearchModel
 
 		public DateTime? DateOfBirth { get; set; }
 
-		public int? PassportSerialAndNumber { get; set; }
+		public string? PassportSerialAndNumber { get; set; }
 
-		public int? ContactPhoneNumber { get; set; }
+		public string? ContactPhoneNumber { get; set; }
 
-		public int? INN { get; set; }
+		public string? INN { get; set; }
 
-		public int? InsuranceNumber { get; set; }
+		public string? InsuranceNumber { get; set; }
 
-		public int? CardDetails { get; set; }
+		public string? CardDetails { get; set; }
 	}
 }

@@ -9,7 +9,7 @@ namespace DataBaseImplement
 		{
 			if (optionsBuilder.IsConfigured == false)
 			{
-				optionsBuilder.UseSqlServer(@"Data Source=WIN-0IL5NARLEQ9\SQLEXPRESS;Initial Catalog=TestCoursWork;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True");
+				optionsBuilder.UseSqlServer(@"Data Source=WIN-0IL5NARLEQ9\SQLEXPRESS;Initial Catalog=CoursWorkIgor;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True");
 			}
 			base.OnConfiguring(optionsBuilder);
 		}

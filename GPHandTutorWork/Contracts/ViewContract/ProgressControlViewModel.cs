@@ -12,7 +12,7 @@ namespace Contracts.ViewContract
 	{ 
 		public int Id { get; set; }
 
-		public int CurriculumList  { get; set; }
+		public int CurriculumId  { get; set; }
 
 		public int StudentId { get; set; }
 

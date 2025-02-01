@@ -19,11 +19,11 @@ namespace DataBaseImplement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FIO = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PassportSerialAndNumber = table.Column<int>(type: "int", nullable: false),
-                    ContactPhoneNumber = table.Column<int>(type: "int", nullable: false),
-                    INN = table.Column<int>(type: "int", nullable: false),
-                    InsuranceNumber = table.Column<int>(type: "int", nullable: false),
-                    CardDetails = table.Column<int>(type: "int", nullable: false)
+                    PassportSerialAndNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    INN = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InsuranceNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardDetails = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,7 +87,7 @@ namespace DataBaseImplement.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TutorId = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -177,18 +177,18 @@ namespace DataBaseImplement.Migrations
                     DataEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UniversityEmployeeId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    CurriculumList = table.Column<int>(type: "int", nullable: false),
+                    CurriculumList = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurriculumId = table.Column<int>(type: "int", nullable: true),
                     Bet = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GPHAgreements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GPHAgreements_Curriculums_CurriculumList",
-                        column: x => x.CurriculumList,
+                        name: "FK_GPHAgreements_Curriculums_CurriculumId",
+                        column: x => x.CurriculumId,
                         principalTable: "Curriculums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_GPHAgreements_Teachers_TeacherId",
                         column: x => x.TeacherId,
@@ -235,7 +235,7 @@ namespace DataBaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CurriculumList = table.Column<int>(type: "int", nullable: false),
+                    CurriculumId = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     DateGrade = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -246,8 +246,8 @@ namespace DataBaseImplement.Migrations
                 {
                     table.PrimaryKey("PK_ProgressControls", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProgressControls_Curriculums_CurriculumList",
-                        column: x => x.CurriculumList,
+                        name: "FK_ProgressControls_Curriculums_CurriculumId",
+                        column: x => x.CurriculumId,
                         principalTable: "Curriculums",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -275,9 +275,9 @@ namespace DataBaseImplement.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GPHAgreements_CurriculumList",
+                name: "IX_GPHAgreements_CurriculumId",
                 table: "GPHAgreements",
-                column: "CurriculumList");
+                column: "CurriculumId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GPHAgreements_TeacherId",
@@ -300,9 +300,9 @@ namespace DataBaseImplement.Migrations
                 column: "TutorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProgressControls_CurriculumList",
+                name: "IX_ProgressControls_CurriculumId",
                 table: "ProgressControls",
-                column: "CurriculumList");
+                column: "CurriculumId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProgressControls_StudentId",

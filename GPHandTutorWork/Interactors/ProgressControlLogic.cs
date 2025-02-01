@@ -71,7 +71,7 @@ namespace Interactors
 			return new()
 			{
 				Id = model.Id,
-				CurriculumList = model.CurriculumList,
+				CurriculumId = model.CurriculumId,
 				StudentId = model.StudentId,
 				TeacherId = model.TeacherId,
 				DateGrade = model.DateGrade,

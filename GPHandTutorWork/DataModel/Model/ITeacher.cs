@@ -10,10 +10,10 @@ namespace DataModel.Model
 	{
 		string FIO { get; }
 		DateTime DateOfBirth { get; }
-		int PassportSerialAndNumber { get; }
-		int ContactPhoneNumber { get; }
-		int INN { get; }
-		int InsuranceNumber { get; }//Стразование
-		int CardDetails { get; }
+		string PassportSerialAndNumber { get; }
+		string ContactPhoneNumber { get; }
+		string INN { get; }
+		string InsuranceNumber { get; }//Стразование
+		string CardDetails { get; }
 	}
 }
