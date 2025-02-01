@@ -222,5 +222,36 @@ namespace WebAppl.Controllers
 			ViewBag.Role = Role;
 			Response.Redirect("OfficialNote");
 		}
+
+
+		[HttpGet]
+		public IActionResult ProgressControll()
+		{
+			if (APIclient.Tutor == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+
+			ViewBag.Groups = APIclient.GetRequest<List<GroupViewModel>>($"api/main/get_group_list?TutorID={APIclient.Tutor.Id}");
+			ViewBag.StudentS = new List<StudentViewModel>();
+			ViewBag.Role = Role;
+			return View();
+		}
+
+		[HttpGet]
+		public IActionResult ProgressControllStudent(int StudentID)
+		{
+			if (APIclient.Tutor == null)
+			{
+				Response.Redirect("Enter");
+				return View();
+			}
+
+
+
+			ViewBag.Role = Role;
+			return View(APIclient.GetRequest<List<ProgressControlViewModel>>($"api/main/get_progress_student?StudentID={StudentID}"));
+		}
+
 	}
 }

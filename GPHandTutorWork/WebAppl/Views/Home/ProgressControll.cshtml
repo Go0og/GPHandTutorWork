@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "ProgressControll";
+}
+<div class="text-center">
+    <h2 class="display-4">Контроль успеваемости</h2>
+</div>
+<form method="post">
+    <div class="row">
+        <div class="col-4">Группа:</div>
+        <div class="col-8">
+            <select id="group" name="group" class="form-control">
+                <option value="">Выберите группу</option>
+                @foreach (var group in ViewBag.Groups)
+                {
+                    <option value="@group.Id">@group.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Студент:</div>
+        <div class="col-8">
+            <select id="student" name="student" class="form-control">
+                <option value="">Выберите студента</option>
+            </select>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <p>
+        <a asp-action="ProgressControllStudent" asp-route-StudentID="" id="createLink">Проверить оценки</a>
+    </p>
+
+</form>
+
+<script>
+    $('#group').on('change', function () {
+        check();
+    });
+
+    $('#student').on('change', function () {
+        updateLink();
+    });
+
+    function check() {
+        var group = $('#group').val();
+        if (group) {
+            $.ajax({
+                method: "GET",
+                url: "/Home/Get_Students_groups",
+                data: { group: group },
+                success: function (result) {
+                    $('#student').empty();
+                    $('#student').append($('<option>', {
+                        value: '',
+                        text: 'Выберите студента'
+                    }));
+                    $.each(result, function (i, student) {
+                        $('#student').append($('<option>', {
+                            value: student.id,
+                            text: student.fio
+                        }));
+                    });
+                }
+            });
+        } else {
+            $('#student').empty();
+            $('#student').append($('<option>', {
+                value: '',
+                text: 'Выберите студента'
+            }));
+        }
+    }
+
+    function updateLink() {
+        var studentId = $('#student').val();
+        var link = $('#createLink');
+        if (studentId) {
+            link.attr('href', '/Home/ProgressControllStudent?StudentID=' + studentId);
+        } else {
+            link.attr('href', '#');
+        }
+    }
+</script>

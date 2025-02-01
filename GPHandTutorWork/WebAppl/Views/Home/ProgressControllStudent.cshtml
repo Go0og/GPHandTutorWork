@@ -1,0 +1,34 @@
+﻿@using Contracts.ViewContract
+@model List<ProgressControlViewModel> 
+@{
+    ViewData["Title"] = "ProgressControllStudent";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Оценки студента</h2>
+</div>
+<div class="text-center">
+    @{
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Предмет</th>
+                    <th>Оценка</th>
+                    <th>Дата</th>
+                    <th>Пара</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CurriculumId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Grade)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DateGrade)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LessonNumber)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

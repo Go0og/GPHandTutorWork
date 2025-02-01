@@ -22,6 +22,7 @@ namespace WebRestAPI.Controllers
 		private readonly IOfficialNotePresenter _OfficialNotePresenter;
 		private readonly IOfficialNoteLogic _OfficialNoteLogic;
 		private readonly IProgressControlPrestnter _ProgressControlPresenter;
+		private readonly IProgressControlLogic _progressControlLogic;
 		private readonly IStudentPrestnter _StudentPresenter;
 		private readonly ITeacherPresenter _TeacherPresenter;
 		private readonly ITutorPresenter _TutorPresenter;
@@ -31,7 +32,7 @@ namespace WebRestAPI.Controllers
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
 			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter,
-			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic)
+			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -48,6 +49,7 @@ namespace WebRestAPI.Controllers
 
 			_AppointmeanHeadmanLogic = appointmeanHeadmanLogic;
 			_OfficialNoteLogic = officialNoteLogic;
+			_progressControlLogic = progressControlLogic;
 		}
 		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
@@ -164,6 +166,26 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+
+		[HttpGet]
+		public List<ProgressControlViewModel> get_progress_student(int StudentID)
+		{
+			try
+			{
+				return _ProgressControlPresenter.MakeProgressControlListPresenter(new ProgressControlSearchModel
+				{
+					StudentId = StudentID
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+
+
 
 	}
 }
