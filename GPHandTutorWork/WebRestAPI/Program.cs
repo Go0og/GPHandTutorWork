@@ -3,6 +3,8 @@ using Contracts.PresenterContract;
 using Contracts.StorageContract;
 using DataBaseImplement.Implements;
 using Interactors;
+using Interactors.OfficePackage;
+using Interactors.OfficePackage.Implements;
 using Microsoft.OpenApi.Models;
 using Presenter;
 
@@ -38,9 +40,12 @@ namespace WebApplicationRestAPI {
             builder.Services.AddTransient<ITutorLogic, TutorLogic>();
             builder.Services.AddTransient<IUniversityEmployeeLogic, UniversiteEmployeeLogic>();
             builder.Services.AddTransient<IWorkTutorLogic, WorkTutorLogic>();
+            builder.Services.AddTransient<IReportTutorLogic, ReportTutorLogic>();
+            // ------ABSTRACT------
+            builder.Services.AddSingleton<AbstractOfficialNoteWord, SaveToWordNote>();
 
-            // ------PRESENTER------
-            builder.Services.AddTransient<IAppointmeanHeadmanPresenter, AppointmeanHeadmanPresenter>();
+			// ------PRESENTER------
+			builder.Services.AddTransient<IAppointmeanHeadmanPresenter, AppointmeanHeadmanPresenter>();
 			builder.Services.AddTransient<ICurriculumPresenter, CurriculumPresenter>();
 			builder.Services.AddTransient<IGPHAgreementPresenter, GPHAgreementHeadmanPresent>();
 			builder.Services.AddTransient<IGroupPresenter, GroupPresenter>();
@@ -50,7 +55,7 @@ namespace WebApplicationRestAPI {
 			builder.Services.AddTransient<ITeacherPresenter, TeacherPresenter>();
 			builder.Services.AddTransient<ITutorPresenter, TutorPresenter>();
 			builder.Services.AddTransient<IUniversityEmployeePresenter, UniversityEmployeePresenter>();
-			builder.Services.AddTransient<IWorkTutorPresenter, WorkTutorPresenter>(); ;
+			builder.Services.AddTransient<IWorkTutorPresenter, WorkTutorPresenter>(); 
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

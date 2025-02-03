@@ -4,6 +4,7 @@
 
 <div class="text-center">
     <h2 class="display-4">Записки сотрудника</h2>
+
 </div>
 <form method="post">
     <input type="hidden" name="id" value="@ViewBag.Text?.Id" />
@@ -22,11 +23,13 @@
     <div class="row">
         <div class="col-8"></div>
         <div class="col-4">
+            <!-- Кнопка "Скачать" отправляет GET-запроc ЭТО НАДО ПОЧЕНИТЬ -->
             <input type="submit" value="Сохранить" class="btn btn-primary" onclick="setAction('save')" />
             <input type="submit" value="Удалить" class="btn btn-danger" onclick="setAction('delete')" />
         </div>
     </div>
 </form>
+
 
 <script>
     const textarea = document.getElementById('autoResizeTextarea');

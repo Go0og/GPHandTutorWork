@@ -16,7 +16,7 @@
         }
         <div class="row">
             <div class="col-4">Номер редактируемой записи:</div>
-            <div class="col-8"><input type="text" id="Note_id" name="Note_id" /></div>
+            <div class="col-8"><input type="number" id="Note_id" name="Note_id" min="1" /></div>
         </div>
         <p>
             <a asp-action="OfficialNoteCreate" asp-route-Note_id="" id="createLink">Работать с запиской</a>

@@ -31,11 +31,12 @@ namespace WebRestAPI.Controllers
 		private readonly IUniversityEmployeePresenter _UniversityEmployeePresenter;
 		private readonly IWorkTutorPresenter _WorkTutorPresenter;
 		private readonly IWorkTutorLogic _WorkTutorLogic;
+		private readonly IReportTutorLogic _ReportTutorLogic;
 
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
 			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter,
-			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic)
+			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic, IReportTutorLogic reportTutorLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -54,6 +55,7 @@ namespace WebRestAPI.Controllers
 			_OfficialNoteLogic = officialNoteLogic;
 			_progressControlLogic = progressControlLogic;
 			_WorkTutorLogic = workTutorLogic;
+			_ReportTutorLogic = reportTutorLogic;
 		}
 		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
@@ -200,6 +202,24 @@ namespace WebRestAPI.Controllers
 			try
 			{
 				return _CurriculumPresent.MakeCurriculumListPresenter();
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
+		public byte[]? create_report_note (int id,int tutorid, string comment)
+		{
+			try
+			{
+				return _ReportTutorLogic.SaveNoteToWordFile(new OfficialNoteViewModel
+				{
+					Id = id,
+					TutorId = tutorid,
+					Comment = comment
+				});
 			}
 			catch (Exception ex)
 			{

@@ -290,5 +290,21 @@ namespace WebAppl.Controllers
 			return View(progressData);
 		}
 
+
+
+		[HttpGet]
+		public IActionResult CreateWordReport(string comment, int id)
+		{
+
+			var fileMemStream = APIclient.GetRequest<byte[]>($"api/main/create_report_note?id={id}&comment={comment}&tutorId={APIclient.Tutor.Id}");
+
+			if (fileMemStream == null)
+			{
+				throw new Exception("Ошибка создания отчета");
+			}
+
+			return File(fileMemStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx");
+		}
+
 	}
 }
