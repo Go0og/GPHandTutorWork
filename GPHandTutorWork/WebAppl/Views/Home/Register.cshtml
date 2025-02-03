@@ -4,6 +4,13 @@
 <div class="text-center">
 	<h2 class="display-4">Регистрация</h2>
 </div>
+
+@if (ViewBag.ErrorMessage != null)
+{
+	<div class="alert alert-danger" role="alert">
+		@ViewBag.ErrorMessage
+	</div>
+}
 <form method="post">
 	<div class="row">
 		<div class="col-4">Login:</div>

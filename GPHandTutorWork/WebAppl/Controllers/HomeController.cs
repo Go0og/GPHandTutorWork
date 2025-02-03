@@ -8,6 +8,7 @@ using WebAppl.Models;
 using AspNetCoreGeneratedDocument;
 using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
+using DataModel.Model;
 
 namespace WebAppl.Controllers
 {
@@ -58,27 +59,40 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public void Enter(string Login, string password, string role)
+		public IActionResult Enter(string Login, string password, string role)
 		{
+			if (string.IsNullOrEmpty(Login) || string.IsNullOrEmpty(password))
+			{
+				ViewBag.ErrorMessage = "Заполните все поля (логин и пароль)";
+				ViewBag.Role = Role;
+				return View(); 
+			}
+
 			switch (role)
 			{
-				case ("Куратор"):
+				case "Куратор":
 					APIclient.Tutor = APIclient.GetRequest<TutorViewModel>($"api/user/login_tutor?Login={Login}&password={password}");
 					if (APIclient.Tutor == null)
 					{
-						throw new Exception("Неверный логин/пароль");
+						ViewBag.ErrorMessage = "Неверный логин или пароль";
+						ViewBag.Role = Role;
+						return View(); 
 					}
 					break;
-				case ("Сотрудник кафедры"):
+
+				case "Сотрудник кафедры":
 					APIclient.UniversityEmployee = APIclient.GetRequest<UniversityEmployeeViewModel>($"api/user/login_employee?Login={Login}&password={password}");
 					if (APIclient.UniversityEmployee == null)
 					{
-						throw new Exception("Неверный логин/пароль");
+						ViewBag.ErrorMessage = "Неверный логин или пароль";
+						ViewBag.Role = Role;
+						return View(); 
 					}
 					break;
 			}
+
 			ViewBag.Role = Role;
-			Response.Redirect("Index");
+			return RedirectToAction("Index"); 
 		}
 
 		[HttpGet]
@@ -89,8 +103,14 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public void Register(string login, string password, string fio, string role) 
+		public IActionResult Register(string login, string password, string fio, string role)
 		{
+			if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(fio))
+			{
+				ViewBag.ErrorMessage = "Заполните все поля (логин, пароль или фио)";
+				ViewBag.Role = Role;
+				return View();
+			}
 			switch (role)
 			{
 				case ("Куратор"):
@@ -111,7 +131,7 @@ namespace WebAppl.Controllers
 					break;
 			}
 			ViewBag.Role = Role;
-			Response.Redirect("Enter");
+			return RedirectToAction("Enter");
 		}
 
 		[HttpPost]
@@ -120,6 +140,12 @@ namespace WebAppl.Controllers
 			if(APIclient.Tutor == null)
 			{
 				Response.Redirect("Enter");
+			}
+			if(student == null)
+			{
+				ViewBag.Role = Role;
+				Response.Redirect("AppointmeanHeadman");
+				return;
 			}
 			APIclient.PostRequest("api/main/add_appointmean_headman", new AppointmentHeadmanBindingModel
 			{
@@ -183,7 +209,7 @@ namespace WebAppl.Controllers
 				Response.Redirect("Enter");
 				return;
 			}
-
+			
 			switch (action)
 			{
 				case "save":
@@ -247,10 +273,21 @@ namespace WebAppl.Controllers
 				return View();
 			}
 
+			var progressData = APIclient.GetRequest<List<ProgressControlViewModel>>($"api/main/get_progress_student?StudentID={StudentID}&TutorId={APIclient.Tutor.Id}");
 
+
+			var curricula = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_all_curricula");
+
+			var curriculumNames = new Dictionary<int, string>();
+			foreach (var curriculum in curricula)
+			{
+				curriculumNames[curriculum.Id] = curriculum.Subject;
+			}
+
+			ViewBag.CurriculumNames = curriculumNames;
 
 			ViewBag.Role = Role;
-			return View(APIclient.GetRequest<List<ProgressControlViewModel>>($"api/main/get_progress_student?StudentID={StudentID}"));
+			return View(progressData);
 		}
 
 	}

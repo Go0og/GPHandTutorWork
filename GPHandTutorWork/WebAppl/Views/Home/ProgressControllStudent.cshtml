@@ -1,5 +1,5 @@
 ﻿@using Contracts.ViewContract
-@model List<ProgressControlViewModel> 
+@model List<ProgressControlViewModel>
 @{
     ViewData["Title"] = "ProgressControllStudent";
 }
@@ -22,7 +22,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.CurriculumId)</td>
+                        <td>@ViewBag.CurriculumNames[item.CurriculumId]</td> 
                         <td>@Html.DisplayFor(modelItem => item.Grade)</td>
                         <td>@Html.DisplayFor(modelItem => item.DateGrade)</td>
                         <td>@Html.DisplayFor(modelItem => item.LessonNumber)</td>

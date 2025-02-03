@@ -17,6 +17,7 @@ namespace DataBaseImplement.Implements
 			using var context = new DataBaseImplement();
 			if (SearchModel.StudentId.HasValue)
 			{
+
 				return context.ProgressControls
 					.Where(x=> x.StudentId==SearchModel.StudentId)
 					.Include(x => x.Student)

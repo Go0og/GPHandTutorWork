@@ -36,9 +36,12 @@ namespace Presenter
 			return newViewModels;
 		}
 
-		public TutorViewModel MakeTutorPresenter(TutorSearchModel search_model)
+		public TutorViewModel? MakeTutorPresenter(TutorSearchModel search_model)
 		{
 			var model = _logic.GetTutor(search_model);
+			if(model == null){
+				return null;
+			}
 			var newViewModel = new TutorViewModel
 			{
 				Id = model.Id,

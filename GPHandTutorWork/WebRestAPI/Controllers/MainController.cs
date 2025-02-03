@@ -4,8 +4,10 @@ using Contracts.PresenterContract;
 using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using Contracts.ViewContract;
+using DataModel.Enum;
 using Interactors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 
 namespace WebRestAPI.Controllers
@@ -28,11 +30,12 @@ namespace WebRestAPI.Controllers
 		private readonly ITutorPresenter _TutorPresenter;
 		private readonly IUniversityEmployeePresenter _UniversityEmployeePresenter;
 		private readonly IWorkTutorPresenter _WorkTutorPresenter;
+		private readonly IWorkTutorLogic _WorkTutorLogic;
 
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
 			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter,
-			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic)
+			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -50,6 +53,7 @@ namespace WebRestAPI.Controllers
 			_AppointmeanHeadmanLogic = appointmeanHeadmanLogic;
 			_OfficialNoteLogic = officialNoteLogic;
 			_progressControlLogic = progressControlLogic;
+			_WorkTutorLogic = workTutorLogic;
 		}
 		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
@@ -168,10 +172,16 @@ namespace WebRestAPI.Controllers
 		}
 
 		[HttpGet]
-		public List<ProgressControlViewModel> get_progress_student(int StudentID)
+		public List<ProgressControlViewModel> get_progress_student(int StudentID,int TutorId)
 		{
 			try
 			{
+				_WorkTutorLogic.CreateWorkTutor(new WorkTutorBindingModel
+				{
+					TutorId = TutorId,
+					DateWork = DateTime.Now,
+					TypeWork = TypeWork.КонтрольПосещаимости
+				});
 				return _ProgressControlPresenter.MakeProgressControlListPresenter(new ProgressControlSearchModel
 				{
 					StudentId = StudentID
@@ -184,7 +194,18 @@ namespace WebRestAPI.Controllers
 			}
 		}
 
-
+		[HttpGet]
+		public List<CurriculumViewModel> get_all_curricula()
+		{
+			try
+			{
+				return _CurriculumPresent.MakeCurriculumListPresenter();
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 
 
 	}

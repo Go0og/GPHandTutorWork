@@ -15,11 +15,9 @@ namespace Interactors
 	public class ProgressControlLogic : IProgressControlLogic
 	{
 		private readonly IProgressControlStorage _storage;
-		private readonly IWorkTutorLogic _workTutorLogic;
 		public ProgressControlLogic (IProgressControlStorage storage, IWorkTutorLogic workTutorLogic)
 		{
 			_storage = storage;
-			_workTutorLogic = workTutorLogic;
 		}
 		public List<ProgressControlBindingModel> GetFullList()
 		{
@@ -51,7 +49,7 @@ namespace Interactors
 
 			return bindingModels;
 		}
-		public ProgressControlBindingModel? GetProgressControl(ProgressControlSearchModel SearchModel)
+		public ProgressControlBindingModel GetProgressControl(ProgressControlSearchModel SearchModel)
 		{
 			{
 				if (SearchModel == null)
@@ -63,6 +61,7 @@ namespace Interactors
 				{
 					return null;
 				}
+
 				return getBindingModel(model);
 			}
 		}
