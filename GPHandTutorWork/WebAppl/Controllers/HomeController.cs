@@ -315,7 +315,7 @@ namespace WebAppl.Controllers
 				Response.Redirect("Enter");
 				return View();
 			}
-
+			ViewBag.Role = Role;
 			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
 		}
 
@@ -341,6 +341,7 @@ namespace WebAppl.Controllers
 				var filteredData = APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work_filltered?tutorid={APIclient.Tutor.Id}&datestart={datestart}&dateend={dateend}");
 				ViewBag.DateStart = datestart;
 				ViewBag.DateEnd = dateend;
+				ViewBag.Role = Role;
 				return View(filteredData);
 			}
 
@@ -351,10 +352,10 @@ namespace WebAppl.Controllers
 				{
 					throw new Exception("Ошибка создания отчета");
 				}
-
+				ViewBag.Role = Role;
 				return File(fileMemStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx");
 			}
-
+			ViewBag.Role = Role;
 			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
 		}
 
