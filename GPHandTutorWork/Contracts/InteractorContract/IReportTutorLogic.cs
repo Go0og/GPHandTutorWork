@@ -1,4 +1,5 @@
-﻿using Contracts.ViewContract;
+﻿using Contracts.SearchModel;
+using Contracts.ViewContract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Contracts.InteractorContract
 	{
 
 		byte[]? SaveNoteToWordFile(OfficialNoteViewModel model);
+
+		byte[]? SaveWorkToWordFile(WorkTutorSearchModel model);
 	}
 }

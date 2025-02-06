@@ -5,6 +5,7 @@ using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using Contracts.ViewContract;
 using DataModel.Enum;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Interactors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -227,6 +228,55 @@ namespace WebRestAPI.Controllers
 			}
 		}
 
+		[HttpGet]
+		public List<WorkTutorViewModel> get_work(int tutorid)
+		{
+			try
+			{
+				return _WorkTutorPresenter.MakeWorkTutorListPresenter(new WorkTutorSearchModel
+				{
+					TutorId = tutorid
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpGet]
+		public List<WorkTutorViewModel> get_work_filltered(int tutorid, DateTime datestart, DateTime dateend )
+		{
+			try
+			{
+				return _WorkTutorPresenter.MakeWorkTutorListPresenter(new WorkTutorSearchModel
+				{
+					TutorId = tutorid,
+					DateStart = datestart,
+					DateEnd = dateend
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
+		public byte[]? create_report_work(DateTime datestart,DateTime dateend )
+		{
+			try
+			{
+				return _ReportTutorLogic.SaveWorkToWordFile(new WorkTutorSearchModel
+				{
+					DateStart = datestart,
+					DateEnd = dateend
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 
 	}
 }

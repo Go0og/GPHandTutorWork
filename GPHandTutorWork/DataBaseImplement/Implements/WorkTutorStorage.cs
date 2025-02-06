@@ -29,15 +29,21 @@ namespace DataBaseImplement.Implements
 		public List<WorkTutor> GetFillteredList(WorkTutorSearchModel SearchModel)
 		{
 			using var context = new DataBaseImplement();
+			if (SearchModel.DateEnd.HasValue && SearchModel.DateStart.HasValue)
+			{
+				return context.WorkTutors
+					.Where(x => x.DateWork > SearchModel.DateStart && x.DateWork < SearchModel.DateEnd)
+					.Include(x => x.Tutor)
+					.ToList();
+			}
 			if (SearchModel.TutorId.HasValue)
 			{
 				return context.WorkTutors
 					.Where(x=> x.TutorId == SearchModel.TutorId)
 					.Include(x=> x.Tutor)
-					.Include (x=> x.TypeWork)
-					.Include (x => x.DateWork)
 					.ToList();
 			}
+
 			return new();
 		}
 
@@ -54,8 +60,6 @@ namespace DataBaseImplement.Implements
 			{
 				return context.WorkTutors
 					.Include(x => x.Tutor)
-					.Include(x => x.TypeWork)
-					.Include(x => x.DateWork)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
 			return null;

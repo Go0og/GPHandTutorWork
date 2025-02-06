@@ -14,6 +14,7 @@ namespace Contracts.SearchModel
 
 		public TypeWork? TypeWork { get; set; }
 
-		public DateTime? DateWork { get; set; }
+		public DateTime? DateStart { get; set; }
+		public DateTime? DateEnd { get; set; }
 	}
 }

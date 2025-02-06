@@ -43,6 +43,7 @@ namespace WebApplicationRestAPI {
             builder.Services.AddTransient<IReportTutorLogic, ReportTutorLogic>();
             // ------ABSTRACT------
             builder.Services.AddSingleton<AbstractOfficialNoteWord, SaveToWordNote>();
+			builder.Services.AddSingleton<AbstractWorkTutorWord, SaveToWordWork>();
 
 			// ------PRESENTER------
 			builder.Services.AddTransient<IAppointmeanHeadmanPresenter, AppointmeanHeadmanPresenter>();

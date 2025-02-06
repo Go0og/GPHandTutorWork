@@ -55,7 +55,7 @@ namespace Interactors
 
 		public List<WorkTutorBindingModel> GetFillteredList(WorkTutorSearchModel? searchModel)
 		{
-			var models = searchModel == null ? _storage.GetFullList() : _storage.GetFullList();
+			var models = searchModel == null ? _storage.GetFullList() : _storage.GetFillteredList(searchModel);
 			if (models.Count == 0)
 			{
 				return new();

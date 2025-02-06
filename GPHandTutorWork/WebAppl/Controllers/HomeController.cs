@@ -9,6 +9,7 @@ using AspNetCoreGeneratedDocument;
 using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using DataModel.Model;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace WebAppl.Controllers
 {
@@ -303,6 +304,58 @@ namespace WebAppl.Controllers
 			}
 
 			return File(fileMemStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx");
+		}
+
+
+		[HttpGet]
+		public IActionResult WorkTutor()
+		{
+			if (APIclient.Tutor == null)
+			{
+				Response.Redirect("Enter");
+				return View();
+			}
+
+			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
+		}
+
+		[HttpPost]
+		public IActionResult WorkTutor(DateTime datestart, DateTime dateend, string action)
+		{
+			if (APIclient.Tutor == null)
+			{
+				Response.Redirect("Enter");
+				return View();
+			}
+
+			if (datestart < Convert.ToDateTime("01.01.2000") || dateend < Convert.ToDateTime("01.01.2000")
+				|| datestart > Convert.ToDateTime("01.01.3000") || dateend > Convert.ToDateTime("01.01.3000"))
+			{
+				ViewBag.ErrorMessage = "Введите корректно даты для выборки";
+				ViewBag.Role = Role;
+				return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
+			}
+
+			if (action == "Фильтровать")
+			{
+				var filteredData = APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work_filltered?tutorid={APIclient.Tutor.Id}&datestart={datestart}&dateend={dateend}");
+				ViewBag.DateStart = datestart;
+				ViewBag.DateEnd = dateend;
+				return View(filteredData);
+			}
+
+			if (action == "Скачать")
+			{
+				var fileMemStream = APIclient.GetRequest<byte[]>($"api/main/create_report_work?datestart={datestart}&dateend={dateend}");
+				if (fileMemStream == null)
+				{
+					throw new Exception("Ошибка создания отчета");
+				}
+
+				return File(fileMemStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx");
+			}
+
+			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
 		}
 
 	}
