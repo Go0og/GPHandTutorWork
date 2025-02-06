@@ -25,7 +25,7 @@ namespace Interactors
 		{
 			var document = _saveToWord.CreateDoc(new WordNote
 			{
-				Title = "Список оплат",
+				Title = "Записка куратора",
 				Comments = model.Comment,
 			});
 			return document;

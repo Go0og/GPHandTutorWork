@@ -9,7 +9,7 @@ namespace Interactors.OfficePackage.HelperEnums
 	public enum WordJustificationType
 	{
 		Center,
-
-		Both
+		Both,
+		Right
 	}
 }

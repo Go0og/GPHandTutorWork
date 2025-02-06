@@ -16,18 +16,18 @@ namespace Interactors.OfficePackage
 		public byte[]? CreateDoc(WordNote info)
 		{
 			CreateWord(info);
-
+			//шапка записки, в теории можно поменять на гос формат шапки в 3-4 строки
 			CreateParagraph(new WordParagraph
 			{
 				Texts = new List<(string, WordTextProperties)> { (info.Title, new WordTextProperties { Bold = false, Size = "24", }) },
 				TextProperties = new WordTextProperties
 				{
 					Size = "24",
-					JustificationType = WordJustificationType.Both
+					JustificationType = WordJustificationType.Right,
 				}
 
 			});
-
+			//оглавление записки
 			CreateParagraph(new WordParagraph
 			{
 				Texts = new List<(string, WordTextProperties)> { ("Записка Куратора", new WordTextProperties { Bold = true, Size = "32", }) },
@@ -37,7 +37,7 @@ namespace Interactors.OfficePackage
 					JustificationType = WordJustificationType.Center
 				}
 			});
-
+			//тело записки
 			CreateParagraph(new WordParagraph
 			{
 				Texts = new List<(string, WordTextProperties)> { (info.Comments, new WordTextProperties { Bold = false, Size = "24", }) },
@@ -52,13 +52,10 @@ namespace Interactors.OfficePackage
 			return document;
 		}
 
-		// Создание doc-файла
 		protected abstract void CreateWord(WordNote info);
 
-		// Создание абзаца с текстом
 		protected abstract void CreateParagraph(WordParagraph paragraph);
 
-		// Сохранение файла
 		protected abstract byte[]? SaveWord(WordNote info);
 	}
 }

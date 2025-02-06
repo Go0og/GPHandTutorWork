@@ -32,6 +32,7 @@ namespace Interactors.OfficePackage.Implements
 			{
 				WordJustificationType.Both => JustificationValues.Both,
 				WordJustificationType.Center => JustificationValues.Center,
+				WordJustificationType.Right => JustificationValues.Right,
 				_ => JustificationValues.Left,
 			};
 		}
