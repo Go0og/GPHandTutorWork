@@ -244,15 +244,15 @@ namespace WebRestAPI.Controllers
 			}
 		}
 		[HttpGet]
-		public List<WorkTutorViewModel> get_work_filltered(int tutorid, DateTime datestart, DateTime dateend )
+		public List<WorkTutorViewModel> get_work_filltered(int tutorid, string datestart, string dateend )
 		{
 			try
 			{
 				return _WorkTutorPresenter.MakeWorkTutorListPresenter(new WorkTutorSearchModel
 				{
 					TutorId = tutorid,
-					DateStart = datestart,
-					DateEnd = dateend
+					DateStart = Convert.ToDateTime(datestart),
+					DateEnd = Convert.ToDateTime(dateend)
 				});
 			}
 			catch (Exception ex)

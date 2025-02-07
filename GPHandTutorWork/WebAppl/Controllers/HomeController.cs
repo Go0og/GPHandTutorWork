@@ -320,7 +320,7 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult WorkTutor(DateTime datestart, DateTime dateend, string action)
+		public IActionResult WorkTutor(string datestart, string dateend, string action)
 		{
 			if (APIclient.Tutor == null)
 			{
@@ -328,8 +328,8 @@ namespace WebAppl.Controllers
 				return View();
 			}
 
-			if (datestart < Convert.ToDateTime("01.01.2000") || dateend < Convert.ToDateTime("01.01.2000")
-				|| datestart > Convert.ToDateTime("01.01.3000") || dateend > Convert.ToDateTime("01.01.3000"))
+			if (Convert.ToDateTime(datestart) < Convert.ToDateTime("01.01.2000") || Convert.ToDateTime(dateend) < Convert.ToDateTime("01.01.2000")
+				|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000"))
 			{
 				ViewBag.ErrorMessage = "Введите корректно даты для выборки";
 				ViewBag.Role = Role;
@@ -339,8 +339,8 @@ namespace WebAppl.Controllers
 			if (action == "Фильтровать")
 			{
 				var filteredData = APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work_filltered?tutorid={APIclient.Tutor.Id}&datestart={datestart}&dateend={dateend}");
-				ViewBag.DateStart = datestart;
-				ViewBag.DateEnd = dateend;
+				ViewBag.DateStart = Convert.ToDateTime(datestart);
+				ViewBag.DateEnd = Convert.ToDateTime(dateend);
 				ViewBag.Role = Role;
 				return View(filteredData);
 			}
