@@ -22,7 +22,7 @@ namespace Contracts.StorageContract.dbModels
 		public int TeacherId {get; set;}
 		public Teacher? Teacher {get; set;}
 
-		public List<int> CurriculumList {get; set;}
+		public int CurriculumList {get; set;}
 		public Curriculum? Curriculum {get; set;} 
 
 		public double Bet {get; set;}

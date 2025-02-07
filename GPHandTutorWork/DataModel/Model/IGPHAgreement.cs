@@ -12,7 +12,7 @@ namespace DataModel.Model
 		DateTime DataEnd { get; }
 		int UniversityEmployeeId { get; }
 		int TeacherId { get; }
-		List<int> CurriculumList { get; }
+		int CurriculumList { get; }
 		double Bet { get; }
 	}
 }

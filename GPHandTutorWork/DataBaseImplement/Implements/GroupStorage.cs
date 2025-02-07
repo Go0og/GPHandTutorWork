@@ -29,7 +29,6 @@ namespace DataBaseImplement.Implements
 		{
 			using var context = new DataBaseImplement();
 			return context.Groups
-				.Include(x => x.Name)
 				.Include(x => x.Tutor)
 				.ToList();
 		}
@@ -40,7 +39,6 @@ namespace DataBaseImplement.Implements
 			if (SearchModel.Id.HasValue)
 			{
 				return context.Groups
-					.Include(x => x.Name)
 					.Include(x => x.Tutor)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}

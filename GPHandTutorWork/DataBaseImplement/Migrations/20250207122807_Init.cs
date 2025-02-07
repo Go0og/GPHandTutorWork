@@ -177,7 +177,7 @@ namespace DataBaseImplement.Migrations
                     DataEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UniversityEmployeeId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    CurriculumList = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurriculumList = table.Column<int>(type: "int", nullable: false),
                     CurriculumId = table.Column<int>(type: "int", nullable: true),
                     Bet = table.Column<double>(type: "float", nullable: false)
                 },

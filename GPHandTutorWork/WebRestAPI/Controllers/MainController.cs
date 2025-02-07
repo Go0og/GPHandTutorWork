@@ -21,6 +21,7 @@ namespace WebRestAPI.Controllers
 		private readonly IAppointmeanHeadmanLogic _AppointmeanHeadmanLogic;
 		private readonly ICurriculumPresenter _CurriculumPresent;
 		private readonly IGPHAgreementPresenter _GPHAgreementPresenter;
+		private readonly IGPHAgreementLogic _GPHAgreementLogic;
 		private readonly IGroupPresenter _GroupPresenter;
 		private readonly IOfficialNotePresenter _OfficialNotePresenter;
 		private readonly IOfficialNoteLogic _OfficialNoteLogic;
@@ -37,7 +38,7 @@ namespace WebRestAPI.Controllers
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
 			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter,
-			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic, IReportTutorLogic reportTutorLogic)
+			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic, IReportTutorLogic reportTutorLogic, IGPHAgreementLogic gPHAgreementLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -57,6 +58,7 @@ namespace WebRestAPI.Controllers
 			_progressControlLogic = progressControlLogic;
 			_WorkTutorLogic = workTutorLogic;
 			_ReportTutorLogic = reportTutorLogic;
+			_GPHAgreementLogic = gPHAgreementLogic;
 		}
 		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
@@ -278,5 +280,60 @@ namespace WebRestAPI.Controllers
 			}
 		}
 
-	}
+
+		[HttpGet]
+		public List<CurriculumViewModel> get_unique_subject()
+		{
+			try
+			{
+				return _CurriculumPresent.MakeCurriculumListPresenter();
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+
+		[HttpGet]
+		public List<GroupViewModel> get_groups_by_subject(string subject)
+		{
+			try
+			{
+				return _CurriculumPresent.groupViewModels(new CurriculumSearchModel
+				{
+					Subject = subject
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
+		public List<TeacherViewModel> get_teachers()
+		{
+			try
+			{
+				return _TeacherPresenter.MakeTeacherListPresenter(null);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpPost]
+		public void create_gph(GPHAgreementBindingModel model)
+		{
+			try
+			{
+				_GPHAgreementLogic.CreateGPHAgreement(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 }

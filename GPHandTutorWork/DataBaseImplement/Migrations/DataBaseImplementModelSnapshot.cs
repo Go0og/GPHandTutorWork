@@ -100,9 +100,8 @@ namespace DataBaseImplement.Migrations
                     b.Property<int?>("CurriculumId")
                         .HasColumnType("int");
 
-                    b.PrimitiveCollection<string>("CurriculumList")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CurriculumList")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataEnd")
                         .HasColumnType("datetime2");

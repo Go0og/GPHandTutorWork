@@ -4,15 +4,21 @@
 <div class="text-center">
     <h2 class="display-4">Создание ГПХ</h2>
 </div>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
 <form method="post">
     <div class="row">
         <div class="col-4">Предмет:</div>
         <div class="col-8">
-            <select id="SubjectName" name="SubjectName" class="form-control">
-                <option value="">Выберите группу</option>
-                @foreach (var group in ViewBag.Groups)
+            <select id="subject" name="subject" class="form-control">
+                <option value="">Выберите предмет</option>
+                @foreach (var subject in ViewBag.subject)
                 {
-                    <option value="@group.Id">@group.Name</option>
+                    <option value="@subject">@subject</option>
                 }
             </select>
         </div>
@@ -22,9 +28,17 @@
         <div class="col-8">
             <select id="group" name="group" class="form-control">
                 <option value="">Выберите группу</option>
-                @foreach (var group in ViewBag.Groups)
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">Преподаватель:</div>
+        <div class="col-8">
+            <select id="teacher" name="teacher" class="form-control">
+                <option value="">Выберите преподавателя</option>
+                @foreach (var teacher in ViewBag.teachers)
                 {
-                    <option value="@group.Id">@group.Name</option>
+                    <option value="@teacher.Id">@teacher.FIO</option>
                 }
             </select>
         </div>
@@ -35,17 +49,37 @@
     <div class="col-auto">
         <input type="date" class="form-control" placeholder="Дата конца" name="dateend">
     </div>
-   <div class="col-auto">
-       <input type="number" class="form-control" placeholder="Оплата в час" name="bet" />
-   </div>
-
-
+    <div class="col-auto">
+        <input type="number" class="form-control" placeholder="Оплата в час" name="bet" />
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-    <p>
-        <a asp-action="ProgressControllStudent" asp-route-StudentID="" id="createLink">Проверить оценки</a>
-    </p>
+    <input type="submit" value="Сохранить" class="btn btn-primary" onclick="setAction('save')" />
 
 </form>
 
+<script>
+    $(document).ready(function() {
+        $('#subject').change(function() {
+            var subject = $(this).val();
+            if (subject) {
+                $.ajax({
+                    url: '@Url.Action("GetGroupsBySubject", "Home")',
+                    type: 'GET',
+                    data: { subject: subject },
+                    success: function(data) {
+                        $('#group').empty();
+                        $('#group').append('<option value="">Выберите группу</option>');
+                        $.each(data, function(index, group) {
+                            $('#group').append('<option value="' + group.id + '">' + group.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#group').empty();
+                $('#group').append('<option value="">Выберите группу</option>');
+            }
+        });
+    });
+</script>

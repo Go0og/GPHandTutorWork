@@ -19,14 +19,6 @@ namespace DataBaseImplement.Implements
 			{
 				return context.Curriculums
 					.Include(x => x.Group)
-					.Include(x => x.Subject)
-					.Include(x => x.AttestationForm)
-					.Include(x => x.PracticalHours)
-					.Include(x => x.ConsultationExam)
-					.Include(x => x.TheoreticalHours)
-					.Include(x => x.Term)
-					.Include(x => x.PracticalHours)
-					.Include(x => x.Exam)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
 			return null;
@@ -35,20 +27,19 @@ namespace DataBaseImplement.Implements
 
 		public List<Curriculum> GetFillteredList(CurriculumSearchModel SearchModel)
 		{
-			using var context = new DataBaseImplement();
+			using var context = new DataBaseImplement(); 
+			if (!string.IsNullOrEmpty(SearchModel.Subject))
+			{
+				return context.Curriculums
+					.Where(x => x.Subject == SearchModel.Subject)
+					.Include(x => x.Group)
+					.ToList();
+			}
 			if (SearchModel.Id.HasValue)
 			{
 				return context.Curriculums
 					.Where(x => x.Id == SearchModel.Id)
 					.Include(x => x.Group)
-					.Include(x => x.Subject)
-					.Include(x => x.AttestationForm)
-					.Include(x => x.PracticalHours)
-					.Include(x => x.ConsultationExam)
-					.Include(x => x.TheoreticalHours)
-					.Include(x => x.Term)
-					.Include(x => x.PracticalHours)
-					.Include(x => x.Exam)
 					.ToList();
 			}
 			return new();

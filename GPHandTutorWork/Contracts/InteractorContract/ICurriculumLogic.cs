@@ -12,6 +12,7 @@ namespace Contracts.InteractorContract
 	public interface ICurriculumLogic
 	{
 		public List<CurriculumBindingModel> GetFullList();
+		public List<CurriculumBindingModel> GetFillteredList(CurriculumSearchModel searchModel);
 		public CurriculumBindingModel GetCurriculum(CurriculumSearchModel SearchModel);
 	}
 }

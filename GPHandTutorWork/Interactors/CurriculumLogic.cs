@@ -62,5 +62,20 @@ namespace Interactors
 				GroupId = model.GroupId
 			};
 		}
+
+		public List<CurriculumBindingModel> GetFillteredList(CurriculumSearchModel searchModel)
+		{
+			var models = searchModel == null ? _storage.GetFullList() : _storage.GetFillteredList(searchModel);
+			if (models.Count == 0)
+			{
+				return new();
+			}
+			List<CurriculumBindingModel> bindingModels = new();
+			foreach (var model in models)
+			{
+				bindingModels.Add(getBindingModel(model));
+			}
+			return bindingModels;
+		}
 	}
 }

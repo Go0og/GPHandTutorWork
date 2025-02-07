@@ -21,6 +21,6 @@ namespace Contracts.BindingModel
 
 		public double Bet { get; set; }
 
-		public List<int> CurriculumList { get; set; } = new();
+		public int CurriculumList { get; set; } = new();
 	}
 }
