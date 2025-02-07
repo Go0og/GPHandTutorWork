@@ -358,6 +358,17 @@ namespace WebAppl.Controllers
 			ViewBag.Role = Role;
 			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
 		}
+		[HttpGet]
+		public IActionResult AgreementGPH()
+		{
+			if (APIclient.UniversityEmployee == null)
+			{
+				Response.Redirect("Enter");
+				return View();
+			}
+			ViewBag.Subject = APIclient.GetRequest<List<CurriculumViewModel>>("");
+			return View();
+		}
 
 	}
 }
