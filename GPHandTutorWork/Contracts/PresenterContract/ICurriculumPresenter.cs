@@ -13,6 +13,7 @@ namespace Contracts.PresenterContract
 		public CurriculumViewModel MakeCurriculumPresenter (CurriculumSearchModel search_model);
 
 		public List<GroupViewModel> groupViewModels(CurriculumSearchModel search_model);
+		public List<int> GetTermsByGroupAndSubject(CurriculumSearchModel searchModel);
 		public List<CurriculumViewModel> MakeCurriculumListPresenter();
 	}
 }

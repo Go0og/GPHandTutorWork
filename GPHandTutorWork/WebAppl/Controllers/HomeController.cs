@@ -391,6 +391,17 @@ namespace WebAppl.Controllers
 			var groups = APIclient.GetRequest<List<GroupViewModel>>($"api/main/get_groups_by_subject?subject={subject}");
 			return Json(groups);
 		}
+		[HttpGet]
+		public IActionResult GetTermsByGroupAndSubject(int groupId, string subject)
+		{
+			if (groupId == 0 || string.IsNullOrEmpty(subject))
+			{
+				return Json(new List<int>());
+			}
+
+			var terms = APIclient.GetRequest<List<int>>($"api/main/get_terms_by_group_and_subject?groupId={groupId}&subject={subject}");
+			return Json(terms);
+		}
 
 		[HttpPost]
 		public IActionResult AgreementGPH(int subjectid,int groupid,int teacherid,string datestart, string dateend,int bet)

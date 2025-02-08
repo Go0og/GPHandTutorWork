@@ -112,7 +112,7 @@ namespace WebRestAPI.Controllers
 			{
 				return _OfficialNotePresenter.MakeOfficialNoteListPresenter(new OfficialNoteSearchModel
 				{
-					TutorId= TutorID
+					TutorId = TutorID
 				});
 
 			}
@@ -177,7 +177,7 @@ namespace WebRestAPI.Controllers
 		}
 
 		[HttpGet]
-		public List<ProgressControlViewModel> get_progress_student(int StudentID,int TutorId)
+		public List<ProgressControlViewModel> get_progress_student(int StudentID, int TutorId)
 		{
 			try
 			{
@@ -213,7 +213,7 @@ namespace WebRestAPI.Controllers
 		}
 
 		[HttpGet]
-		public byte[]? create_report_note (int id,int tutorid, string comment)
+		public byte[]? create_report_note(int id, int tutorid, string comment)
 		{
 			try
 			{
@@ -246,7 +246,7 @@ namespace WebRestAPI.Controllers
 			}
 		}
 		[HttpGet]
-		public List<WorkTutorViewModel> get_work_filltered(int tutorid, string datestart, string dateend )
+		public List<WorkTutorViewModel> get_work_filltered(int tutorid, string datestart, string dateend)
 		{
 			try
 			{
@@ -264,7 +264,7 @@ namespace WebRestAPI.Controllers
 		}
 
 		[HttpGet]
-		public byte[]? create_report_work(DateTime datestart,DateTime dateend )
+		public byte[]? create_report_work(DateTime datestart, DateTime dateend)
 		{
 			try
 			{
@@ -312,6 +312,24 @@ namespace WebRestAPI.Controllers
 		}
 
 		[HttpGet]
+		public List<int> get_terms_by_group_and_subject(int groupid,string subject)
+		{
+			try
+			{
+				return _CurriculumPresent.GetTermsByGroupAndSubject(new CurriculumSearchModel
+				{
+					Subject = subject,
+					GroupId = groupid
+					
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
 		public List<TeacherViewModel> get_teachers()
 		{
 			try
@@ -336,4 +354,5 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+	}
 }

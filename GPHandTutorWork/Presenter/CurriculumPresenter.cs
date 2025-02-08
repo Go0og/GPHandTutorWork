@@ -21,6 +21,18 @@ namespace Presenters
 			_groupStorage = groupStorage;
 		}
 
+		public List<int> GetTermsByGroupAndSubject(CurriculumSearchModel searchModel)
+		{
+			var subjects = _logic.GetFillteredList(searchModel);
+			List<int> terms = new List<int>();
+			foreach (var subject in subjects) 
+			{
+				terms.Add(subject.Term);
+			}
+			terms.Sort();
+			return terms;
+		}
+
 		public List<GroupViewModel> groupViewModels(CurriculumSearchModel search_model)
 		{
 			var subjects = _logic.GetFillteredList(search_model);

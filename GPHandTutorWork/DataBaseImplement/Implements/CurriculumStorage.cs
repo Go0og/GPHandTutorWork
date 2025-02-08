@@ -28,6 +28,13 @@ namespace DataBaseImplement.Implements
 		public List<Curriculum> GetFillteredList(CurriculumSearchModel SearchModel)
 		{
 			using var context = new DataBaseImplement(); 
+			if(!string.IsNullOrEmpty(SearchModel.Subject) && SearchModel.GroupId.HasValue)
+			{
+				return context.Curriculums
+					.Where(x => x.Subject == SearchModel.Subject && x.GroupId == SearchModel.GroupId)
+					.Include(x => x.Group)
+					.ToList();
+			}
 			if (!string.IsNullOrEmpty(SearchModel.Subject))
 			{
 				return context.Curriculums

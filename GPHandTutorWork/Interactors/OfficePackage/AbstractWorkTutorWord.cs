@@ -16,13 +16,12 @@ namespace Interactors.OfficePackage
 	public abstract class AbstractWorkTutorWord
 	{
 		private Dictionary<TypeWork, int> WorkDict = new Dictionary<TypeWork, int>()
-		{
-			{TypeWork.СоставлениеСлужебнойЗаписки,3},
-			{TypeWork.КонтрольПосещаимости,2},
-			{TypeWork.НазначениеСтарост,1},
+	{
+	  {TypeWork.СоставлениеСлужебнойЗаписки,3},
+	  {TypeWork.КонтрольПосещаимости,2},
+	  {TypeWork.НазначениеСтарост,1},
 
-		}
-		;
+	};
 		public byte[]? CreateDoc(WordWork info)
 		{
 			CreateWord(info);
@@ -45,7 +44,7 @@ namespace Interactors.OfficePackage
 				CreateParagraph(new WordParagraph
 				{
 					Texts = new List<(string, WordTextProperties)> { ($"ID :{work.Id.ToString()}/Вид деятельности :{work.TypeWork}/"
-							+ $"Баллы :{WorkDict[work.TypeWork]}/", new WordTextProperties { Bold = false, Size = "24", }) },
+			  + $"Баллы :{WorkDict[work.TypeWork]}/", new WordTextProperties { Bold = false, Size = "24", }) },
 					TextProperties = new WordTextProperties
 					{
 						Size = "24",
