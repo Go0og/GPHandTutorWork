@@ -404,7 +404,7 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult AgreementGPH(int subjectid,int groupid,int teacherid,string datestart, string dateend,int bet)
+		public IActionResult AgreementGPH(int subject, int group,int teacher,string datestart, string dateend,int bet)
 		{
 			if (APIclient.UniversityEmployee == null)
 			{
@@ -427,7 +427,7 @@ namespace WebAppl.Controllers
 				ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
 				return View();
 			}
-			if(string.IsNullOrEmpty(Convert.ToString(groupid)) || string.IsNullOrEmpty(Convert.ToString(subjectid)) || string.IsNullOrEmpty(Convert.ToString(teacherid)))
+			if(string.IsNullOrEmpty(Convert.ToString(group)) || string.IsNullOrEmpty(Convert.ToString(subject)) || string.IsNullOrEmpty(Convert.ToString(teacher)))
 			{
 				ViewBag.ErrorMessage = "Введите корректно группу или предмет или преподавателя";
 				ViewBag.Role = Role;
@@ -437,10 +437,12 @@ namespace WebAppl.Controllers
 
 			APIclient.PostRequest("api/main/create_gph", new GPHAgreementBindingModel
 			{
+				TeacherId = teacher,
+				UniversityEmployeeId = APIclient.UniversityEmployee.Id,
 				DateOfConclusion = Convert.ToDateTime(datestart),
 				DataEnd = Convert.ToDateTime(dateend),
 				Bet = bet,
-				CurriculumList = subjectid,
+				CurriculumList = subject,
 			});
 
 			ViewBag.Role = Role;

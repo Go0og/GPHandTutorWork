@@ -1,27 +1,18 @@
-﻿using Contracts.StorageContract.dbModels;
-using DataModel.Enum;
-using DocumentFormat.OpenXml.Office2010.Excel;
+﻿using DataModel.Enum;
 using Interactors.OfficePackage.HelperEnums;
 using Interactors.OfficePackage.Helpermodels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xceed.Document.NET;
-using Xceed.Words.NET;
+
 
 namespace Interactors.OfficePackage
 {
 	public abstract class AbstractWorkTutorWord
 	{
 		private Dictionary<TypeWork, int> WorkDict = new Dictionary<TypeWork, int>()
-	{
-	  {TypeWork.СоставлениеСлужебнойЗаписки,3},
-	  {TypeWork.КонтрольПосещаимости,2},
-	  {TypeWork.НазначениеСтарост,1},
-
-	};
+		{
+			{TypeWork.СоставлениеСлужебнойЗаписки,3},
+			{TypeWork.КонтрольПосещаимости,2},
+			{TypeWork.НазначениеСтарост,1},
+			};
 		public byte[]? CreateDoc(WordWork info)
 		{
 			CreateWord(info);

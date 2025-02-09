@@ -30,7 +30,7 @@ namespace Interactors
 			{
 				return;
 			}
-			if (string.IsNullOrEmpty(bindingModel.DateOfConclusion.ToString()) || DateOnly.FromDateTime(bindingModel.DateOfConclusion) < DateOnly.FromDateTime(DateTime.Now))
+			if (string.IsNullOrEmpty(bindingModel.DateOfConclusion.ToString()) )
 			{
 				throw new ArgumentNullException("Проверьте дату заключения", nameof(bindingModel.DateOfConclusion));
 			}
