@@ -14,75 +14,15 @@ using Document = DocumentFormat.OpenXml.Wordprocessing.Document;
 using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
 using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
+using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 namespace Interactors.OfficePackage.Implements
 {
 	public class SaveToWordWork : AbstractWorkTutorWord
 	{
 		private WordprocessingDocument? _wordDocument;
-
 		private Body? _docBody;
-
 		private MemoryStream _mem = new MemoryStream();
-
-		// Получение типа выравнивания
-		private static JustificationValues GetJustificationValues(WordJustificationType type)
-		{
-			return type switch
-			{
-				WordJustificationType.Both => JustificationValues.Both,
-				WordJustificationType.Center => JustificationValues.Center,
-				WordJustificationType.Right => JustificationValues.Right,
-				_ => JustificationValues.Left,
-			};
-		}
-
-		// Настройки страницы
-		private static SectionProperties CreateSectionProperties()
-		{
-			var properties = new SectionProperties();
-
-			var pageSize = new PageSize
-			{
-				Orient = PageOrientationValues.Portrait
-			};
-
-			properties.AppendChild(pageSize);
-
-			return properties;
-		}
-
-		// Задание форматирования для абзаца
-		private static ParagraphProperties? CreateParagraphProperties(WordTextProperties? paragraphProperties)
-		{
-			if (paragraphProperties == null)
-			{
-				return null;
-			}
-
-			var properties = new ParagraphProperties();
-
-			properties.AppendChild(new Justification()
-			{
-				Val = GetJustificationValues(paragraphProperties.JustificationType)
-			});
-
-			properties.AppendChild(new SpacingBetweenLines
-			{
-				LineRule = LineSpacingRuleValues.Auto
-			});
-
-			properties.AppendChild(new Indentation());
-
-			var paragraphMarkRunProperties = new ParagraphMarkRunProperties();
-			if (!string.IsNullOrEmpty(paragraphProperties.Size))
-			{
-				paragraphMarkRunProperties.AppendChild(new FontSize { Val = paragraphProperties.Size });
-			}
-			properties.AppendChild(paragraphMarkRunProperties);
-
-			return properties;
-		}
 
 		protected override void CreateWord(WordWork info)
 		{
@@ -98,6 +38,7 @@ namespace Interactors.OfficePackage.Implements
 			{
 				return;
 			}
+
 			var docParagraph = new Paragraph();
 
 			docParagraph.AppendChild(CreateParagraphProperties(paragraph.TextProperties));
@@ -122,19 +63,126 @@ namespace Interactors.OfficePackage.Implements
 			_docBody.AppendChild(docParagraph);
 		}
 
+		protected override void CreateTable(WordWork info)
+		{
+			if (_docBody == null)
+			{
+				return;
+			}
+
+			// Создаем таблицу
+			var table = new Table();
+
+			// Добавляем стили таблицы
+			var tableProperties = new TableProperties(
+				new TableBorders(
+					new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+					new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+					new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+					new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+					new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
+					new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 }
+				)
+			);
+			table.AppendChild(tableProperties);
+
+			// Создаем строку с заголовками
+			var headerRow = new TableRow();
+			headerRow.AppendChild(CreateTableCell("ID", true));
+			headerRow.AppendChild(CreateTableCell("Вид деятельности", true));
+			headerRow.AppendChild(CreateTableCell("Баллы", true));
+			table.AppendChild(headerRow);
+
+			// Заполняем таблицу данными
+			foreach (var work in info.ListWork)
+			{
+				var row = new TableRow();
+				row.AppendChild(CreateTableCell(work.Id.ToString()));
+				row.AppendChild(CreateTableCell(work.TypeWork.ToString()));
+				row.AppendChild(CreateTableCell(WorkDict[work.TypeWork].ToString()));
+				table.AppendChild(row);
+			}
+
+			_docBody.AppendChild(table);
+		}
+
+		private TableCell CreateTableCell(string text, bool isHeader = false)
+		{
+			var cell = new TableCell();
+			var paragraph = new Paragraph();
+			var run = new Run();
+			var runProperties = new RunProperties();
+
+			if (isHeader)
+			{
+				runProperties.AppendChild(new Bold());
+			}
+
+			run.AppendChild(runProperties);
+			run.AppendChild(new Text(text));
+			paragraph.AppendChild(run);
+			cell.AppendChild(paragraph);
+
+			return cell;
+		}
+
 		protected override byte[]? SaveWord(WordWork info)
 		{
 			if (_docBody == null || _wordDocument == null)
 			{
 				return null;
 			}
+
+			// Добавляем настройки страницы
 			_docBody.AppendChild(CreateSectionProperties());
 
+			// Сохраняем документ
 			_wordDocument.MainDocumentPart!.Document.Save();
-
 			_wordDocument.Dispose();
 
 			return _mem.ToArray();
+		}
+
+		private static SectionProperties CreateSectionProperties()
+		{
+			var properties = new SectionProperties();
+			var pageSize = new PageSize { Orient = PageOrientationValues.Portrait };
+			properties.AppendChild(pageSize);
+			return properties;
+		}
+
+		private static ParagraphProperties? CreateParagraphProperties(WordTextProperties? paragraphProperties)
+		{
+			if (paragraphProperties == null)
+			{
+				return null;
+			}
+
+			var properties = new ParagraphProperties();
+			properties.AppendChild(new Justification
+			{
+				Val = GetJustificationValues(paragraphProperties.JustificationType)
+			});
+
+			var paragraphMarkRunProperties = new ParagraphMarkRunProperties();
+			if (!string.IsNullOrEmpty(paragraphProperties.Size))
+			{
+				paragraphMarkRunProperties.AppendChild(new FontSize { Val = paragraphProperties.Size });
+			}
+			properties.AppendChild(paragraphMarkRunProperties);
+
+			return properties;
+		}
+
+		private static JustificationValues GetJustificationValues(WordJustificationType type)
+		{
+			return type switch
+			{
+				WordJustificationType.Both => JustificationValues.Both,
+				WordJustificationType.Center => JustificationValues.Center,
+				WordJustificationType.Right => JustificationValues.Right,
+				_ => JustificationValues.Left,
+			};
 		}
 	}
 }

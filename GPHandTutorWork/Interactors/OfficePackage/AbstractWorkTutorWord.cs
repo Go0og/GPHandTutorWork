@@ -7,47 +7,25 @@ namespace Interactors.OfficePackage
 {
 	public abstract class AbstractWorkTutorWord
 	{
-		private Dictionary<TypeWork, int> WorkDict = new Dictionary<TypeWork, int>()
-		{
-			{TypeWork.СоставлениеСлужебнойЗаписки,3},
-			{TypeWork.КонтрольПосещаимости,2},
-			{TypeWork.НазначениеСтарост,1},
-			};
+		public Dictionary<TypeWork, int> WorkDict = new Dictionary<TypeWork, int>()
+	{
+		{ TypeWork.СоставлениеСлужебнойЗаписки, 3 },
+		{ TypeWork.КонтрольПосещаимости, 2 },
+		{ TypeWork.НазначениеСтарост, 1 },
+	};
+
 		public byte[]? CreateDoc(WordWork info)
 		{
+			// Создаем документ
 			CreateWord(info);
 
+			// Добавляем заголовок
 			CreateParagraph(new WordParagraph
 			{
-				Texts = new List<(string, WordTextProperties)> { (info.Title, new WordTextProperties { Bold = false, Size = "24", }) },
-				TextProperties = new WordTextProperties
-				{
-					Size = "24",
-					JustificationType = WordJustificationType.Right,
-				}
-
-			});
-
-			int sum = 0;
-			foreach (var work in info.ListWork)
+				Texts = new List<(string, WordTextProperties)>
 			{
-				sum += WorkDict[work.TypeWork];
-				CreateParagraph(new WordParagraph
-				{
-					Texts = new List<(string, WordTextProperties)> { ($"ID :{work.Id.ToString()}/Вид деятельности :{work.TypeWork}/"
-			  + $"Баллы :{WorkDict[work.TypeWork]}/", new WordTextProperties { Bold = false, Size = "24", }) },
-					TextProperties = new WordTextProperties
-					{
-						Size = "24",
-						JustificationType = WordJustificationType.Both
-					}
-				});
-
-
-			}
-			CreateParagraph(new WordParagraph
-			{
-				Texts = new List<(string, WordTextProperties)> { ($"Итого: {sum}\t", new WordTextProperties { Bold = true, Size = "24", }) },
+				(info.Title, new WordTextProperties { Bold = true, Size = "24" })
+			},
 				TextProperties = new WordTextProperties
 				{
 					Size = "24",
@@ -55,16 +33,42 @@ namespace Interactors.OfficePackage
 				}
 			});
 
+			// Создаем таблицу
+			CreateTable(info);
 
+			// Добавляем итоговую строку
+			CreateParagraph(new WordParagraph
+			{
+				Texts = new List<(string, WordTextProperties)>
+			{
+				($"Итого: {CalculateTotal(info)}", new WordTextProperties { Bold = true, Size = "24" })
+			},
+				TextProperties = new WordTextProperties
+				{
+					Size = "24",
+					JustificationType = WordJustificationType.Right
+				}
+			});
 
+			// Сохраняем документ
+			return SaveWord(info);
+		}
 
-			var document = SaveWord(info);
-			return document;
+		private int CalculateTotal(WordWork info)
+		{
+			int sum = 0;
+			foreach (var work in info.ListWork)
+			{
+				sum += WorkDict[work.TypeWork];
+			}
+			return sum;
 		}
 
 		protected abstract void CreateWord(WordWork info);
 
 		protected abstract void CreateParagraph(WordParagraph paragraph);
+
+		protected abstract void CreateTable(WordWork info);
 
 		protected abstract byte[]? SaveWord(WordWork info);
 	}
