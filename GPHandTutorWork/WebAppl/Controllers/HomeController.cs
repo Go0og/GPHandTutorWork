@@ -370,7 +370,7 @@ namespace WebAppl.Controllers
 			ViewBag.Role = Role;
 
 			ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject")
-				.Select(s => s.Subject)
+				.Select(s => s.Subject )
 				.Distinct()
 				.ToList();
 
@@ -404,7 +404,7 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult AgreementGPH(int subject, int group,int teacher,string datestart, string dateend,int bet)
+		public IActionResult AgreementGPH(string subject, int group,int teacher,string datestart, string dateend,int bet, int term)
 		{
 			if (APIclient.UniversityEmployee == null)
 			{
@@ -434,7 +434,7 @@ namespace WebAppl.Controllers
 				ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
 				return View();
 			}
-
+			var Subject = APIclient.GetRequest<CurriculumViewModel>($"api/main/get_curriculum?subject={subject}&group={group}&term={term}");
 			APIclient.PostRequest("api/main/create_gph", new GPHAgreementBindingModel
 			{
 				TeacherId = teacher,
@@ -442,11 +442,11 @@ namespace WebAppl.Controllers
 				DateOfConclusion = Convert.ToDateTime(datestart),
 				DataEnd = Convert.ToDateTime(dateend),
 				Bet = bet,
-				CurriculumList = subject,
+				CurriculumList = Subject.Id
 			});
 
 			ViewBag.Role = Role;
-			return View("Enter");
+			return View("Index");
 		}
 	}
 }

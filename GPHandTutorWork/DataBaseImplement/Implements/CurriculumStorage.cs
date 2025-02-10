@@ -21,6 +21,12 @@ namespace DataBaseImplement.Implements
 					.Include(x => x.Group)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
+			if(!string.IsNullOrEmpty(SearchModel.Subject) && SearchModel.GroupId.HasValue && SearchModel.Term.HasValue)
+			{
+				return context.Curriculums
+					.Include(x => x.Group)
+					.FirstOrDefault(x => x.Subject == SearchModel.Subject && x.GroupId == SearchModel.GroupId && x.Term == SearchModel.Term);
+			}
 			return null;
 
 		}

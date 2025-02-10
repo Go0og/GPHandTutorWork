@@ -17,7 +17,7 @@ namespace Contracts.SearchModel
 
 		public int? TeacherId { get; set; }
 
-		public List<int>? CurriculumList { get; set; }
+		public int? CurriculumList { get; set; }
 
 		public double? Bet { get; set; }
 	}

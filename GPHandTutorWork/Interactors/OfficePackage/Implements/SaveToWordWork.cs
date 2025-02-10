@@ -70,11 +70,11 @@ namespace Interactors.OfficePackage.Implements
 				return;
 			}
 
-			// Создаем таблицу
 			var table = new Table();
 
-			// Добавляем стили таблицы
+
 			var tableProperties = new TableProperties(
+				new TableWidth { Width = "5000", Type = TableWidthUnitValues.Pct }, 
 				new TableBorders(
 					new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
 					new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.Single), Size = 4 },
@@ -86,14 +86,20 @@ namespace Interactors.OfficePackage.Implements
 			);
 			table.AppendChild(tableProperties);
 
-			// Создаем строку с заголовками
+
+			var tableGrid = new TableGrid();
+			tableGrid.AppendChild(new GridColumn { Width = "1000" });
+			tableGrid.AppendChild(new GridColumn { Width = "2500" }); 
+			tableGrid.AppendChild(new GridColumn { Width = "1500" }); 
+			table.AppendChild(tableGrid);
+
+
 			var headerRow = new TableRow();
 			headerRow.AppendChild(CreateTableCell("ID", true));
 			headerRow.AppendChild(CreateTableCell("Вид деятельности", true));
 			headerRow.AppendChild(CreateTableCell("Баллы", true));
 			table.AppendChild(headerRow);
 
-			// Заполняем таблицу данными
 			foreach (var work in info.ListWork)
 			{
 				var row = new TableRow();
@@ -133,10 +139,8 @@ namespace Interactors.OfficePackage.Implements
 				return null;
 			}
 
-			// Добавляем настройки страницы
 			_docBody.AppendChild(CreateSectionProperties());
 
-			// Сохраняем документ
 			_wordDocument.MainDocumentPart!.Document.Save();
 			_wordDocument.Dispose();
 

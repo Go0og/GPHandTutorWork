@@ -342,6 +342,24 @@ namespace WebRestAPI.Controllers
 			}
 		}
 
+
+		[HttpGet]
+		public CurriculumViewModel get_curriculum(string subject,int group, int term)
+		{
+			try
+			{
+				return  _CurriculumPresent.MakeCurriculumPresenter(new CurriculumSearchModel
+				{
+					Subject = subject,
+					GroupId=group,
+					Term = term
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 		[HttpPost]
 		public void create_gph(GPHAgreementBindingModel model)
 		{
