@@ -22,10 +22,12 @@ namespace Contracts.StorageContract.dbModels
 		public int TeacherId {get; set;}
 		public Teacher? Teacher {get; set;}
 
-		public int CurriculumList {get; set;}
+		public int CurriculumId {get; set;}
 		public Curriculum? Curriculum {get; set;} 
 
 		public double Bet {get; set;}
+
+		public bool IsActive { get; set;}
 
 		public static GPHAgreement? Create(GPHAgreementBindingModel Model)
 		{
@@ -40,8 +42,9 @@ namespace Contracts.StorageContract.dbModels
 				DateOfConclusion = Model.DateOfConclusion,
 				UniversityEmployeeId = Model.UniversityEmployeeId,
 				TeacherId = Model.TeacherId,
-				CurriculumList = Model.CurriculumList,
+				CurriculumId = Model.CurriculumId,
 				Bet = Model.Bet,
+				IsActive = Model.IsActive,
 
 			};
 		}
@@ -56,8 +59,9 @@ namespace Contracts.StorageContract.dbModels
 			DataEnd = Model.DataEnd;
 			UniversityEmployeeId = Model.UniversityEmployeeId;
 			TeacherId = Model.TeacherId;
-			CurriculumList = Model.CurriculumList;
+			CurriculumId = Model.CurriculumId;
 			Bet = Model.Bet;
+			IsActive = Model.IsActive;
 		}
 	}
 }

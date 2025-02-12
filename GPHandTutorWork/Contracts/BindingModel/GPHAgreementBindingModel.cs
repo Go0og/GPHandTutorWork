@@ -21,6 +21,8 @@ namespace Contracts.BindingModel
 
 		public double Bet { get; set; }
 
-		public int CurriculumList { get; set; } 
+		public int CurriculumId { get; set; } 
+
+		public bool IsActive { get; set; }
 	}
 }

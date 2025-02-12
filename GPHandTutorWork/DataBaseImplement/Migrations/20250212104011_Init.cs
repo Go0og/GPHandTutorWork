@@ -177,9 +177,9 @@ namespace DataBaseImplement.Migrations
                     DataEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UniversityEmployeeId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
-                    CurriculumList = table.Column<int>(type: "int", nullable: false),
-                    CurriculumId = table.Column<int>(type: "int", nullable: true),
-                    Bet = table.Column<double>(type: "float", nullable: false)
+                    CurriculumId = table.Column<int>(type: "int", nullable: false),
+                    Bet = table.Column<double>(type: "float", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,7 +188,8 @@ namespace DataBaseImplement.Migrations
                         name: "FK_GPHAgreements_Curriculums_CurriculumId",
                         column: x => x.CurriculumId,
                         principalTable: "Curriculums",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GPHAgreements_Teachers_TeacherId",
                         column: x => x.TeacherId,

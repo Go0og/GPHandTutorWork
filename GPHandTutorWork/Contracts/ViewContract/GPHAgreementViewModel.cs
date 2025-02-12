@@ -19,9 +19,10 @@ namespace Contracts.ViewContract
 
 		public int TeacherId { get; set; }
 
-		public int? CurriculumList { get; set; }
+		public int? CurriculumId { get; set; }
 
 		public double Bet { get; set; }
 
+		public bool IsActive { get; set; }
 	}
 }

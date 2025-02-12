@@ -54,7 +54,7 @@ namespace Presenters
 			return Result;
 		}
 
-		public List<CurriculumViewModel> MakeCurriculumListPresenter()
+		public List<CurriculumViewModel> MakeCurriculumIdPresenter()
 		{
 			var models = _logic.GetFullList();
 			List<CurriculumViewModel> newViewModels = new();

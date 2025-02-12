@@ -204,7 +204,7 @@ namespace WebRestAPI.Controllers
 		{
 			try
 			{
-				return _CurriculumPresent.MakeCurriculumListPresenter();
+				return _CurriculumPresent.MakeCurriculumIdPresenter();
 			}
 			catch (Exception ex)
 			{
@@ -286,7 +286,7 @@ namespace WebRestAPI.Controllers
 		{
 			try
 			{
-				return _CurriculumPresent.MakeCurriculumListPresenter();
+				return _CurriculumPresent.MakeCurriculumIdPresenter();
 			}
 			catch (Exception ex)
 			{
@@ -366,6 +366,23 @@ namespace WebRestAPI.Controllers
 			try
 			{
 				_GPHAgreementLogic.CreateGPHAgreement(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
+		public List<GPHAgreementViewModel> get_gphs(int employee)
+		{
+			try
+			{
+				return _GPHAgreementPresenter.MakeAppoinmeanHeadmanListPresenter(new GPHAgreementSearchModel
+				{
+					UniversityEmployeeId = employee,
+				});
+
 			}
 			catch (Exception ex)
 			{

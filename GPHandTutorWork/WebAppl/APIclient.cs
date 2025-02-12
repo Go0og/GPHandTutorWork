@@ -23,7 +23,7 @@ namespace WebAppL {
                 return JsonConvert.DeserializeObject<T>(result);
             }
             else {
-                throw new Exception(result);
+                 throw new Exception(result);
             }
         }
 

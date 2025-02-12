@@ -199,6 +199,10 @@ namespace WebAppl.Controllers
 			{
 				ViewBag.Text=APIclient.GetRequest<OfficialNoteViewModel>($"api/main/get_note?Note_id={Note_id}");
 			}
+			else
+			{
+				ViewBag.ErrorMessage = "Чтобы скачать или удалить записку, сначала её надо сохранить";
+			}
 			return View();
 		}
 
@@ -296,6 +300,13 @@ namespace WebAppl.Controllers
 		[HttpGet] 
 		public IActionResult CreateWordReport(string comment, int id)
 		{
+			if(id==0 || comment == null)
+			{
+				ViewBag.ErrorMessage = "Для скачивания отчёта он должен быть предварительно сохранён";
+				ViewBag.Role=Role;
+				Response.Redirect("OfficialNote");
+				return View();
+			}
 			var fileMemStream = APIclient.GetRequest<byte[]>($"api/main/create_report_note?id={id}&comment={comment}&tutorId={APIclient.Tutor.Id}");
 
 			if (fileMemStream == null)
@@ -359,7 +370,7 @@ namespace WebAppl.Controllers
 			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
 		}
 		[HttpGet]
-		public IActionResult AgreementGPH()
+		public IActionResult AgreementGPH_Create()
 		{
 			if (APIclient.UniversityEmployee == null)
 			{
@@ -404,7 +415,7 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult AgreementGPH(string subject, int group,int teacher,string datestart, string dateend,int bet, int term)
+		public IActionResult AgreementGPH_Create(string subject, int group,int teacher,string datestart, string dateend,int bet, int term)
 		{
 			if (APIclient.UniversityEmployee == null)
 			{
@@ -442,11 +453,35 @@ namespace WebAppl.Controllers
 				DateOfConclusion = Convert.ToDateTime(datestart),
 				DataEnd = Convert.ToDateTime(dateend),
 				Bet = bet,
-				CurriculumList = Subject.Id
+				CurriculumId = Subject.Id,
+				IsActive = true,
 			});
 
 			ViewBag.Role = Role;
 			return View("Index");
+		}
+
+		[HttpGet]
+		public IActionResult AgreementGPH()
+		{
+			if (APIclient.UniversityEmployee == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+
+			var curricula = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_all_curricula");
+
+			var curriculumNames = new Dictionary<int, string>();
+			foreach (var curriculum in curricula)
+			{
+				curriculumNames[curriculum.Id] = curriculum.Subject;
+			}
+
+			ViewBag.CurriculumNames = curriculumNames;
+
+
+			ViewBag.Role = Role;
+			return View(APIclient.GetRequest<List<GPHAgreementViewModel>>($"api/main/get_gphs?employee={APIclient.UniversityEmployee.Id}"));
 		}
 	}
 }

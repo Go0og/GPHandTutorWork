@@ -4,8 +4,15 @@
 
 <div class="text-center">
     <h2 class="display-4">Записки сотрудника</h2>
-
 </div>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
 <form method="post">
     <input type="hidden" name="id" value="@ViewBag.Text?.Id" />
     <input type="hidden" name="action" id="action" value="" />
@@ -22,12 +29,16 @@
     <div class="row">
         <div class="col-8"></div>
         <div class="col-4">
-            <a href="@Url.Action("CreateWordReport", "Home", new { id = ViewBag.Text?.Id, comment = ViewBag.Text?.Comment })" class="btn btn-success">Скачать</a>
+            @if (ViewBag.Text?.Id > 0 && ViewBag.Text?.Comment != null)
+            {
+                <a href="@Url.Action("CreateWordReport", "Home", new { id = ViewBag.Text?.Id, comment = ViewBag.Text?.Comment })" class="btn btn-success">Скачать</a>
+                <input type="submit" value="Удалить" class="btn btn-danger" onclick="setAction('delete')" />
+            }
             <input type="submit" value="Сохранить" class="btn btn-primary" onclick="setAction('save')" />
-            <input type="submit" value="Удалить" class="btn btn-danger" onclick="setAction('delete')" />
         </div>
     </div>
 </form>
+
 <script>
     const textarea = document.getElementById('autoResizeTextarea');
 

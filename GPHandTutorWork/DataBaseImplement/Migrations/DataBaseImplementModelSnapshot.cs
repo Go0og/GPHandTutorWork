@@ -97,10 +97,7 @@ namespace DataBaseImplement.Migrations
                     b.Property<double>("Bet")
                         .HasColumnType("float");
 
-                    b.Property<int?>("CurriculumId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CurriculumList")
+                    b.Property<int>("CurriculumId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataEnd")
@@ -108,6 +105,9 @@ namespace DataBaseImplement.Migrations
 
                     b.Property<DateTime>("DateOfConclusion")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
@@ -375,7 +375,9 @@ namespace DataBaseImplement.Migrations
                 {
                     b.HasOne("Contracts.StorageContract.dbModels.Curriculum", "Curriculum")
                         .WithMany()
-                        .HasForeignKey("CurriculumId");
+                        .HasForeignKey("CurriculumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Contracts.StorageContract.dbModels.Teacher", "Teacher")
                         .WithMany()

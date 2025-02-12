@@ -12,7 +12,8 @@ namespace DataModel.Model
 		DateTime DataEnd { get; }
 		int UniversityEmployeeId { get; }
 		int TeacherId { get; }
-		int CurriculumList { get; }
+		int CurriculumId { get; }
 		double Bet { get; }
+		bool IsActive { get; }
 	}
 }

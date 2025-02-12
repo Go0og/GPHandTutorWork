@@ -34,8 +34,9 @@ namespace Presenter
 					DateOfConclusion = model.DateOfConclusion,
 					UniversityEmployeeId = model.UniversityEmployeeId,
 					TeacherId = model.TeacherId,
-					CurriculumList = model.CurriculumList,
+					CurriculumId = model.CurriculumId,
 					Bet = model.Bet,
+					IsActive = model.IsActive,
 				});
 			}
 			return newViewModels;
@@ -51,8 +52,9 @@ namespace Presenter
 				DateOfConclusion = model.DateOfConclusion,
 				UniversityEmployeeId = model.UniversityEmployeeId,
 				TeacherId = model.TeacherId,
-				CurriculumList = model.CurriculumList,
+				CurriculumId = model.CurriculumId,
 				Bet = model.Bet,
+				IsActive = model.IsActive,
 			};
 			return newViewModel;
 		}
