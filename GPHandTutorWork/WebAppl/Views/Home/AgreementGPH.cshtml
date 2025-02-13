@@ -36,8 +36,17 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Id)</td>
                         <td>@ViewBag.CurriculumNames[item.CurriculumId]</td>
-                        <td>@Html.DisplayFor(modelItem => item.TeacherId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                        <td>@ViewBag.Teachers[item.TeacherId]</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <text>Активно</text>
+                            }
+                            else
+                            {
+                                <text>Не активно</text>
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>

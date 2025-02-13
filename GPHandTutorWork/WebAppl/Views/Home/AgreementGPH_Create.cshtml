@@ -15,7 +15,15 @@
         <div class="col-4">Предмет:</div>
         <div class="col-8">
             <select id="subject" name="subject" class="form-control">
-                <option value="">Выберите предмет</option>
+                @if (ViewBag.gph_data != null)
+                {
+                    <option value="">@ViewBag.CurriculumNames[ViewBag.gph_data.CurriculumId]</option>
+                }
+                else
+                {
+                    <option value="">Выберите предмет</option>
+                }
+
                 @foreach (var subject in ViewBag.subject)
                 {
                     <option value="@subject">@subject</option>

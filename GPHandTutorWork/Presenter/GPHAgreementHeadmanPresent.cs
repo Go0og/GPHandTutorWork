@@ -45,6 +45,10 @@ namespace Presenter
 		public GPHAgreementViewModel MakeAppointmeanHeadmenPresenter(GPHAgreementSearchModel search_model)
 		{
 			var model = _logic.GetGPHAgreement(search_model);
+			if (model == null) 
+			{
+				return null;
+			}
 			var newViewModel = new GPHAgreementViewModel
 			{
 				Id = model.Id,

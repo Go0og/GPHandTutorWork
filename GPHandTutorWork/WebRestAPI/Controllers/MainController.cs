@@ -389,5 +389,36 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+
+		[HttpGet]
+		public GPHAgreementViewModel get_gph(int gphid)
+		{
+			try
+			{
+				return _GPHAgreementPresenter.MakeAppointmeanHeadmenPresenter(new GPHAgreementSearchModel
+				{
+					Id= gphid,
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+		[HttpGet]
+		public List<TeacherViewModel> get_full_teachers()
+		{
+			try
+			{
+				return _TeacherPresenter.MakeTeacherListPresenter(null);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		
 	}
 }

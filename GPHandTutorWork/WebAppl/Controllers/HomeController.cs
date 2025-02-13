@@ -370,7 +370,7 @@ namespace WebAppl.Controllers
 			return View(APIclient.GetRequest<List<WorkTutorViewModel>>($"api/main/get_work?tutorid={APIclient.Tutor.Id}"));
 		}
 		[HttpGet]
-		public IActionResult AgreementGPH_Create()
+		public IActionResult AgreementGPH_Create(int GPH_Id)
 		{
 			if (APIclient.UniversityEmployee == null)
 			{
@@ -380,6 +380,10 @@ namespace WebAppl.Controllers
 			}
 			ViewBag.Role = Role;
 
+			var gph_data = APIclient.GetRequest<GPHAgreementViewModel>($"api/main/get_gph?gphid={GPH_Id}");
+
+			ViewBag.gph_data = gph_data;
+
 			ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject")
 				.Select(s => s.Subject )
 				.Distinct()
@@ -387,6 +391,17 @@ namespace WebAppl.Controllers
 
 			ViewBag.teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_teachers");
 
+			var curricula = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_all_curricula");
+
+			var curriculumNames = new Dictionary<int, string>();
+			foreach (var curriculum in curricula)
+			{
+				curriculumNames[curriculum.Id] = curriculum.Subject;
+			}
+
+			ViewBag.CurriculumNames = curriculumNames;
+
+			
 			return View();
 		}
 
@@ -469,6 +484,7 @@ namespace WebAppl.Controllers
 				return Redirect("~/Home/Enter");
 			}
 
+			// names subjects in web
 			var curricula = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_all_curricula");
 
 			var curriculumNames = new Dictionary<int, string>();
@@ -479,6 +495,15 @@ namespace WebAppl.Controllers
 
 			ViewBag.CurriculumNames = curriculumNames;
 
+			// names teachers in web 
+			var teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_full_teachers");
+			
+			var teachersNames = new Dictionary<int, string>();
+			foreach (var teacher in teachers)
+			{
+				teachersNames[teacher.Id] = teacher.FIO;
+			}
+			ViewBag.Teachers = teachersNames;
 
 			ViewBag.Role = Role;
 			return View(APIclient.GetRequest<List<GPHAgreementViewModel>>($"api/main/get_gphs?employee={APIclient.UniversityEmployee.Id}"));

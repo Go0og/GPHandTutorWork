@@ -127,7 +127,9 @@ namespace Interactors
 				CurriculumId = model.CurriculumId,
 				TeacherId = model.TeacherId,
 				UniversityEmployeeId = model.UniversityEmployeeId,
-				Bet = model.Bet
+				Bet = model.Bet,
+				IsActive = model.IsActive,
+
 			};
 		}
 	}
