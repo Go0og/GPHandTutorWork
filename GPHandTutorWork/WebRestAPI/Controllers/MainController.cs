@@ -61,6 +61,22 @@ namespace WebRestAPI.Controllers
 			_GPHAgreementLogic = gPHAgreementLogic;
 		}
 		[HttpGet]
+		public GroupViewModel get_group(int id)
+		{
+			try
+			{
+				return _GroupPresenter.MakeGroupPresenter(new GroupSearchModel
+				{
+					Id = id,
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpGet]
 		public List<GroupViewModel> get_group_list(int TutorID)
 		{
 			try
@@ -419,6 +435,21 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
-		
+
+		[HttpGet]
+		public TeacherViewModel get_teacher(int id)
+		{
+			try
+			{
+				return _TeacherPresenter.MakeTeacherPresenter(new TeacherSearchModel
+				{
+					Id = id,
+				});
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 	}
 }

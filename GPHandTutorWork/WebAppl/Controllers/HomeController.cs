@@ -385,7 +385,7 @@ namespace WebAppl.Controllers
 			ViewBag.gph_data = gph_data;
 
 			ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject")
-				.Select(s => s.Subject )
+				.Select(s => s.Subject)
 				.Distinct()
 				.ToList();
 
@@ -397,13 +397,51 @@ namespace WebAppl.Controllers
 			foreach (var curriculum in curricula)
 			{
 				curriculumNames[curriculum.Id] = curriculum.Subject;
+				if (gph_data != null && curriculum.Id == gph_data.CurriculumId)
+				{
+					ViewBag.SelectedGroup = curriculum.GroupId;
+					ViewBag.SelectedTerm = curriculum.Term;
+				}
 			}
 
 			ViewBag.CurriculumNames = curriculumNames;
 
-			
+			if (gph_data != null)
+			{
+				ViewBag.SelectedTeacher = gph_data.TeacherId;
+				ViewBag.DateStart = gph_data.DateOfConclusion.ToString("yyyy-MM-dd"); 
+				ViewBag.DateEnd = gph_data.DataEnd.ToString("yyyy-MM-dd"); 
+				ViewBag.Bet = gph_data.Bet;
+			}
+
 			return View();
 		}
+
+
+		[HttpGet]
+		public IActionResult GetGroupNameById(int groupId)
+		{
+			var group = APIclient.GetRequest<GroupViewModel>($"api/main/get_group?id={groupId}");
+			return Json(group?.Name); // Возвращаем название группы
+		}
+
+		[HttpGet]
+		public IActionResult GetTermNameById(int termId)
+		{
+			return Json(termId); // Возвращаем название семестра
+		}
+
+		[HttpGet]
+		public IActionResult GetTeacherNameById(int teacherId)
+		{
+			var teacher = APIclient.GetRequest<TeacherViewModel>($"api/main/get_teacher?id={teacherId}");
+			return Json(teacher?.FIO); // Возвращаем ФИО преподавателя
+		}
+
+
+
+
+
 
 		[HttpGet]
 		public IActionResult GetGroupsBySubject(string subject)

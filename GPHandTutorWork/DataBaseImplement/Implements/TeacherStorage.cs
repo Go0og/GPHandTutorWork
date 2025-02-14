@@ -43,13 +43,6 @@ namespace DataBaseImplement.Implements
 			if (SearchModel.Id.HasValue)
 			{
 				return context.Teachers
-					.Include(x => x.FIO)
-					.Include(x => x.DateOfBirth)
-					.Include(x => x.PassportSerialAndNumber)
-					.Include(x => x.ContactPhoneNumber)
-					.Include(x => x.INN)
-					.Include(x => x.InsuranceNumber)
-					.Include(x => x.CardDetails)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
 			return null;
