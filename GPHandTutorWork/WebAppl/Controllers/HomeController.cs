@@ -431,9 +431,18 @@ namespace WebAppl.Controllers
 				return Json(new List<GroupViewModel>());
 			}
 			ViewBag.Role = Role;
+
 			var groups = APIclient.GetRequest<List<GroupViewModel>>($"api/main/get_groups_by_subject?subject={subject}");
-			return Json(groups);
+
+			var uniqueGroups = groups
+				.GroupBy(g => g.Name) 
+				.Select(g => g.First()) 
+				.ToList();
+
+			return Json(uniqueGroups);
 		}
+
+
 		[HttpGet]
 		public IActionResult GetTermsByGroupAndSubject(int groupId, string subject)
 		{
