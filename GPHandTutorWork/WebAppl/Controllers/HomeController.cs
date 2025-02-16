@@ -399,7 +399,7 @@ namespace WebAppl.Controllers
 				curriculumNames[curriculum.Id] = curriculum.Subject;
 				if (gph_data != null && curriculum.Id == gph_data.CurriculumId)
 				{
-					ViewBag.SelectedGroup = curriculum.GroupId;
+					ViewBag.SelectedGroup = APIclient.GetRequest<GroupViewModel>($"api/main/get_group?id={curriculum.GroupId}").Name;
 					ViewBag.SelectedTerm = curriculum.Term;
 				}
 			}
@@ -408,34 +408,13 @@ namespace WebAppl.Controllers
 
 			if (gph_data != null)
 			{
-				ViewBag.SelectedTeacher = gph_data.TeacherId;
+				ViewBag.SelectedTeacher = APIclient.GetRequest<TeacherViewModel>($"api/main/get_teacher?id={gph_data.TeacherId}").FIO;
 				ViewBag.DateStart = gph_data.DateOfConclusion.ToString("yyyy-MM-dd"); 
 				ViewBag.DateEnd = gph_data.DataEnd.ToString("yyyy-MM-dd"); 
 				ViewBag.Bet = gph_data.Bet;
 			}
 
 			return View();
-		}
-
-
-		[HttpGet]
-		public IActionResult GetGroupNameById(int groupId)
-		{
-			var group = APIclient.GetRequest<GroupViewModel>($"api/main/get_group?id={groupId}");
-			return Json(group?.Name); // Возвращаем название группы
-		}
-
-		[HttpGet]
-		public IActionResult GetTermNameById(int termId)
-		{
-			return Json(termId); // Возвращаем название семестра
-		}
-
-		[HttpGet]
-		public IActionResult GetTeacherNameById(int teacherId)
-		{
-			var teacher = APIclient.GetRequest<TeacherViewModel>($"api/main/get_teacher?id={teacherId}");
-			return Json(teacher?.FIO); // Возвращаем ФИО преподавателя
 		}
 
 
@@ -468,7 +447,7 @@ namespace WebAppl.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult AgreementGPH_Create(string subject, int group,int teacher,string datestart, string dateend,int bet, int term)
+		public IActionResult AgreementGPH_Create(int id,string subject, int group,int teacher,string datestart, string dateend,int bet, int term, string action)
 		{
 			if (APIclient.UniversityEmployee == null)
 			{
@@ -476,39 +455,71 @@ namespace WebAppl.Controllers
 				Response.Redirect("Enter");
 				return View();
 			}
-			if (Convert.ToDateTime(datestart) < Convert.ToDateTime("01.01.2000") || Convert.ToDateTime(dateend) < Convert.ToDateTime("01.01.2000")
-				|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000"))
+			if (action == "Сохранить")
 			{
-				ViewBag.ErrorMessage = "Введите корректно даты для выборки";
-				ViewBag.Role = Role;
-				ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
-				return View();
+				if (Convert.ToDateTime(datestart) < Convert.ToDateTime("01.01.2000") || Convert.ToDateTime(dateend) < Convert.ToDateTime("01.01.2000")
+					|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000"))
+				{
+					ViewBag.ErrorMessage = "Введите корректно даты для выборки";
+					ViewBag.Role = Role;
+					ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
+					return View();
+				}
+				if (bet < 0 || bet > 10000)
+				{
+					ViewBag.ErrorMessage = "Введите корректно оплату за час";
+					ViewBag.Role = Role;
+					ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
+					return View();
+				}
+				if (string.IsNullOrEmpty(Convert.ToString(group)) || string.IsNullOrEmpty(Convert.ToString(subject)) || string.IsNullOrEmpty(Convert.ToString(teacher)))
+				{
+					ViewBag.ErrorMessage = "Введите корректно группу или предмет или преподавателя";
+					ViewBag.Role = Role;
+					ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
+					return View();
+				}
+				var Subject = APIclient.GetRequest<CurriculumViewModel>($"api/main/get_curriculum?subject={subject}&group={group}&term={term}");
+				if (id==0)
+				{
+					APIclient.PostRequest("api/main/create_gph", new GPHAgreementBindingModel
+					{
+						TeacherId = teacher,
+						UniversityEmployeeId = APIclient.UniversityEmployee.Id,
+						DateOfConclusion = Convert.ToDateTime(datestart),
+						DataEnd = Convert.ToDateTime(dateend),
+						Bet = bet,
+						CurriculumId = Subject.Id,
+						IsActive = true,
+					});
+				}
+				else 
+				{
+					APIclient.PostRequest("api/main/update_gph", new GPHAgreementBindingModel
+					{
+						Id = id,
+						TeacherId = teacher,
+						UniversityEmployeeId = APIclient.UniversityEmployee.Id,
+						DateOfConclusion = Convert.ToDateTime(datestart),
+						DataEnd = Convert.ToDateTime(dateend),
+						Bet = bet,
+						CurriculumId = Subject.Id,
+						IsActive = true,
+					});
+				}
 			}
-			if(bet<0 || bet > 10000)
+			if (action == "Удалить")
 			{
-				ViewBag.ErrorMessage = "Введите корректно оплату за час";
-				ViewBag.Role = Role;
-				ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
-				return View();
+				APIclient.PostRequest("api/main/delete_gph", new GPHAgreementBindingModel
+				{
+					Id = id
+				});
 			}
-			if(string.IsNullOrEmpty(Convert.ToString(group)) || string.IsNullOrEmpty(Convert.ToString(subject)) || string.IsNullOrEmpty(Convert.ToString(teacher)))
+
+			if(action == "Скачать")
 			{
-				ViewBag.ErrorMessage = "Введите корректно группу или предмет или преподавателя";
-				ViewBag.Role = Role;
-				ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
-				return View();
+				//вернуться сюда как сделаю отчёт
 			}
-			var Subject = APIclient.GetRequest<CurriculumViewModel>($"api/main/get_curriculum?subject={subject}&group={group}&term={term}");
-			APIclient.PostRequest("api/main/create_gph", new GPHAgreementBindingModel
-			{
-				TeacherId = teacher,
-				UniversityEmployeeId = APIclient.UniversityEmployee.Id,
-				DateOfConclusion = Convert.ToDateTime(datestart),
-				DataEnd = Convert.ToDateTime(dateend),
-				Bet = bet,
-				CurriculumId = Subject.Id,
-				IsActive = true,
-			});
 
 			ViewBag.Role = Role;
 			return View("Index");

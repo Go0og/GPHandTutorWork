@@ -451,5 +451,30 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+
+		[HttpPost]
+		public void update_gph(GPHAgreementBindingModel model)
+		{
+			try
+			{
+				_GPHAgreementLogic.UpdateGPHAgreement(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpPost]
+		public void delete_gph(GPHAgreementBindingModel model)
+		{
+			try
+			{
+				_GPHAgreementLogic.DeleteGPHAgreement(model);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 	}
 }

@@ -2,7 +2,7 @@
     ViewData["Title"] = "AgreementGPH_Create";
 }
 <div class="text-center">
-    <h2 class="display-4">Создание ГПХ</h2>
+    <h2 class="display-4">Работа с ГПХ</h2>
 </div>
 @if (ViewBag.ErrorMessage != null)
 {
@@ -11,19 +11,12 @@
     </div>
 }
 <form method="post">
+    <input type="hidden" name="id" value="@ViewBag.gph_data?.Id" />
     <div class="row">
         <div class="col-4">Предмет:</div>
         <div class="col-8">
             <select id="subject" name="subject" class="form-control">
-                @if (ViewBag.gph_data != null)
-                {
-                    <option value="@ViewBag.gph_data.CurriculumId">@ViewBag.CurriculumNames[ViewBag.gph_data.CurriculumId]</option>
-                }
-                else
-                {
-                    <option value="">Выберите предмет</option>
-                }
-
+                <option value="">Выберите предмет</option>
                 @foreach (var subject in ViewBag.subject)
                 {
                     <option value="@subject">@subject</option>
@@ -58,60 +51,56 @@
                 <option value="">Выберите семестр</option>
             </select>
         </div>
-    </div>    <div class="col-auto">
-        <input type="date" class="form-control" placeholder="Дата начала" name="datestart" value="@(ViewBag.gph_data != null ? ViewBag.DateStart : "")">
     </div>
     <div class="col-auto">
-        <input type="date" class="form-control" placeholder="Дата конца" name="dateend" value="@(ViewBag.gph_data != null ? ViewBag.DateEnd : "")">
+        <input type="date" class="form-control" placeholder="Дата начала" name="datestart">
     </div>
     <div class="col-auto">
-        <input type="number" class="form-control" placeholder="Оплата в час" name="bet" value="@(ViewBag.gph_data != null ? ViewBag.Bet : "")" />
+        <input type="date" class="form-control" placeholder="Дата конца" name="dateend">
+    </div>
+    <div class="col-auto">
+        <input type="number" class="form-control" placeholder="Оплата в час" name="bet" />
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-    <input type="submit" value="Сохранить" class="btn btn-primary" onclick="setAction('save')" />
+    @if (ViewBag.gph_data != null)
+    {
+        <input type="submit" name="action" value="Скачать" class="btn btn-success" />
+        <input type="submit" name="action" value="Удалить" class="btn btn-danger" />
+    }
 
+    <input type="submit" name="action" value="Сохранить" class="btn btn-primary" />
 </form>
+
+@if (ViewBag.gph_data != null)
+{
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>Текущие данные ГПХ</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Предмет:</strong> @ViewBag.CurriculumNames[ViewBag.gph_data.CurriculumId]</p>
+            <p><strong>Группа:</strong> @ViewBag.SelectedGroup</p>
+            <p><strong>Преподаватель:</strong> @ViewBag.SelectedTeacher</p>
+            <p><strong>Семестр:</strong> @ViewBag.SelectedTerm</p>
+            <p><strong>Дата начала:</strong> @ViewBag.DateStart</p>
+            <p><strong>Дата конца:</strong> @ViewBag.DateEnd</p>
+            <p><strong>Оплата в час:</strong> @ViewBag.Bet</p>
+        </div>
+    </div>
+}
 
 <script>
     $(document).ready(function() {
-        // Проверяем, есть ли данные о ГПХ
-    @if (ViewBag.gph_data != null)
-    {
-        <text>
-                // Устанавливаем значение предмета и триггерим событие change
-                $('#subject').val('@ViewBag.gph_data.CurriculumId').trigger('change');
-
-                // Устанавливаем значение группы после загрузки групп
-                setTimeout(function() {
-                    $('#group').val('@ViewBag.SelectedGroup');
-                    loadGroupName('@ViewBag.SelectedGroup'); // Загружаем название группы по ID
-                }, 500); // Небольшая задержка для гарантии загрузки групп
-
-                // Устанавливаем значение преподавателя
-                $('#teacher').val('@ViewBag.SelectedTeacher');
-                loadTeacherName('@ViewBag.SelectedTeacher'); // Загружаем ФИО преподавателя по ID
-
-                // Устанавливаем значение семестра после загрузки семестров
-                setTimeout(function() {
-                    $('#term').val('@ViewBag.SelectedTerm');
-                    loadTermName('@ViewBag.SelectedTerm'); // Загружаем название семестра по ID
-                }, 1000); // Задержка для гарантии загрузки семестров
-        </text>
-    }
-
-        // Обработчик изменения предмета
         $('#subject').change(function() {
             loadGroups();
         });
 
-        // Обработчик изменения группы
         $('#group').change(function() {
             loadTerms();
         });
 
-        // Функция загрузки групп
         function loadGroups() {
             var subject = $('#subject').val();
             if (subject) {
@@ -125,14 +114,7 @@
                         $.each(data, function(index, group) {
                             $('#group').append('<option value="' + group.id + '">' + group.name + '</option>');
                         });
-                        // Если есть выбранная группа, устанавливаем её значение
-    @if (ViewBag.gph_data != null)
-    {
-        <text>
-                                $('#group').val('@ViewBag.SelectedGroup');
-                                loadGroupName('@ViewBag.SelectedGroup'); // Загружаем название группы по ID
-        </text>
-    }
+                        $('#group').trigger('change');
                     }
                 });
             } else {
@@ -141,21 +123,6 @@
             }
         }
 
-        // Функция загрузки названия группы по ID
-        function loadGroupName(groupId) {
-            if (groupId) {
-                $.ajax({
-                    url: '@Url.Action("GetGroupNameById", "Home")', // Новый метод в контроллере
-                    type: 'GET',
-                    data: { groupId: groupId },
-                    success: function(data) {
-                        $('#group option[value="' + groupId + '"]').text(data); // Обновляем текст option
-                    }
-                });
-            }
-        }
-
-        // Функция загрузки семестров
         function loadTerms() {
             var groupId = $('#group').val();
             var subject = $('#subject').val();
@@ -168,49 +135,13 @@
                         $('#term').empty();
                         $('#term').append('<option value="">Выберите семестр</option>');
                         $.each(data, function(index, term) {
-                            $('#term').append('<option value="' + term.id + '">' + term.name + '</option>');
+                            $('#term').append('<option value="' + term + '">' + term + '</option>');
                         });
-                        // Если есть выбранный семестр, устанавливаем его значение
-    @if (ViewBag.gph_data != null)
-    {
-        <text>
-                                $('#term').val('@ViewBag.SelectedTerm');
-                                loadTermName('@ViewBag.SelectedTerm'); // Загружаем название семестра по ID
-        </text>
-    }
                     }
                 });
             } else {
                 $('#term').empty();
                 $('#term').append('<option value="">Выберите семестр</option>');
-            }
-        }
-
-        // Функция загрузки названия семестра по ID
-        function loadTermName(termId) {
-            if (termId) {
-                $.ajax({
-                    url: '@Url.Action("GetTermNameById", "Home")', // Новый метод в контроллере
-                    type: 'GET',
-                    data: { termId: termId },
-                    success: function(data) {
-                        $('#term option[value="' + termId + '"]').text(data); // Обновляем текст option
-                    }
-                });
-            }
-        }
-
-        // Функция загрузки ФИО преподавателя по ID
-        function loadTeacherName(teacherId) {
-            if (teacherId) {
-                $.ajax({
-                    url: '@Url.Action("GetTeacherNameById", "Home")', // Новый метод в контроллере
-                    type: 'GET',
-                    data: { teacherId: teacherId },
-                    success: function(data) {
-                        $('#teacher option[value="' + teacherId + '"]').text(data); // Обновляем текст option
-                    }
-                });
             }
         }
     });
