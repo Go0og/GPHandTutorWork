@@ -52,6 +52,15 @@ namespace DataBaseImplement.Implements
 		public List<GPHAgreement> GetFillteredList(GPHAgreementSearchModel SearchModel)
 		{
 			using var context = new DataBaseImplement();
+			if (SearchModel.DataEnd.HasValue && SearchModel.DateOfConclusion.HasValue && SearchModel.TeacherId.HasValue)
+			{
+				return context.GPHAgreements
+					.Where(x => x.DataEnd <= SearchModel.DataEnd && x.DateOfConclusion >= SearchModel.DateOfConclusion && x.TeacherId == SearchModel.TeacherId)
+					.Include(x => x.Curriculum)
+					.Include(x => x.UniversityEmployee)
+					.Include(x => x.Teacher)
+					.ToList();
+			}
 			if (SearchModel.DataEnd.HasValue && SearchModel.DateOfConclusion.HasValue)
 			{
 				return context.GPHAgreements

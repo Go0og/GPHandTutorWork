@@ -476,5 +476,42 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
+
+		[HttpGet]
+		public List<GPHAgreementViewModel> get_gphs_by_teacher(int teacher, string datestart, string dateend)
+		{
+			try
+			{
+				return _GPHAgreementPresenter.MakeAppoinmeanHeadmanListPresenter(new GPHAgreementSearchModel
+				{
+					TeacherId = teacher,
+					DateOfConclusion = Convert.ToDateTime(datestart),
+					DataEnd = Convert.ToDateTime(dateend)
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+
+		[HttpGet]
+		public byte[]? create_report_gph_teacher(string datestart ,string dateend, int teacherid) 
+		{ 
+			try
+			{
+				//реализовать логику создания отчётов
+				return null;
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+
+
 	}
 }

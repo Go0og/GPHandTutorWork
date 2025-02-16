@@ -525,11 +525,6 @@ namespace WebAppl.Controllers
 				});
 			}
 
-			if(action == "Скачать")
-			{
-				//вернуться сюда как сделаю отчёт
-			}
-
 			ViewBag.Role = Role;
 			return View("Index");
 		}
@@ -566,5 +561,93 @@ namespace WebAppl.Controllers
 			ViewBag.Role = Role;
 			return View(APIclient.GetRequest<List<GPHAgreementViewModel>>($"api/main/get_gphs?employee={APIclient.UniversityEmployee.Id}"));
 		}
+
+		[HttpGet]
+		public IActionResult GPH_Reported()
+		{
+			if (APIclient.UniversityEmployee == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
+
+			ViewBag.teachers_but = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_full_teachers");
+			ViewBag.Role = Role;
+
+			return View(null);
+		}
+
+
+		[HttpPost]
+		public IActionResult GPH_Reported(int teacher,string datestart, string dateend, string action)
+		{
+			if (APIclient.UniversityEmployee == null)
+			{
+				Response.Redirect("Enter");
+				return View();
+			}
+
+			if (Convert.ToDateTime(datestart) < Convert.ToDateTime("01.01.2000") || Convert.ToDateTime(dateend) < Convert.ToDateTime("01.01.2000")
+				|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000"))
+			{
+				ViewBag.ErrorMessage = "Введите корректно даты для выборки";
+				ViewBag.Role = Role;
+				return View(null);
+			}
+			if (teacher==null)
+			{
+				ViewBag.ErrorMessage = "Выберите преподавателя";
+				ViewBag.Role = Role;
+				return View(null);
+			}
+
+			if (action == "Фильтровать")
+			{
+				var teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_full_teachers");
+				ViewBag.teachers_but= teachers;
+				ViewBag.ThisTeacher= APIclient.GetRequest<TeacherViewModel>($"api/main/get_teacher?id={teacher}"); 
+				
+				var filteredData = APIclient.GetRequest<List<GPHAgreementViewModel>>($"api/main/get_gphs_by_teacher?teacher={teacher}&datestart={datestart}&dateend={dateend}");
+				ViewBag.DateStart = Convert.ToDateTime(datestart);
+				ViewBag.DateEnd = Convert.ToDateTime(dateend);
+				var curricula = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_all_curricula");
+
+				var curriculumNames = new Dictionary<int, string>();
+				var groupName = new Dictionary<int, string>();
+				foreach (var curriculum in curricula)
+				{
+					curriculumNames[curriculum.Id] = curriculum.Subject;
+					ViewBag.SelectedGroup = APIclient.GetRequest<GroupViewModel>($"api/main/get_group?id={curriculum.GroupId}").Name;
+				}
+				ViewBag.CurriculumNames= curriculumNames;
+				ViewBag.Role = Role;
+				return View(filteredData);
+			}
+
+			if (action == "Скачать")
+			{
+				var teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_full_teachers");
+				ViewBag.teachers_but = teachers;
+				ViewBag.ThisTeacher = APIclient.GetRequest<TeacherViewModel>($"api/main/get_teacher?id={teacher}");
+				ViewBag.DateStart = Convert.ToDateTime(datestart);
+				ViewBag.DateEnd = Convert.ToDateTime(dateend);
+
+
+				var fileMemStream = APIclient.GetRequest<byte[]>($"api/main/create_report_gph_teacher?datestart={datestart}&dateend={dateend}&teacherid={teacher}");
+				if (fileMemStream == null)
+				{
+					throw new Exception("Ошибка создания отчета");
+				}
+				ViewBag.Role = Role;
+				return File(fileMemStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx");
+			}
+
+			ViewBag.Role = Role;
+			return View();
+
+
+		}
+
+
+
 	}
 }

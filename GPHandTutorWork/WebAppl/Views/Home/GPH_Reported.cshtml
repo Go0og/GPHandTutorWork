@@ -1,0 +1,85 @@
+﻿@using Contracts.ViewContract
+@model List<GPHAgreementViewModel> 
+@{
+    ViewData["Title"] = "GPH_Reported";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Экспорт ГПХ</h2>
+</div>
+<div class="text-center">
+    <form method="post" class="d-flex justify-content-center mb-4">
+        <div class="row g-3 align-items-center">
+            <div class="row">
+                <div class="col-4">Преподаватель:</div>
+                <div class="col-8">
+                    <select id="teacher" name="teacher" class="form-control">
+                        @if(ViewBag.ThisTeacher!=null){
+                            <option value="@ViewBag.ThisTeacher.Id">@ViewBag.ThisTeacher.FIO</option>
+                        }
+                        else
+                        {
+                            <option value="">Выберите преподавателя</option>
+                        }
+                        @foreach (var teacher in ViewBag.teachers_but)
+                        {
+                            @if (@ViewBag.ThisTeacher!=null && @ViewBag.ThisTeacher.Id == teacher.Id)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                            <option value="@teacher.Id">@teacher.FIO</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-auto">
+                <input type="date" class="form-control" placeholder="Дата начала" name="datestart" value="@(ViewBag.DateStart != null ? ((DateTime)ViewBag.DateStart).ToString("yyyy-MM-dd") : "")">
+            </div>
+            <div class="col-auto">
+                <input type="date" class="form-control" placeholder="Дата конца" name="dateend" value="@(ViewBag.DateEnd != null ? ((DateTime)ViewBag.DateEnd).ToString("yyyy-MM-dd") : "")">
+            </div>
+            <div class="col-auto">
+                <input type="submit" name="action" value="Фильтровать" class="btn btn-secondary">
+            </div>
+            <div class="col-auto">
+                <input type="submit" name="action" value="Скачать" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+    @if(Model!=null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Предмет</th>
+                    <th>Группа</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                        <td>@ViewBag.CurriculumNames[item.CurriculumId]</td>
+                        <td>@ViewBag.SelectedGroup</td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <text>Активно</text>
+                            }
+                            else
+                            {
+                                <text>Не активно</text>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
