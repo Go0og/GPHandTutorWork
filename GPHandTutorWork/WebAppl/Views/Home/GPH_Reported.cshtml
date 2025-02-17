@@ -21,15 +21,17 @@
                         {
                             <option value="">Выберите преподавателя</option>
                         }
-                        @foreach (var teacher in ViewBag.teachers_but)
-                        {
-                            @if (@ViewBag.ThisTeacher!=null && @ViewBag.ThisTeacher.Id == teacher.Id)
+                        @if (ViewBag.teachers_but != null){
+                            @foreach (var teacher in ViewBag.teachers_but)
                             {
-                                continue;
-                            }
-                            else
-                            {
-                            <option value="@teacher.Id">@teacher.FIO</option>
+                                @if (@ViewBag.ThisTeacher!=null && @ViewBag.ThisTeacher.Id == teacher.Id)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                <option value="@teacher.Id">@teacher.FIO</option>
+                                }
                             }
                         }
                     </select>

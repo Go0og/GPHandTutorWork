@@ -42,9 +42,13 @@ namespace WebApplicationRestAPI {
             builder.Services.AddTransient<IUniversityEmployeeLogic, UniversiteEmployeeLogic>();
             builder.Services.AddTransient<IWorkTutorLogic, WorkTutorLogic>();
             builder.Services.AddTransient<IReportTutorLogic, ReportTutorLogic>();
-            // ------ABSTRACT------
-            builder.Services.AddSingleton<AbstractOfficialNoteWord, SaveToWordNote>();
+			builder.Services.AddTransient<IReportEmployeeLogic, ReportEmployeeLogic>();
+
+			// ------ABSTRACT------
+			builder.Services.AddSingleton<AbstractOfficialNoteWord, SaveToWordNote>();
 			builder.Services.AddSingleton<AbstractWorkTutorWord, SaveToWordWork>();
+			builder.Services.AddSingleton<AbstractWordTeacherGPH, SaveToWordTeacherGPH>();
+
 
 			// ------PRESENTER------
 			builder.Services.AddTransient<IAppointmeanHeadmanPresenter, AppointmeanHeadmanPresenter>();

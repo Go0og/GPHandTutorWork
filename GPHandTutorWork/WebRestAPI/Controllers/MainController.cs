@@ -5,6 +5,7 @@ using Contracts.SearchModel;
 using Contracts.StorageContract.dbModels;
 using Contracts.ViewContract;
 using DataModel.Enum;
+using DataModel.Model;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Interactors;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +35,13 @@ namespace WebRestAPI.Controllers
 		private readonly IWorkTutorPresenter _WorkTutorPresenter;
 		private readonly IWorkTutorLogic _WorkTutorLogic;
 		private readonly IReportTutorLogic _ReportTutorLogic;
+		private readonly IReportEmployeeLogic _ReportEmployeeLogic;
+
 
 		public MainController(IAppointmeanHeadmanPresenter appointmeanHeadmanPresenter, ICurriculumPresenter curriculumPresenter,
 			IGPHAgreementPresenter GPHAgreementPresenter, IGroupPresenter groupPresenter, IOfficialNotePresenter officialNotePresenter, IProgressControlPrestnter progressControlPrestnter,
 			IStudentPrestnter studentPrestnter, ITeacherPresenter teacherPresenter, ITutorPresenter tutorPresenter, IUniversityEmployeePresenter universityEmployeePresenter, IWorkTutorPresenter workTutorPresenter,
-			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic, IReportTutorLogic reportTutorLogic, IGPHAgreementLogic gPHAgreementLogic)
+			IAppointmeanHeadmanLogic appointmeanHeadmanLogic, IOfficialNoteLogic officialNoteLogic, IProgressControlLogic progressControlLogic, IWorkTutorLogic workTutorLogic, IReportTutorLogic reportTutorLogic, IGPHAgreementLogic gPHAgreementLogic, IReportEmployeeLogic reportEmployeeLogic)
 		{
 			_AppointmeanPresent = appointmeanHeadmanPresenter;
 			_CurriculumPresent = curriculumPresenter;
@@ -59,6 +62,7 @@ namespace WebRestAPI.Controllers
 			_WorkTutorLogic = workTutorLogic;
 			_ReportTutorLogic = reportTutorLogic;
 			_GPHAgreementLogic = gPHAgreementLogic;
+			_ReportEmployeeLogic = reportEmployeeLogic;
 		}
 		[HttpGet]
 		public GroupViewModel get_group(int id)
@@ -502,8 +506,13 @@ namespace WebRestAPI.Controllers
 		{ 
 			try
 			{
-				//реализовать логику создания отчётов
-				return null;
+				var t = _GPHAgreementPresenter.MakeAppoinmeanHeadmanListPresenter(new GPHAgreementSearchModel
+				{
+					TeacherId = teacherid,
+					DateOfConclusion = Convert.ToDateTime(datestart),
+					DataEnd = Convert.ToDateTime(dateend)
+				});
+				return _ReportEmployeeLogic.SaveGPHToWordFile( t );
 			}
 			catch (Exception ex)
 			{
