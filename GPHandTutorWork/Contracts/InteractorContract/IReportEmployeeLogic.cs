@@ -13,5 +13,7 @@ namespace Contracts.InteractorContract
 
 		byte[]? SaveGPHToWordFile(List<GPHAgreementViewModel> model);
 
+		byte[]? SaveEmployeeWorkToWordFile(List<GPHAgreementViewModel> models);
+
 	}
 }

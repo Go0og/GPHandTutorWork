@@ -471,21 +471,24 @@ namespace WebAppl.Controllers
 				{
 					ViewBag.ErrorMessage = "¬ведите корректно даты дл€ выборки";
 					ViewBag.Role = Role;
+					ViewBag.teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_teachers");
 					ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
 					return View();
 				}
-				if (bet < 0 || bet > 10000)
+				if (bet <= 0 || bet > 10000)
 				{
 					ViewBag.ErrorMessage = "¬ведите корректно оплату за час";
+					ViewBag.teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_teachers");
 					ViewBag.Role = Role;
 					ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
 					return View();
 				}
-				if (string.IsNullOrEmpty(Convert.ToString(group)) || string.IsNullOrEmpty(Convert.ToString(subject)) || string.IsNullOrEmpty(Convert.ToString(teacher)))
+				if (string.IsNullOrEmpty(Convert.ToString(group)) || string.IsNullOrEmpty(Convert.ToString(subject)) || string.IsNullOrEmpty(Convert.ToString(teacher)) || string.IsNullOrEmpty(Convert.ToString(term)))
 				{
-					ViewBag.ErrorMessage = "¬ведите корректно группу или предмет или преподавател€";
+					ViewBag.ErrorMessage = "¬ведите корректно группу или предмет или преподавател€ или семестр";
 					ViewBag.Role = Role;
 					ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
+					ViewBag.teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_teachers");
 					return View();
 				}
 				var Subject = APIclient.GetRequest<CurriculumViewModel>($"api/main/get_curriculum?subject={subject}&group={group}&term={term}");
@@ -587,9 +590,13 @@ namespace WebAppl.Controllers
 			}
 
 			if (Convert.ToDateTime(datestart) < Convert.ToDateTime("01.01.2000") || Convert.ToDateTime(dateend) < Convert.ToDateTime("01.01.2000")
-				|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000"))
+				|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000")
+				|| teacher == null || datestart == null || dateend == null)
 			{
-				ViewBag.ErrorMessage = "¬ведите корректно даты дл€ выборки";
+				ViewBag.ErrorMessage = "¬ведите корректно даты дл€ выборки и выберите преподавател€ из выпадающего списка ";
+				var teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_full_teachers");
+				ViewBag.teachers_but = teachers;
+				ViewBag.ThisTeacher = APIclient.GetRequest<TeacherViewModel>($"api/main/get_teacher?id={teacher}");
 				ViewBag.Role = Role;
 				return View(null);
 			}
@@ -647,7 +654,80 @@ namespace WebAppl.Controllers
 
 		}
 
+		[HttpGet]
+		public IActionResult WorkEmployeeReport()
+		{
+			if (APIclient.UniversityEmployee == null)
+			{
+				return Redirect("~/Home/Enter");
+			}
 
+			ViewBag.Role = Role;
+
+			return View(null);
+		}
+
+
+
+		[HttpPost]
+		public IActionResult WorkEmployeeReport( string datestart, string dateend, string action)
+		{
+			if (APIclient.UniversityEmployee == null)
+			{
+				Response.Redirect("Enter");
+				return View();
+			}
+
+			if (Convert.ToDateTime(datestart) < Convert.ToDateTime("01.01.2000") || Convert.ToDateTime(dateend) < Convert.ToDateTime("01.01.2000")
+				|| Convert.ToDateTime(datestart) > Convert.ToDateTime("01.01.3000") || Convert.ToDateTime(dateend) > Convert.ToDateTime("01.01.3000")
+				 || datestart == null || dateend == null)
+			{
+				ViewBag.ErrorMessage = "¬ведите корректно даты дл€ выборки и выберите преподавател€ из выпадающего списка ";
+				ViewBag.Role = Role;
+				return View(null);
+			}
+
+			if (action == "‘ильтровать")
+			{
+
+				var filteredData = APIclient.GetRequest<List<GPHAgreementViewModel>>($"api/main/get_gphs_by_employee?datestart={datestart}&dateend={dateend}&employee_id={APIclient.UniversityEmployee.Id}");
+				ViewBag.DateStart = Convert.ToDateTime(datestart);
+				ViewBag.DateEnd = Convert.ToDateTime(dateend);
+				var curricula = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_all_curricula");
+				var teachets = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_full_teachers");
+				var curriculumNames = new Dictionary<int, string>();
+				var teacherNames = new Dictionary<int, string>();
+				foreach (var curriculum in filteredData)
+				{
+					curriculumNames[curriculum.CurriculumId] = curricula.FirstOrDefault(x => x.Id == curriculum.CurriculumId).Subject;
+					teacherNames[curriculum.TeacherId] = teachets.FirstOrDefault(x => x.Id == curriculum.TeacherId).FIO;
+				}
+				ViewBag.TeacherName = teacherNames;
+				ViewBag.CurriculumNames = curriculumNames;
+				ViewBag.Role = Role;
+				return View(filteredData);
+			}
+
+			if (action == "—качать")
+			{
+				ViewBag.DateStart = Convert.ToDateTime(datestart);
+				ViewBag.DateEnd = Convert.ToDateTime(dateend);
+
+				//тут ничего не переделано под нужный отчЄт
+				var fileMemStream = APIclient.GetRequest<byte[]>($"api/main/create_report_gph_employee?datestart={datestart}&dateend={dateend}&employee_id={APIclient.UniversityEmployee.Id}");
+				if (fileMemStream == null)
+				{
+					throw new Exception("ќшибка создани€ отчета");
+				}
+				ViewBag.Role = Role;
+				return File(fileMemStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Report.docx");
+			}
+
+			ViewBag.Role = Role;
+			return View();
+
+
+		}
 
 	}
 }

@@ -520,7 +520,44 @@ namespace WebRestAPI.Controllers
 			}
 		}
 
+		[HttpGet]
+		public List<GPHAgreementViewModel> get_gphs_by_employee( string datestart, string dateend, int employee_id)
+		{
+			try
+			{
+				return _GPHAgreementPresenter.MakeAppoinmeanHeadmanListPresenter(new GPHAgreementSearchModel
+				{
+					DateOfConclusion = Convert.ToDateTime(datestart),
+					DataEnd = Convert.ToDateTime(dateend),
+					UniversityEmployeeId = employee_id
+				});
 
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+
+
+		[HttpGet]
+		public byte[]? create_report_gph_employee(string datestart, string dateend, int employee_id)
+		{
+			try
+			{
+				var t = _GPHAgreementPresenter.MakeAppoinmeanHeadmanListPresenter(new GPHAgreementSearchModel
+				{
+					UniversityEmployeeId = employee_id,
+					DateOfConclusion = Convert.ToDateTime(datestart),
+					DataEnd = Convert.ToDateTime(dateend)
+				});
+				return _ReportEmployeeLogic.SaveEmployeeWorkToWordFile(t);
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
 
 	}
 }

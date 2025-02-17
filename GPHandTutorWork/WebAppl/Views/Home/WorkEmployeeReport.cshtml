@@ -1,7 +1,7 @@
 ﻿@using Contracts.ViewContract
 @model List<GPHAgreementViewModel> 
 @{
-    ViewData["Title"] = "GPH_Reported";
+    ViewData["Title"] = "WorkEmployeeReport";
 }
 @if (ViewBag.ErrorMessage != null)
 {
@@ -15,33 +15,6 @@
 <div class="text-center">
     <form method="post" class="d-flex justify-content-center mb-4">
         <div class="row g-3 align-items-center">
-            <div class="row">
-                <div class="col-4">Преподаватель:</div>
-                <div class="col-8">
-                    <select id="teacher" name="teacher" class="form-control">
-                        @if(ViewBag.ThisTeacher!=null){
-                            <option value="@ViewBag.ThisTeacher.Id">@ViewBag.ThisTeacher.FIO</option>
-                        }
-                        else
-                        {
-                            <option value="">Выберите преподавателя</option>
-                        }
-                        @if (ViewBag.teachers_but != null){
-                            @foreach (var teacher in ViewBag.teachers_but)
-                            {
-                                @if (@ViewBag.ThisTeacher!=null && @ViewBag.ThisTeacher.Id == teacher.Id)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                <option value="@teacher.Id">@teacher.FIO</option>
-                                }
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
             <div class="col-auto">
                 <input type="date" class="form-control" placeholder="Дата начала" name="datestart" value="@(ViewBag.DateStart != null ? ((DateTime)ViewBag.DateStart).ToString("yyyy-MM-dd") : "")">
             </div>
@@ -63,7 +36,7 @@
                 <tr>
                     <th>Номер</th>
                     <th>Предмет</th>
-                    <th>Группа</th>
+                    <th>Преподаватель</th>
                     <th>Статус</th>
                 </tr>
             </thead>
@@ -73,7 +46,7 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Id)</td>
                         <td>@ViewBag.CurriculumNames[item.CurriculumId]</td>
-                        <td>@ViewBag.SelectedGroup</td>
+                        <td>@ViewBag.TeacherName[item.TeacherId]</td>
                         <td>
                             @if (item.IsActive)
                             {

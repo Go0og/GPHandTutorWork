@@ -61,6 +61,15 @@ namespace DataBaseImplement.Implements
 					.Include(x => x.Teacher)
 					.ToList();
 			}
+			if (SearchModel.DataEnd.HasValue && SearchModel.DateOfConclusion.HasValue && SearchModel.UniversityEmployeeId.HasValue)
+			{
+				return context.GPHAgreements
+					.Where(x => x.DataEnd <= SearchModel.DataEnd && x.DateOfConclusion >= SearchModel.DateOfConclusion && x.UniversityEmployeeId == SearchModel.UniversityEmployeeId)
+					.Include(x => x.Curriculum)
+					.Include(x => x.UniversityEmployee)
+					.Include(x => x.Teacher)
+					.ToList();
+			}
 			if (SearchModel.DataEnd.HasValue && SearchModel.DateOfConclusion.HasValue)
 			{
 				return context.GPHAgreements

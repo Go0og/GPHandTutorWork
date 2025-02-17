@@ -18,19 +18,46 @@ namespace Interactors
 		private readonly ITeacherStorage _teacherStorage;
 		private readonly ICurriculumStorage _curriumStorage;
 		private readonly IGPHAgreementStorage _gphStorage;
-		private readonly AbstractWordTeacherGPH _saveGPHToWord;
+		private readonly AbstractEmployeeGPHWord _saveEmployeeToWord;
+		private readonly AbstractWordTeacherGPH _abstractWordTeacherGPH;
 
-		public ReportEmployeeLogic(AbstractWordTeacherGPH abstractWordTeacherGPH, IGPHAgreementStorage gPHAgreementStorage, ITeacherStorage teacherStorage, ICurriculumStorage curriumStorage)
+		public ReportEmployeeLogic(AbstractEmployeeGPHWord abstractEmployeeGPHWord, ITeacherStorage teacherStorage, ICurriculumStorage curriumStorage, IGPHAgreementStorage agreementStorage, AbstractWordTeacherGPH abstractWordTeacherGPH)
 		{
-			_gphStorage = gPHAgreementStorage;
-			_saveGPHToWord = abstractWordTeacherGPH;
+			_saveEmployeeToWord = abstractEmployeeGPHWord;
 			_teacherStorage = teacherStorage;
 			_curriumStorage = curriumStorage;
+			_gphStorage = agreementStorage;
+			_abstractWordTeacherGPH = abstractWordTeacherGPH;
+		}
+
+		public byte[]? SaveEmployeeWorkToWordFile(List<GPHAgreementViewModel> models)
+		{
+			List<Curriculum> CurriculumList = new();
+			List<Teacher> TeacherList = new();
+			List<GPHAgreement> GPHList = new();
+			foreach (var data in models)
+			{
+				CurriculumList.Add(_curriumStorage.GetCurriculum(new CurriculumSearchModel
+				{
+					Id = data.CurriculumId,
+				}));
+				GPHList.Add(_gphStorage.GetGPHAgreement(new GPHAgreementSearchModel { Id = data.Id }));
+				TeacherList.Add(_teacherStorage.GetTeacher(new TeacherSearchModel { Id = data.TeacherId }));
+			}
+			var document = _saveEmployeeToWord.CreateDoc(new WordEmployeeGPH
+			{
+				Title = "ГПХ",
+				Teacher = TeacherList,
+				CurriculumList = CurriculumList,
+				GPH =GPHList,
+			});
+
+			return document;
 		}
 
 		public byte[]? SaveGPHToWordFile(List<GPHAgreementViewModel> model)
 		{
-			var teacher =_teacherStorage.GetTeacher(new TeacherSearchModel
+			var teacher = _teacherStorage.GetTeacher(new TeacherSearchModel
 			{
 				Id = model.First().TeacherId,
 			});
@@ -49,7 +76,7 @@ namespace Interactors
 				}));
 
 			}
-			var document = _saveGPHToWord.CreateDoc(new WordTeacherGPH
+			var document = _abstractWordTeacherGPH.CreateDoc(new WordTeacherGPH
 			{
 				Title = "ГПХ",
 				Teacher = teacher,
@@ -59,6 +86,9 @@ namespace Interactors
 
 			return document;
 		}
+
+
+
 
 	}
 }

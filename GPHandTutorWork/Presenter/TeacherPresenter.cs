@@ -44,6 +44,10 @@ namespace Presenter
 		public TeacherViewModel MakeTeacherPresenter(TeacherSearchModel search_model)
 		{
 			var item = _logic.GetTeacher(search_model);
+			if (item == null)
+			{
+				return null;
+			}
 			var newViewModel = new TeacherViewModel
 			{
 				Id = item.Id,

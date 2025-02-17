@@ -15,17 +15,16 @@ using Paragraph = DocumentFormat.OpenXml.Wordprocessing.Paragraph;
 using Run = DocumentFormat.OpenXml.Wordprocessing.Run;
 using Text = DocumentFormat.OpenXml.Wordprocessing.Text;
 using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
-using Contracts.StorageContract.dbModels;
 
 namespace Interactors.OfficePackage.Implements
 {
-	public class SaveToWordTeacherGPH : AbstractWordTeacherGPH
+	public class SaveEmployeeGPHWord : AbstractEmployeeGPHWord
 	{
 		private WordprocessingDocument? _wordDocument;
 		private Body? _docBody;
 		private MemoryStream _mem = new MemoryStream();
 
-		protected override void CreateWord(WordTeacherGPH info)
+		protected override void CreateWord(WordEmployeeGPH info)
 		{
 			_wordDocument = WordprocessingDocument.Create(_mem, WordprocessingDocumentType.Document);
 			MainDocumentPart mainPart = _wordDocument.AddMainDocumentPart();
@@ -64,7 +63,7 @@ namespace Interactors.OfficePackage.Implements
 			_docBody.AppendChild(docParagraph);
 		}
 
-		protected override void CreateTable(WordTeacherGPH info)
+		protected override void CreateTable(WordEmployeeGPH info)
 		{
 			if (_docBody == null)
 			{
@@ -89,57 +88,34 @@ namespace Interactors.OfficePackage.Implements
 
 
 			var tableGrid = new TableGrid();
-			tableGrid.AppendChild(new GridColumn { Width = "3000" });
-			tableGrid.AppendChild(new GridColumn { Width = "666" }); 
-			tableGrid.AppendChild(new GridColumn { Width = "666" });
-			tableGrid.AppendChild(new GridColumn { Width = "666" });
+			tableGrid.AppendChild(new GridColumn { Width = "1000" });
+			tableGrid.AppendChild(new GridColumn { Width = "1000" });
+			tableGrid.AppendChild(new GridColumn { Width = "1000" });
+			tableGrid.AppendChild(new GridColumn { Width = "1000" });
+			tableGrid.AppendChild(new GridColumn { Width = "1000" });
 			table.AppendChild(tableGrid);
 
 
 			var headerRow = new TableRow();
-			headerRow.AppendChild(CreateTableCell("Вид услуги", true));
-			headerRow.AppendChild(CreateTableCell("Количество часов", true));
-			headerRow.AppendChild(CreateTableCell("Стоимость 1 часа, руб.", true));
-			headerRow.AppendChild(CreateTableCell("Сумма, руб.", true));
+			headerRow.AppendChild(CreateTableCell("ID", true));
+			headerRow.AppendChild(CreateTableCell("Предмет", true));
+			headerRow.AppendChild(CreateTableCell("Преподаватель", true));
+			headerRow.AppendChild(CreateTableCell("Дата начала", true));
+			headerRow.AppendChild(CreateTableCell("Дата окончания", true));
 			table.AppendChild(headerRow);
 
-			foreach (var subject in info.CurriculumList)
+			for ( int i = 0; i < info.GPH.Count; i++)
 			{
 				var row = new TableRow();
-				row.AppendChild(CreateTableCell(subject.Subject));
-				row.AppendChild(CreateTableCell(CalculateHoursInSubject(subject)));
-				row.AppendChild(CreateTableCell(info.GPHAgreement.FirstOrDefault(x => x.CurriculumId == subject.Id).Bet.ToString()));
-				row.AppendChild(CreateTableCell(CalculateMoneyInSubject(info.GPHAgreement.FirstOrDefault(x => x.CurriculumId == subject.Id))));
+				row.AppendChild(CreateTableCell(info.GPH[i].Id.ToString()));
+				row.AppendChild(CreateTableCell(info.CurriculumList[i].Subject.ToString()));
+				row.AppendChild(CreateTableCell(info.Teacher[i].FIO));
+				row.AppendChild(CreateTableCell(info.GPH[i].DateOfConclusion.ToString()));
+				row.AppendChild(CreateTableCell(info.GPH[i].DataEnd.ToString()));
 				table.AppendChild(row);
 			}
-			var ro = new TableRow();
-			ro.AppendChild(CreateTableCell("Итого"));
-			ro.AppendChild(CreateTableCell(SumHoursGlobal.ToString()));
-			ro.AppendChild(CreateTableCell(""));
-			ro.AppendChild(CreateTableCell(SumMoneyGlobal.ToString()));
-			table.AppendChild(ro);
+
 			_docBody.AppendChild(table);
-		}
-		private double SumHours = 0;
-		private double SumHoursGlobal = 0;
-		private double SumMoneyGlobal = 0;
-		private string CalculateHoursInSubject(Curriculum data)
-		{
-			double sum = 0;
-			sum += data.TheoreticalHours;
-			sum += data.PracticalHours;
-			sum += data.ConsultationExam;
-			sum += data.Exam;
-			SumHours = sum;
-			SumHoursGlobal += sum;
-			return sum.ToString();
-		}
-		private string CalculateMoneyInSubject(GPHAgreement data)
-		{
-			double sum = 0;
-			sum = SumHours * data.Bet;
-			SumMoneyGlobal += sum;
-			return sum.ToString();
 		}
 
 		private TableCell CreateTableCell(string text, bool isHeader = false)
@@ -162,76 +138,7 @@ namespace Interactors.OfficePackage.Implements
 			return cell;
 		}
 
-
-		protected override void CreateTableTitle7(WordTeacherGPH info)
-		{
-			if (_docBody == null)
-			{
-				return;
-			}
-
-			var table = new Table();
-
-
-			var tableProperties = new TableProperties(
-				new TableWidth { Width = "5000", Type = TableWidthUnitValues.Pct },
-				new TableBorders(
-					new TopBorder { Val = new EnumValue<BorderValues>(BorderValues.None), Size = 0 },
-					new BottomBorder { Val = new EnumValue<BorderValues>(BorderValues.None), Size = 0 },
-					new LeftBorder { Val = new EnumValue<BorderValues>(BorderValues.None), Size = 0 },
-					new RightBorder { Val = new EnumValue<BorderValues>(BorderValues.None), Size = 0 },
-					new InsideHorizontalBorder { Val = new EnumValue<BorderValues>(BorderValues.None), Size = 0 },
-					new InsideVerticalBorder { Val = new EnumValue<BorderValues>(BorderValues.None), Size = 0 }
-				)
-			);
-			table.AppendChild(tableProperties);
-
-
-			var tableGrid = new TableGrid();
-			tableGrid.AppendChild(new GridColumn { Width = "2500" });
-			tableGrid.AppendChild(new GridColumn { Width = "2500" });
-			table.AppendChild(tableGrid);
-
-
-			var headerRow = new TableRow();
-			headerRow.AppendChild(CreateTableCell("Заказчик", true));
-			headerRow.AppendChild(CreateTableCell("Исполнитель", true));
-			table.AppendChild(headerRow);
-
-
-			var row = new TableRow();
-			row.AppendChild(CreateTableCell($"<<__Крутая организация__>>"));
-			row.AppendChild(CreateTableCell($"Ф.И.О. {info.Teacher.FIO}"));
-			table.AppendChild(row);
-			var row2 = new TableRow();
-			row2.AppendChild(CreateTableCell($"<<__Прочие константные данные организации__>>"));
-			row2.AppendChild(CreateTableCell($"Паспорт {info.Teacher.PassportSerialAndNumber}"));
-			table.AppendChild(row2);
-
-			var row3 = new TableRow();
-			row3.AppendChild(CreateTableCell($"<<__Прочие константные данные организации__>>"));
-			row3.AppendChild(CreateTableCell($"ИНН {info.Teacher.INN}"));
-			table.AppendChild(row3);
-
-			var row4 = new TableRow();
-			row4.AppendChild(CreateTableCell($"<<__Прочие константные данные организации__>>"));
-			row4.AppendChild(CreateTableCell($"Контактный номер {info.Teacher.ContactPhoneNumber}"));
-			table.AppendChild(row4);
-
-			var row5 = new TableRow();
-			row5.AppendChild(CreateTableCell($"Заказчик"));
-			row5.AppendChild(CreateTableCell($"Исполнитель"));
-			table.AppendChild(row5);
-
-			var row6 = new TableRow();
-			row6.AppendChild(CreateTableCell($"Директор_______________<<Имя Крутого Директора>>"));
-			row6.AppendChild(CreateTableCell($"_______________________ {info.Teacher.FIO}"));
-			table.AppendChild(row6);
-
-			_docBody.AppendChild(table);
-		}
-
-		protected override byte[]? SaveWord(WordTeacherGPH info)
+		protected override byte[]? SaveWord(WordEmployeeGPH info)
 		{
 			if (_docBody == null || _wordDocument == null)
 			{

@@ -48,7 +48,7 @@ namespace WebApplicationRestAPI {
 			builder.Services.AddSingleton<AbstractOfficialNoteWord, SaveToWordNote>();
 			builder.Services.AddSingleton<AbstractWorkTutorWord, SaveToWordWork>();
 			builder.Services.AddSingleton<AbstractWordTeacherGPH, SaveToWordTeacherGPH>();
-
+			builder.Services.AddSingleton<AbstractEmployeeGPHWord, SaveEmployeeGPHWord>();
 
 			// ------PRESENTER------
 			builder.Services.AddTransient<IAppointmeanHeadmanPresenter, AppointmeanHeadmanPresenter>();
