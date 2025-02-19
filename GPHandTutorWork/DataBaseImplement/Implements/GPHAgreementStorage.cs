@@ -126,6 +126,14 @@ namespace DataBaseImplement.Implements
 					.Include(x => x.Teacher)
 					.FirstOrDefault(x => x.Id == SearchModel.Id);
 			}
+			if (SearchModel.IsActive.HasValue && SearchModel.CurriculumId.HasValue)
+			{
+				return context.GPHAgreements
+					.Include(x => x.Curriculum)
+					.Include(x => x.UniversityEmployee)
+					.Include(x => x.Teacher)
+					.FirstOrDefault(x => x.IsActive == SearchModel.IsActive && x.CurriculumId == SearchModel.CurriculumId);
+			}
 			return null;
 		}
 	}

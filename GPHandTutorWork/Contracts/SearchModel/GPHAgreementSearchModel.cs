@@ -20,5 +20,7 @@ namespace Contracts.SearchModel
 		public int? CurriculumId { get; set; }
 
 		public double? Bet { get; set; }
+
+		public bool? IsActive { get; set; }
 	}
 }

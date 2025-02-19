@@ -380,7 +380,7 @@ namespace WebAppl.Controllers
 			}
 			ViewBag.Role = Role;
 
-			var gph_data = APIclient.GetRequest<GPHAgreementViewModel>($"api/main/get_gph?gphid={GPH_Id}");
+			var gph_data = APIclient.GetRequest<GPHAgreementViewModel>($"api/main/get_gph_by_id?gphid={GPH_Id}");
 
 			ViewBag.gph_data = gph_data;
 
@@ -494,6 +494,15 @@ namespace WebAppl.Controllers
 				var Subject = APIclient.GetRequest<CurriculumViewModel>($"api/main/get_curriculum?subject={subject}&group={group}&term={term}");
 				if (id==0)
 				{
+					var gph = APIclient.GetRequest<GPHAgreementViewModel>($"api/main/get_gph_by_data?curriculum_id={Subject.Id}");
+					if ( gph != null )
+					{
+						ViewBag.ErrorMessage =  $"На данный учебный план уже существует активный ГПХ = №{ gph.Id } ";
+						ViewBag.Role = Role;
+						ViewBag.subject = APIclient.GetRequest<List<CurriculumViewModel>>("api/main/get_unique_subject").Select(s => s.Subject).Distinct().ToList();
+						ViewBag.teachers = APIclient.GetRequest<List<TeacherViewModel>>("api/main/get_teachers");
+						return View();
+					}
 					APIclient.PostRequest("api/main/create_gph", new GPHAgreementBindingModel
 					{
 						TeacherId = teacher,

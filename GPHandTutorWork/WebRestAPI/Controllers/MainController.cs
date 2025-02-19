@@ -411,13 +411,30 @@ namespace WebRestAPI.Controllers
 		}
 
 		[HttpGet]
-		public GPHAgreementViewModel get_gph(int gphid)
+		public GPHAgreementViewModel get_gph_by_id(int gphid)
 		{
 			try
 			{
 				return _GPHAgreementPresenter.MakeAppointmeanHeadmenPresenter(new GPHAgreementSearchModel
 				{
 					Id= gphid,
+				});
+
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
+		}
+		[HttpGet]
+		public GPHAgreementViewModel get_gph_by_data(int curriculum_id)
+		{
+			try
+			{
+				return _GPHAgreementPresenter.MakeAppointmeanHeadmenPresenter(new GPHAgreementSearchModel
+				{
+					CurriculumId= curriculum_id,
+					IsActive = true,
 				});
 
 			}
