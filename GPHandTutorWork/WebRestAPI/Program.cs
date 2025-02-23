@@ -5,6 +5,7 @@ using DataBaseImplement.Implements;
 using Interactors;
 using Interactors.OfficePackage;
 using Interactors.OfficePackage.Implements;
+using Microsoft.Data.SqlClient;
 using Microsoft.OpenApi.Models;
 using Presenter;
 using Presenters;
@@ -61,9 +62,11 @@ namespace WebApplicationRestAPI {
 			builder.Services.AddTransient<ITeacherPresenter, TeacherPresenter>();
 			builder.Services.AddTransient<ITutorPresenter, TutorPresenter>();
 			builder.Services.AddTransient<IUniversityEmployeePresenter, UniversityEmployeePresenter>();
-			builder.Services.AddTransient<IWorkTutorPresenter, WorkTutorPresenter>(); 
+			builder.Services.AddTransient<IWorkTutorPresenter, WorkTutorPresenter>();
 
-            builder.Services.AddControllers();
+			UpdateIsActiveField();
+
+			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(s => s.SwaggerDoc("v1", new OpenApiInfo {
@@ -89,5 +92,24 @@ namespace WebApplicationRestAPI {
 
             app.Run();
         }
-    }
+
+
+		static void UpdateIsActiveField()
+		{
+
+			var connectionString = @"Data Source=WIN-0IL5NARLEQ9\SQLEXPRESS;Initial Catalog=CoursWorkIgor;Integrated Security=True;MultipleActiveResultSets=True;;TrustServerCertificate=True";
+
+			using (var connection = new SqlConnection(connectionString))
+			{
+
+				var command = new SqlCommand("UpdateIsActiveField", connection);
+				command.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+				connection.Open();
+
+				command.ExecuteNonQuery();
+			}
+		}
+	}
 }
