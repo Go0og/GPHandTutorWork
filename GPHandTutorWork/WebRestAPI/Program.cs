@@ -105,7 +105,6 @@ namespace WebApplicationRestAPI {
 				var command = new SqlCommand("UpdateIsActiveField", connection);
 				command.CommandType = System.Data.CommandType.StoredProcedure;
 
-
 				connection.Open();
 
 				command.ExecuteNonQuery();

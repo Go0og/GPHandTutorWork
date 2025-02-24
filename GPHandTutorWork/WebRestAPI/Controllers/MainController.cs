@@ -142,7 +142,7 @@ namespace WebRestAPI.Controllers
 			}
 		}
 		[HttpGet]
-		public OfficialNoteViewModel get_note(int TutorID, int Note_id)
+		public OfficialNoteViewModel get_note(int Note_id)
 		{
 			try
 			{

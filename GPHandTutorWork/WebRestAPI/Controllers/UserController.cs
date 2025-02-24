@@ -111,18 +111,6 @@ namespace WebRestAPI.Controllers
 				throw;
 			}
 		}
-		/*          //потом разобрать зачем это было тут
-		[HttpGet]
-		public List<template_view_model>? get_user_template_list(int userId) {
-			try {
-				return _userPresenter.make_user_presenter(new user_search_model { id = userId }).templates;
-			}
-			catch (Exception ex) {
-				throw;
-			}
-		}
-		*/
-
 
 	}
 }
